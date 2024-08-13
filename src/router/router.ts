@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
         }
     }
     */
-    const isUser = true;
+    const isUser = false;
     if (!isUser && to.path !== '/login') {
         next('/login');
     } else if (to.meta.auth && !isUser) {
