@@ -18,6 +18,7 @@ git init
 git add .
 git commit -m "init"
 git remote add origin "https://github.com/kaisaohnae/kaisa-bo.git"
+git branch -m main master
 git push -u --force origin master
 ```
 ## vscode 
