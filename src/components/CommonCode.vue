@@ -10,7 +10,7 @@
 <script setup lang="ts">
 /* eslint-disable no-debugger */
 import { onMounted, ref, reactive } from 'vue';
-import { useAuthStore } from '../store/store.auth';
+import { useAuthStore } from '@src/store/authStore';
 
 const emit = defineEmits(['set-data'])
 

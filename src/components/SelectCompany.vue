@@ -13,7 +13,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, reactive, popScopeId } from 'vue';
-import { useAuthStore } from '../store/store.auth';
+import { useAuthStore } from '@src/store/authStore';
 
 const auth = useAuthStore();
 const emit = defineEmits(['set-company']);

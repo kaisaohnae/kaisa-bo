@@ -1,5 +1,4 @@
 import { apiConfig } from '@src/utils/apiConfig';
-import { formApi } from '@src/utils/formApi';
 
 class DictionaryService {
 	async getDictionaryList(json?:any) { // 사전 리스트

@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLoadingStore } from '../store/store.loading';
+import { useLoadingStore } from '@src/store/loadingStore';
 
 const loading = useLoadingStore();
 </script>

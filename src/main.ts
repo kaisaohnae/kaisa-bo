@@ -1,17 +1,17 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
-import router from './router/router';
+import router from '@src/router/router';
 
 import { globalCookiesConfig } from "vue3-cookies";
 
-import "./assets/css/reset.css";
-import "./assets/css/common.css";
+import "@src/assets/css/reset.css";
+import "@src/assets/css/common.css";
 
-import "./assets/css/tui-grid.css";
-import "./assets/css/tui-grid-datepicker.css";
-import "./assets/css/tui-grid-timepicker.css";
-import "./assets/css/tui-grid-editor.css";
+import "@src/assets/css/tui-grid.css";
+import "@src/assets/css/tui-grid-datepicker.css";
+import "@src/assets/css/tui-grid-timepicker.css";
+import "@src/assets/css/tui-grid-editor.css";
 
 const app = createApp(App);
 const pinia = createPinia();

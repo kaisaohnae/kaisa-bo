@@ -1,5 +1,4 @@
 import { apiConfig } from '@src/utils/apiConfig';
-import { formApi } from '@src/utils/formApi';
 
 class FtpService {
 	/**
@@ -9,7 +8,7 @@ class FtpService {
 	 * @returns
 	 */
 	async uploadList(formData:FormData) {
-		const res = await formApi('/file/uploadList', formData);
+		const res = await apiConfig('/file/uploadList', formData);
 		return res.data;
 	}
 }

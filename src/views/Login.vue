@@ -24,10 +24,10 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useCookies } from "vue3-cookies";
-import { useSettingStore } from '@src/store/store.setting';
+import { useSettingStore } from '@src/store/settingStore';
 import UserService from '@src/service/auth/UserService';
-import { useAuthStore } from '@src/store/store.auth';
-import { useAlertStore } from '@src/store/store.alert';
+import { useAuthStore } from '@src/store/authStore';
+import { useAlertStore } from '@src/store/alertStore';
 const alert = useAlertStore();
 
 const { cookies } = useCookies();

@@ -76,10 +76,10 @@
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue';
 import Grid from 'tui-grid';
-import DictionaryService from '@src/service/bs/DictionaryService';
+import DictionaryService from '@src/service/cr/DictionaryService';
 import SelectDate from '@src/components/SelectDate.vue';
 import SelectGroupDate from '@src/components/SelectGroupDate.vue';
-import { useAuthStore } from '@src/store/store.auth';
+import { useAuthStore } from '@src/store/authStore';
 import gridUtil from '@src/utils/gridUtil';
 
 const auth = useAuthStore();

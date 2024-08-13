@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import Header from '../views/layout/Header.vue';
 import Footer from '../views/layout/Footer.vue';
-import { useSettingStore } from '../store/store.setting';
+import { useSettingStore } from '@src/store/settingStore';
 
 const setting = useSettingStore();
 </script>

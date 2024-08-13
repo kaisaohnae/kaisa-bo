@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAlertStore } from '../store/store.alert';
+import { useAlertStore } from '@src/store/alertStore';
 
 const alert = useAlertStore();
 

@@ -1,6 +1,6 @@
 import axios, {AxiosInstance, AxiosError, AxiosResponse, AxiosRequestConfig} from 'axios';
-import { useLoadingStore } from '../store/store.loading';
-import { useAlertStore } from '../store/store.alert';
+import { useLoadingStore } from '@src/store/loadingStore';
+import { useAlertStore } from '@src/store/alertStore';
 
 
 let baseURL = import.meta.env.VITE_API_HOST;

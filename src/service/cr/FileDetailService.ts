@@ -1,5 +1,4 @@
 import { apiConfig } from '@src/utils/apiConfig';
-import { formApi } from '@src/utils/formApi';
 
 class FileDetailService {
 	async getFileDetailList(json?:any) { // 파일상세 리스트 [BS_FILE_DTL]
@@ -15,15 +14,15 @@ class FileDetailService {
 		return res.data;
 	}
 	async insertFileDetail(formData:FormData) { // 파일상세 등록 [BS_FILE_DTL]
-		const res = await formApi('/bo/cr/insertFileDetail', formData);
+		const res = await apiConfig('/bo/cr/insertFileDetail', formData);
 		return res.data;
 	}
 	async updateFileDetail(formData:FormData) { // 파일상세 수정 [BS_FILE_DTL]
-		const res = await formApi('/bo/cr/updateFileDetail', formData);
+		const res = await apiConfig('/bo/cr/updateFileDetail', formData);
 		return res.data;
 	}
 	async deleteFileDetail(formData:FormData) { // 파일상세 삭제 [BS_FILE_DTL]
-		const res = await formApi('/bo/cr/getFileDetailList', formData);
+		const res = await apiConfig('/bo/cr/getFileDetailList', formData);
 		return res.data;
 	}
 }

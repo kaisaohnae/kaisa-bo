@@ -52,8 +52,8 @@
 <script setup lang="ts">
 import { reactive, onUpdated } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@src/store/store.auth';
-import { useSettingStore } from '@src/store/store.setting';
+import { useAuthStore } from '@src/store/authStore';
+import { useSettingStore } from '@src/store/settingStore';
 import logoImgUrl from '@src/assets/img/common/kaisa.png';
 
 const auth = useAuthStore();

@@ -9,8 +9,8 @@
 <script setup lang="ts">
 import Loading from './components/Loading.vue';
 import Alert from './components/Alert.vue';
-import { useAlertStore } from './store/store.alert';
-import { useSettingStore } from './store/store.setting';
+import { useAlertStore } from './store/alertStore';
+import { useSettingStore } from './store/settingStore';
 
 const alert = useAlertStore();
 const setting = useSettingStore();

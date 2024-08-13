@@ -1,5 +1,4 @@
 import { apiConfig } from '@src/utils/apiConfig';
-import { formApi } from '@src/utils/formApi';
 
 class FileService {
 	async getFileList(json?:any) { // 파일 리스트 [BS_FILE]
@@ -15,15 +14,15 @@ class FileService {
 		return res.data;
 	}
 	async insertFile(formData:FormData) { // 파일 등록 [BS_FILE]
-		const res = await formApi('/bo/cr/insertFile', formData);
+		const res = await apiConfig('/bo/cr/insertFile', formData);
 		return res.data;
 	}
 	async updateFile(formData:FormData) { // 파일 수정 [BS_FILE]
-		const res = await formApi('/bo/cr/updateFile', formData);
+		const res = await apiConfig('/bo/cr/updateFile', formData);
 		return res.data;
 	}
 	async deleteFile(formData:FormData) { // 파일 삭제 [BS_FILE]
-		const res = await formApi('/bo/cr/getFileList', formData);
+		const res = await apiConfig('/bo/cr/getFileList', formData);
 		return res.data;
 	}
 }
