@@ -1,63 +1,37 @@
 import { defineStore } from 'pinia';
+import { useStorage } from '@vueuse/core';
 
 export const useAuthStore = defineStore('auth', {
-  state : () => ({ 
+  state: () => ({
     active: false,
-    menuList: JSON.parse(localStorage.getItem('menuList') || '[]'),
-    companyList: JSON.parse(localStorage.getItem('companyList') || '[]'),
-    codeList: JSON.parse(localStorage.getItem('codeList') || '{}'),
-    userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
-    count: 0,
+    userInfo: useStorage('userInfo', {} as any),
+    menuList: useStorage('menuList', [] as any[]),
+    companyList: useStorage('companyList', [] as any[]),
+    codeList: useStorage('codeList', {} as any),
   }),
-	actions: {
-    loginSuccess(info:any) {
-      if(info && info.token) {
-        const userInfo = {
-          id: info.id,
-          cmpId: info.cmpId,
-          cmpNm: info.cmpNm,
-          token: info.token,
-          nm: info.nm,
+  actions: {
+    async loginSuccess(data: any) {
+      try {
+        if (data && data.token && data.userInfo) {
+          this.userInfo = data.userInfo;
         }
-        localStorage.setItem('menuList', JSON.stringify(info.menuList) || '[]');
-        localStorage.setItem('companyList', JSON.stringify(info.companyList) || '[]');
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        this.userInfo = userInfo;
+        location.href = '/';
+      } catch (error) {
+        console.error('Login error:', error);
       }
-      let groupCodeArr:any = {};
-      for(let o of info.codeList) {
-        let codeArr:any = [];
-        for(let c of o.cdList) {
-          codeArr.push({ text: c.cdNm, value: c.cd, dataType: 'string'});
-        }
-        groupCodeArr[o.grpCd] = codeArr;
-      }
-      localStorage.setItem('codeList', JSON.stringify(groupCodeArr) || '{}');
-
-      this.count = 0;
-      
-			this.active = true;
-			this.menuList = info.menuList;
-			this.companyList = info.companyList;
-			this.codeList = info.codeList; // 이곳에 안담으면 아래 setTimeout을해도 문제가 생김...
-      
-      location.href = '/';
-		},
+    },
     loginFail() {
       this.removeSession();
-      this.count++;
     },
     removeSession() {
-      localStorage.removeItem('menuList');
-      localStorage.removeItem('companyList');
-      localStorage.removeItem('codeList');
-      localStorage.removeItem('userInfo');
-			this.active = false;
       this.userInfo = {};
+      this.menuList = [];
+      this.companyList = [];
+      this.codeList = {};
     },
-		logout() {
+    logout() {
       this.removeSession();
       location.href = '/';
-		},
-	}
+    },
+  },
 });
