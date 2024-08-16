@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         if (data && data.token && data.userInfo) {
           this.userInfo = data.userInfo;
+          this.menuList = data.menuList;
         }
         location.href = '/';
       } catch (error) {
