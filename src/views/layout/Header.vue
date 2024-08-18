@@ -4,7 +4,7 @@
     <div class="btnMenu" @click="toggleMenu()"><ul><li></li><li></li><li></li></ul></div>
     <ul class="userInfo">
       <li class="name">
-        <b><span class="icon user">&#xe809;</span> {{ auth.userInfo.id }} {{ auth.userInfo.nm }}님</b>
+        <b><span class="icon user">&#xe809;</span> {{ auth.userInfo.userId }} {{ auth.userInfo.userName }}님</b>
       </li>
       <li class="btn">
         <u v-on:click="auth.logout()" style="cursor:pointer;">로그아웃</u>
@@ -67,6 +67,7 @@ let sideMenu = reactive<any[]>([
   {path: 'mb', active: true, pathNm: '회원관리', menu: []},
   {path: 'dp', active: true, pathNm: '전시관리', menu: []},
 ]);
+/*
 const sessionMenu = <any[]>(JSON.parse(localStorage.getItem('menuList') || '[]'));
 
 for(let c of sideMenu) {
@@ -82,13 +83,13 @@ for(let c of sideMenu) {
       }
     }
   }
-}
+}*/
 const data = reactive({
   path: '',
   menuSearch: '',
   searchList: [] as any,
 });
-
+/*
 const menuSearchInput  = (e: any) => {
   let val = e?.target?.value;
   data.searchList = [];
@@ -104,7 +105,7 @@ const menuSearchInput  = (e: any) => {
       }
     }
   }
-}
+}*/
 
 const toggleFav = (menu:any) => {
   let isExists = false;

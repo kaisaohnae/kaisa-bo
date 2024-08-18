@@ -69,7 +69,7 @@ const axis = ref({
 }) as any;
 
 const setDashboard = () => {
-  MainService.getDashboard({}).then(
+  /*MainService.getDashboard({}).then(
     (res) => {
       data.yearSales = res.data.yearSales;
       data.orderStateCount = res.data.orderStateCount;
@@ -78,7 +78,7 @@ const setDashboard = () => {
     (err) => {
       console.log(err);
     },
-  );
+  );*/
 }
 onMounted(() => {
   setDashboard();

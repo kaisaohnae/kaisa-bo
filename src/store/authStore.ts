@@ -6,7 +6,6 @@ export const useAuthStore = defineStore('auth', {
     active: false,
     userInfo: useStorage('userInfo', {} as any),
     menuList: useStorage('menuList', [] as any[]),
-    companyList: useStorage('companyList', [] as any[]),
     codeList: useStorage('codeList', {} as any),
   }),
   actions: {
@@ -15,6 +14,7 @@ export const useAuthStore = defineStore('auth', {
         if (data && data.token && data.userInfo) {
           this.userInfo = data.userInfo;
           this.menuList = data.menuList;
+          this.codeList = data.codeList;
         }
         location.href = '/';
       } catch (error) {
@@ -27,7 +27,6 @@ export const useAuthStore = defineStore('auth', {
     removeSession() {
       this.userInfo = {};
       this.menuList = [];
-      this.companyList = [];
       this.codeList = {};
     },
     logout() {
