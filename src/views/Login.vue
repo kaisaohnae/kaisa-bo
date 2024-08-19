@@ -28,11 +28,13 @@ import { useSettingStore } from '@src/store/settingStore';
 import UserService from '@src/service/auth/UserService';
 import { useAuthStore } from '@src/store/authStore';
 import { useAlertStore } from '@src/store/alertStore';
+import { useRouter } from 'vue-router';
 const alert = useAlertStore();
 
 const { cookies } = useCookies();
 const setting = useSettingStore();
 const auth = useAuthStore();
+const router = useRouter();
 
 interface LoginInfo {
   userId: string;
@@ -57,7 +59,7 @@ const submitForm = () => {
     (res) => {
       if(res) {
         setting.setState();
-        auth.loginSuccess(res.data);
+        auth.loginSuccess(res.data, router);
       } else {
         auth.loginFail();
         alert.open({title: null, message: '회원정보와 일치하지 않습니다.' });

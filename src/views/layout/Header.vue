@@ -4,10 +4,10 @@
     <div class="btnMenu" @click="toggleMenu()"><ul><li></li><li></li><li></li></ul></div>
     <ul class="userInfo">
       <li class="name">
-        <b><span class="icon user">&#xe809;</span> {{ auth.userInfo.userId }} {{ auth.userInfo.userName }}님</b>
+        <b><span class="icon user">&#xe809;</span>{{ auth.userInfo.userName }}님</b>
       </li>
       <li class="btn">
-        <u v-on:click="auth.logout()" style="cursor:pointer;">로그아웃</u>
+        <u v-on:click="auth.logout(router)" style="cursor:pointer;">로그아웃</u>
       </li>
     </ul>
     <div class="tab">
@@ -20,10 +20,11 @@
       <span class="icon closeAll" @click="closeAll">&#xe0de;</span>
     </div>
   </div>
+
   <div id="side" v-bind:class="{menuOn : setting.menu.active}">
     <h1 @click="clickHome()"><img :src="logoImgUrl" alt="" /></h1>
     <div class="search">
-      <input v-model="data.menuSearch" @input="menuSearchInput" placeholder="메뉴 검색" />
+      <input v-model="data.searchKeyword" @input="menuSearch" placeholder="메뉴 검색" />
     </div>
     <div class="wrap">
       <div class="searchList" v-show="data.searchList.length > 0">
@@ -35,7 +36,7 @@
           </li>
         </ul>
       </div>
-      <div class="menu" v-for="(side, i) in sideMenu" :key="i" v-bind:class="{'on': side.active }" v-show="side.menu.length > 0 && data.searchList.length == 0">
+      <div class="menu" v-for="(side, i) in menuList" :key="i" v-bind:class="{'on': side.active }" v-show="side.menu.length > 0 && data.searchList.length == 0">
         <h2>{{ side.pathNm }}</h2>
         <ul>
           <li v-for="(menu, idx) in side.menu" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash == menu.url }">
@@ -50,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onUpdated } from 'vue';
+import { reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@src/store/authStore';
 import { useSettingStore } from '@src/store/settingStore';
@@ -59,53 +60,19 @@ import logoImgUrl from '@src/assets/img/common/kaisa.png';
 const auth = useAuthStore();
 const setting = useSettingStore();
 const router = useRouter();
-let sideMenu = reactive<any[]>([
-  {path: 'or', active: true, pathNm: '주문관리', menu: []},
-  {path: 'cr', active: true, pathNm: '기초관리', menu: []},
-  {path: 'cs', active: true, pathNm: '고객관리', menu: []},
-  {path: 'pr', active: true, pathNm: '상품관리', menu: []},
-  {path: 'mb', active: true, pathNm: '회원관리', menu: []},
-  {path: 'dp', active: true, pathNm: '전시관리', menu: []},
-]);
-/*
-const sessionMenu = <any[]>(JSON.parse(localStorage.getItem('menuList') || '[]'));
 
-for(let c of sideMenu) {
-  for(let s of sessionMenu) {
-    if(s.url.match('/'+ c.path + '/')) {
-      c.menu.push(s);
-    }
-  }
-  for(let m of c.menu) {
-    for(let f of setting.favList) {
-      if(m.menuNo == f.menuNo) {
-        m.fav = true;
-      }
-    }
-  }
-}*/
+const menuList = computed(() => auth.menuList);
+
 const data = reactive({
   path: '',
-  menuSearch: '',
+  searchKeyword: '',
   searchList: [] as any,
 });
-/*
-const menuSearchInput  = (e: any) => {
-  let val = e?.target?.value;
-  data.searchList = [];
-  if(val) {
-    for(let c of sideMenu) {
-      for(let m of c.menu) {
-        if(m.menuNm.match(val)) {
-          let str = m.menuNm;
-          str = str.replaceAll(val, '<u>' + val + '</u>');
-          m.menuHtml = str;
-          data.searchList.push(m);
-        }
-      }
-    }
-  }
-}*/
+
+const menuSearch = () => {
+
+}
+
 
 const toggleFav = (menu:any) => {
   let isExists = false;
@@ -162,16 +129,19 @@ const closeAll = (menu:any) => {
     setting.setState();
   }
 }
-// h2 @click="clickCategory(side)"
-const clickCategory = (side:any) => {
-  side.active = !side.active;
-}
+
 const toggleMenu = () => {
+  setting.menu.active = !setting.menu.active;
+  setting.setState();
 }
 const clickMenu = (menu:any) => {
+  setting.hash = menu.url;
+  setting.setState();
   router.push(menu.url);
 }
 const clickHome = () => {
+  setting.hash = '/main';
+  setting.setState();
   router.push('/main');
 }
 const clickFav = (fav:any, idx:number) => {
