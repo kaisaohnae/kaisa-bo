@@ -24,7 +24,7 @@ export interface UserType {
 export interface MenuType {
   menuGroupCode: string;
   active: boolean;
-  pathNm: string;
+  pathName: string;
   menu: any[];
 }
 
@@ -64,11 +64,11 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
     },
     setMenus(menus: any[]) {
       const baseMenus: MenuType[] = [
-        { menuGroupCode: 'or', active: true, pathNm: '주문관리', menu: [] },
-        { menuGroupCode: 'cr', active: true, pathNm: '기초관리', menu: [] },
-        { menuGroupCode: 'cs', active: true, pathNm: '고객관리', menu: [] },
-        { menuGroupCode: 'pd', active: true, pathNm: '상품관리', menu: [] },
-        { menuGroupCode: 'at', active: true, pathNm: '회원관리', menu: [] },
+        { menuGroupCode: 'or', active: true, pathName: '주문관리', menu: [] },
+        { menuGroupCode: 'cr', active: true, pathName: '기초관리', menu: [] },
+        { menuGroupCode: 'cs', active: true, pathName: '고객관리', menu: [] },
+        { menuGroupCode: 'pd', active: true, pathName: '상품관리', menu: [] },
+        { menuGroupCode: 'at', active: true, pathName: '회원관리', menu: [] },
       ];
       baseMenus.forEach(baseMenu => {
         baseMenu.menu = menus.filter(menu => menu.menuGroupCode === baseMenu.menuGroupCode);
