@@ -5,7 +5,7 @@ import { Router } from 'vue-router';
 
 export interface AuthType {
   active: boolean;
-  userInfo: UserType;
+  userInfo: RemovableRef<UserType>;
   menuList: RemovableRef<any[]>;
   codeList: any;
 }
