@@ -35,7 +35,7 @@ const routes: RouteRecordRaw[] = [
         meta: {title: 'calendar', auth: true,},
         component: () => import( '@src/views/common/Calendar.vue'),
       },
-      // 프로그램으로 자동생성
+      // 프로그램으로 자동생성 (xf274)
       /*{ path: '/at/auth', name: 'auth', meta: { title: '인증', auth: true }, component: () => import('@src/views/bs/Auth.vue'), },
       { path: '/at/company', name: 'company', meta: { title: '업체', auth: true }, component: () => import('@src/views/bs/Company.vue'), },
       { path: '/at/member', name: 'member', meta: { title: '회원', auth: true }, component: () => import('@src/views/bs/Member.vue'), },

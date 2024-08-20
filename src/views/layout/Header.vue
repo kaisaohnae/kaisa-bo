@@ -19,7 +19,7 @@
       <ul>
         <li v-bind:class="{ active: setting.hash == '/main' }"><span class="icon home" @click="clickHome()">&#xe819;</span></li>
         <template v-for="(fav, i) in setting.favList" :key="fav">
-          <li v-bind:class="{ active: setting.hash == fav.url }"><span class="name" @click="clickFav(fav, i)">{{ fav.menuNm }}</span> <span class="icon close" @click="toggleFav(fav)">&#xe042;</span></li>
+          <li v-bind:class="{ active: setting.hash == fav.url }"><span class="name" @click="clickFav(fav)">{{ fav.menuName }}</span> <span class="icon close" @click="toggleFav(fav)">&#xe042;</span></li>
         </template>
       </ul>
       <span class="icon closeAll" @click="closeAll">&#xe0de;</span>
@@ -33,19 +33,19 @@
     </div>
     <div class="wrap">
       <div class="searchList" v-show="data.searchList.length > 0">
-        <ul>
-          <li v-for="(menu, idx) in data.searchList" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash == menu.url }">
-            <span class="icon pre" v-html="menu.iconCode"></span>
+<!--        <ul>
+          <li v-for="(menu, idx) in data.searchList" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash === menu.path }">
+            <span class="icon pre" v-html="menu.icon"></span>
             <span class="name" v-html="menu.menuName"></span>
             <span class="icon fav" v-bind:class="{on : menu.fav}" @click="toggleFav(menu)">&#xe807;</span>
           </li>
-        </ul>
+        </ul>-->
       </div>
       <div class="menu" v-for="(o, i) in menuList" :key="i" v-bind:class="{'on': o.active }" v-show="o.menu.length > 0 && data.searchList.length === 0">
         <h2>{{ o.pathName }}</h2>
         <ul>
-          <li v-for="(menu, idx) in o.menu" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash == menu.url }">
-            <span class="icon pre" v-html="menu.iconCode"></span>
+          <li v-for="(menu, idx) in o.menu" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash === menu.path }">
+            <span class="icon pre" v-html="menu.icon"></span>
             <span class="name">{{ menu.menuName }}</span>
             <span class="icon fav" v-bind:class="{on : menu.fav}" @click="toggleFav(menu)">&#xe807;</span>
           </li>
@@ -65,7 +65,6 @@ import logoImgUrl from '@src/assets/img/common/kaisa.png';
 const auth = useAuthStore();
 const setting = useSettingStore();
 const router = useRouter();
-
 const menuList = computed(() => auth.menuList);
 
 const data = reactive({
@@ -73,8 +72,6 @@ const data = reactive({
   searchKeyword: '',
   searchList: [] as any,
 });
-
-// 메뉴 검색 기능
 const menuSearch = () => {
   const keyword = data.searchKeyword.trim().toLowerCase();
   if (keyword) {
@@ -87,51 +84,39 @@ const menuSearch = () => {
     data.searchList = [];
   }
 }
-
-// 즐겨찾기 토글 기능
 const toggleFav = (menu: any) => {
   const idx = setting.favList.findIndex((fav: any) => fav.menuId === menu.menuId);
-
-  if (idx !== -1) {
-    // 이미 즐겨찾기에 있으면 제거
+  if (idx !== -1) { // 이미 즐겨찾기에 있으면 제거
     setting.favList.splice(idx, 1);
   } else {
-    // 즐겨찾기에 없으면 추가
     setting.favList.push(menu);
   }
-
   setting.setState();
 }
-
 const closeAll = () => {
   if (confirm('즐겨찾기를 모두 지우시겠습니까?')) {
     setting.favList = [];
     setting.setState();
   }
 }
-
 const toggleMenu = () => {
   setting.menu.active = !setting.menu.active;
   setting.setState();
 }
-
 const clickMenu = (menu: any) => {
-  console.log(menu);
-  setting.hash = menu.url;
+  setting.hash = menu.path;
   setting.setState();
-  router.push(menu.url);
+  router.push(menu.path);
 }
-
 const clickHome = () => {
   setting.hash = '/main';
   setting.setState();
   router.push('/main');
 }
-
 const clickFav = (fav: any) => {
-  setting.hash = fav.url;
+  setting.hash = fav.path;
   setting.setState();
-  router.push(fav.url);
+  router.push(fav.path);
 }
 </script>
 
