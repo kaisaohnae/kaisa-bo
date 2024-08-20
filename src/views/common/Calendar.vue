@@ -93,10 +93,10 @@ const getFirstDay = () => {
   return new Date(calendar.date.getFullYear(), calendar.date.getMonth(), 1).getDay();
 }
 const getList = () => {
-  MainService.getCalendar({ year: calendar.year, month: calendar.month }).then(
+  MainService.calendar({ year: calendar.year, month: calendar.month }).then(
     (res) => {
-      // console.log(res.data);
-      let firstDay = getFirstDay();
+      console.log(res.data);
+      /*let firstDay = getFirstDay();
       calendar.dateArray = [];
       let array = [];
       for (let i = 1; i < 43; i++) {
@@ -123,7 +123,7 @@ const getList = () => {
           calendar.dateArray.push(array);
           array = [];
         }
-      }
+      }*/
 
     },
     (err) => {

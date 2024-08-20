@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
       },
       // 프로그램으로 만들지 않는...
       {
-        path: '/cr/calendar',
+        path: '/common/calendar',
         name: 'calendar',
         meta: {title: 'calendar', auth: true,},
         component: () => import( '@src/views/common/Calendar.vue'),

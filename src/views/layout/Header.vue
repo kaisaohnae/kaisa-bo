@@ -18,8 +18,8 @@
     <div class="tab">
       <ul>
         <li v-bind:class="{ active: setting.hash == '/main' }"><span class="icon home" @click="clickHome()">&#xe819;</span></li>
-        <template v-for="(fav, i) in setting.favList" :key="fav">
-          <li v-bind:class="{ active: setting.hash == fav.url }"><span class="name" @click="clickFav(fav)">{{ fav.menuName }}</span> <span class="icon close" @click="toggleFav(fav)">&#xe042;</span></li>
+        <template v-for="(fav) in setting.favList" :key="fav">
+          <li v-bind:class="{ active: setting.hash == fav.path }"><span class="name" @click="clickFav(fav)">{{ fav.menuName }}</span> <span class="icon close" @click="toggleFav(fav)">&#xe042;</span></li>
         </template>
       </ul>
       <span class="icon closeAll" @click="closeAll">&#xe0de;</span>
@@ -33,13 +33,13 @@
     </div>
     <div class="wrap">
       <div class="searchList" v-show="data.searchList.length > 0">
-<!--        <ul>
+        <ul>
           <li v-for="(menu, idx) in data.searchList" :key="idx" @click="clickMenu(menu)" v-bind:class="{ active: setting.hash === menu.path }">
             <span class="icon pre" v-html="menu.icon"></span>
             <span class="name" v-html="menu.menuName"></span>
             <span class="icon fav" v-bind:class="{on : menu.fav}" @click="toggleFav(menu)">&#xe807;</span>
           </li>
-        </ul>-->
+        </ul>
       </div>
       <div class="menu" v-for="(o, i) in menuList" :key="i" v-bind:class="{'on': o.active }" v-show="o.menu.length > 0 && data.searchList.length === 0">
         <h2>{{ o.pathName }}</h2>
@@ -153,20 +153,21 @@ const clickFav = (fav: any) => {
 #header.menuOn .btnMenu ul li:nth-child(3) {transform: rotate(45deg); width:20px; left:-4px; top:16px;}
 
 #side.menuOn {left:0;}
-#side {width:220px; box-shadow:0 0 3px 1px rgba(0,0,0,0.5); background:#333; border-right:1px solid #000; height:100%; position:fixed; left:-230px; top:0; z-index:200; white-space:nowrap;}
+#side {width:220px; box-shadow:0 0 3px 1px rgba(0,0,0,0.5); background:#222; border-right:1px solid #000; height:100%; position:fixed; left:-230px; top:0; z-index:200; white-space:nowrap;}
 #side h1 {width:100%; text-align:left; overflow:hidden; cursor:pointer;}
 #side h1 img {width:50%; margin:10px 0 -20px 0;}
 #side .search {padding:10px;}
-#side .search input {width:100%; background:#999; border:0; color:#000;}
+#side .search input {width:100%; background:#333; border:0; color:#000; padding: 0 15px;}
+#side .search input::placeholder {color:#777;}
 #side .wrap {width:100%; padding-bottom:10px; height:calc(100% - 135px); border-right:1px solid rgba(255,255,255,0.1); overflow:auto;}
 #side .menu {width:220px; height:40px; overflow:hidden;}
 #side .menu.on {height:auto;}
-#side .menu h2 {padding:0 20px; background:#222; color:#555; height:40px; line-height:40px;}
+#side .menu h2 {padding:0 20px; background:#222; color:#555; height:40px; line-height:40px; display:none;}
 #side ul {width:100%;}
-#side ul li {padding:0; color:#bbb; cursor:pointer; height:34px; line-height:34px; position:relative; overflow:hidden; background:rgba(0,0,0,0.3);}
-#side ul li span.pre {position:absolute; font-size:13px; opacity:0.5; left:10px; top:50%; margin-top:-12px;}
-#side ul li span.name {display:block; padding:0 40px; border-bottom:1px solid rgba(255,255,255,0.1); height:33px; line-height:31px;}
-#side ul li span.fav {position:absolute; right:0; width:35px; top:50%; margin-top:-14px; opacity:0.5;}
+#side ul li {padding:0; color:#bbb; cursor:pointer; height:45px; line-height:45px; position:relative; overflow:hidden;}
+#side ul li span.pre {position:absolute; font-size:13px; left:15px; top: 10px; opacity: 0.5;}
+#side ul li span.name {display:block; padding:0 45px; border-bottom:1px dashed #2e2e2e; height:45px; line-height:45px;}
+#side ul li span.fav {position:absolute; right:0; width:45px; height: 45px; top:0; line-height:45px; opacity: 0.5;}
 #side ul li span.fav.on {opacity:1; color:rgb(229, 255, 0);}
 #side ul li.active {color:#FF9933;}
 </style>

@@ -8,6 +8,7 @@ export interface AuthType {
   userInfo: RemovableRef<UserType>;
   menuList: RemovableRef<any[]>;
   codeList: any;
+  token: RemovableRef<string>;
 }
 
 export interface UserType {
@@ -40,12 +41,14 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
     userInfo: useStorage('userInfo', {} as UserType),
     codeList: useStorage('codeList', {} as any),
     menuList: useStorage('menuList', [] as any[]),
+    token: useStorage('token', '' as string),
   }),
   actions: {
     async loginSuccess(data: any, router: Router) {
       if (data && data.token && data.userInfo) {
         this.userInfo = data.userInfo;
         this.codeList = data.codeList;
+        this.token = data.token;
         this.setMenus(data.menuList);
       }
       router.push('/main');
@@ -57,6 +60,7 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
       this.userInfo = {} as UserType;
       this.menuList = [];
       this.codeList = {};
+      this.token = '';
     },
     logout(router: Router) {
       this.removeSession();

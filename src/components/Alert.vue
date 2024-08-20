@@ -14,27 +14,27 @@
 
 <script setup lang="ts">
 import { useAlertStore } from '@src/store/alertStore';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const props = defineProps<{
+  info: Info;
+}>();
 
 const alert = useAlertStore();
 
 interface Info {
   title: string;
   message: string;
-}
-defineProps({
-  info: {
-    type: Object,
-    required: true,
-    validator: (value) => {
-      const info = value as Info;
-      return true;
-    },
-  },
-});
-const closeAlert = () => {
-  alert.close();
+  redirect?: string;
 }
 
+const closeAlert = () => {
+  alert.close();
+  if(props.info.redirect) {
+    router.push(props.info.redirect);
+  }
+}
 </script>
 <style>
 #alertWrap {width:100%; z-index:9000; height:100%; background:rgba(0,0,0,0.3); position:fixed; left:0; top:0;}

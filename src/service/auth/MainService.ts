@@ -5,8 +5,8 @@ class MainService {
 		const res = await apiConfig('/main/getDashboard', json ? json : {});
 		return res.data;
 	}
-	async getCalendar(json?:any) {
-		const res = await apiConfig('/main/getCalendar', json ? json : {});
+	async calendar(json?:any) {
+		const res = await apiConfig('/common/calendar', json ? json : {});
 		return res.data;
 	}
 }
