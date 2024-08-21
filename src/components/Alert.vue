@@ -15,7 +15,10 @@
 <script setup lang="ts">
 import { useAlertStore } from '@src/store/alertStore';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@src/store/authStore';
+
 const router = useRouter();
+const auth = useAuthStore();
 
 const props = defineProps<{
   info: Info;
@@ -31,8 +34,8 @@ interface Info {
 
 const closeAlert = () => {
   alert.close();
-  if(props.info.redirect) {
-    router.push(props.info.redirect);
+  if(props.info?.redirect === '/login') {
+    auth.logout(router);
   }
 }
 </script>

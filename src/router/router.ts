@@ -90,34 +90,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = `kaisa ${to.meta.title}`;
-  /*
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    const codeList = JSON.parse(localStorage.getItem('codeList') || '{}');
-    const menuList = JSON.parse(localStorage.getItem('menuList') || '[]');
 
-    const isUser = (
-           userInfo.cmpId
-        && codeList
-        && settings
-        && menuList.length > 0
-        && userInfo.token
-    );
-
-    let isRole = (to.path == '/' || to.path == '/main') ? true : false;
-    if(!isRole) {
-        for(let o of menuList) {
-            if(to.path === o.url) {
-                isRole = true;
-                break;
-            }
-        }
-    }*/
   const authStore = useAuthStore();
   const userInfo = authStore.userInfo;
 
-  if (!userInfo.companyId && to.path !== '/login') {
+  if (!userInfo?.companyId && to.path !== '/login') {
     next('/login');
-  } else if (to.meta.auth && !userInfo.companyId) {
+  } else if (to.meta.auth && !userInfo?.companyId) {
     next('/403');
   } else if (to.path === '/') {
     next('/main');
