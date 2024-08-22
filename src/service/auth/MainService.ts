@@ -1,8 +1,8 @@
 import { apiConfig } from '@src/utils/apiConfig';
 
 class MainService {
-	async getDashboard(json?:any) {
-		const res = await apiConfig('/main/getDashboard', json ? json : {});
+	async dashboard(json?:any) {
+		const res = await apiConfig('/common/dashboard', json ? json : {});
 		return res.data;
 	}
 	async calendar(json?:any) {

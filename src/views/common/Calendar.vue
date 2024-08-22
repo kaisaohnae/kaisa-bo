@@ -13,8 +13,12 @@
       <div class="calendar-day" v-for="(o, index) in calendar.days" :key="index">
         <div class="day-number">{{ o.day > 0 ? o.day : '' }}</div>
         <div v-if="o.reservations.length > 0">
-          <div v-for="(rsv, rsvIndex) in o.reservations" :key="rsvIndex">
-            <span>{{ rsv.productNo }}: {{ rsv.orderStateCode }}</span>
+          <div v-for="(rsv, rsvIndex) in o.reservations" :key="rsvIndex" class="product">
+            <p :class="getClassForOrderState(rsv.orderStateCode)">
+              <span class="productName">{{ rsv.productName }}</span>
+              <span class="price">{{ rsv.price }}</span>
+              <span class="orderStateCode">{{ rsv.orderStateCode }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -34,11 +38,26 @@ const calendar = reactive({
   days: [] as Array<{
     day: number,
     reservations: Array<{
+      price: number,
       productNo: number,
+      productName: string,
       orderStateCode: string,
     }>,
   }>,
 });
+
+const getClassForOrderState = (orderStateCode: string) => {
+  switch (orderStateCode) {
+    case '결제완료':
+      return 'paid';
+    case '예약중':
+      return 'pending';
+    case '예약가능':
+      return 'available';
+    default:
+      return 'default';
+  }
+};
 
 const move = (str: string) => {
   if (str === 'prev') {
@@ -69,7 +88,9 @@ const getList = () => {
         daysArray.push({
           day: i,
           reservations: dayData ? dayData.reservations.map((r: any) => ({
+            price: r.price,
             productNo: r.productNo,
+            productName: r.productName,
             orderStateCode: r.orderStateCode,
           })) : [],
         });
@@ -89,12 +110,18 @@ onMounted(() => {
 <style scoped>
 #calendar {width: 100%;}
 #calendar .calendar-controls {width: 100%; text-align: center}
-#calendar h2 {font-size:20px; line-height: 40px; color:#333; padding:25px 0 25px 0;}
+#calendar h2 {font-size:20px; line-height: 40px; color:#333; padding:23px 0 23px 0;}
 #calendar h2 .calendar-nav {display:inline-block; padding: 0 15px;}
 #calendar h2 .icon {font-size:30px; color:#333; vertical-align: middle; cursor: pointer; padding: 5px; width: 40px;}
 #calendar .calendar-grid {display:grid; grid-template-columns:repeat(7, 1fr); gap:0;}
-#calendar .calendar-day {outline: 1px solid #eee; padding:10px;}
+#calendar .calendar-day {border: 1px solid #f2f2f2; padding:8px 10px; box-sizing: border-box}
 #calendar .day-number {text-align: right; color: #000; padding-bottom: 10px;}
 #calendar .calendar-day:nth-child(7n) .day-number {color: #6172c9;}
-#calendar .calendar-day:nth-child(7n+1) .day-number {color: #ff0000;}
+#calendar .calendar-day:nth-child(7n) .day-number {color: #6172c9;}
+#calendar span {display:inline-block; padding-right:3px;}
+#calendar .product {font-size:11px; text-align: right;}
+#calendar .product p {display:inline-block; width: 100px; padding-left:8px; letter-spacing: -0.5px; text-align: left; margin-bottom:5px; border-radius: 3px; color:#000;}
+#calendar .product p.paid {background: #f2f2f2; color:#999;}
+#calendar .product p.pending {background: #ffe9e9; color:#000;}
+#calendar .product p.available {background: #f1ffe2;}
 </style>
