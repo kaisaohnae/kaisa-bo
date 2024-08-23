@@ -171,7 +171,8 @@ const save = () => {
   if (confirm('등록 ' + count[0] + '건, 수정 ' + count[1] + '건, 삭제 ' + count[2] + '건을 정말 저장하시겠습니까?')) {
     DictionaryService.setDictionaryList(saveList).then(
       (res) => {
-        location.reload();
+        console.log(res);
+        // location.reload();
       },
       (err) => {
         console.log(err);
