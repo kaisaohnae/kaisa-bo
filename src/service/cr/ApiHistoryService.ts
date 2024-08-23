@@ -2,15 +2,15 @@ import { apiConfig } from '@src/utils/apiConfig';
 
 class ApiHistoryService {
 	async getApiHistoryList(json?:any) { // API이력 리스트 [BS_API_HIST]
-		const res = await apiConfig('/bo/cr/getApiHistoryList', json ? json : {});
+		const res = await apiConfig('/bo/cr/getApiHistoryList', json || {});
 		return res.data;
 	}
 	async getApiHistory(json?:any) { // API이력 상세조회 [BS_API_HIST]
-		const res = await apiConfig('/bo/cr/getApiHistory', json ? json : {});
+		const res = await apiConfig('/bo/cr/getApiHistory', json || {});
 		return res.data;
 	}
 	async setApiHistoryList(json?:any) { // API이력 리스트등록 [BS_API_HIST]
-		const res = await apiConfig('/bo/cr/setApiHistoryList', json ? json : {});
+		const res = await apiConfig('/bo/cr/setApiHistoryList', json || {});
 		return res.data;
 	}
 	async insertApiHistory(formData:FormData) { // API이력 등록 [BS_API_HIST]

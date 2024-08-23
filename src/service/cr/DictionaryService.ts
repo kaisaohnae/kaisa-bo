@@ -2,11 +2,11 @@ import { apiConfig } from '@src/utils/apiConfig';
 
 class DictionaryService {
 	async getDictionaryList(json?:any) { // 사전 리스트
-		const res = await apiConfig('/bo/cr/getDictionaryList', json ? json : {});
+		const res = await apiConfig('/cr/getDictionaryList', json || {});
 		return res.data;
 	}
 	async setDictionaryList(json?:any) { // 사전 리스트등록
-		const res = await apiConfig('/bo/cr/setDictionaryList', json ? json : {});
+		const res = await apiConfig('/cr/setDictionaryList', json || {});
 		return res.data;
 	}
 }

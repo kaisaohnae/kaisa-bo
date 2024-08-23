@@ -2,15 +2,15 @@ import { apiConfig } from '@src/utils/apiConfig';
 
 class FileDetailService {
 	async getFileDetailList(json?:any) { // 파일상세 리스트 [BS_FILE_DTL]
-		const res = await apiConfig('/bo/cr/getFileDetailList', json ? json : {});
+		const res = await apiConfig('/bo/cr/getFileDetailList', json || {});
 		return res.data;
 	}
 	async getFileDetail(json?:any) { // 파일상세 상세조회 [BS_FILE_DTL]
-		const res = await apiConfig('/bo/cr/getFileDetail', json ? json : {});
+		const res = await apiConfig('/bo/cr/getFileDetail', json || {});
 		return res.data;
 	}
 	async setFileDetailList(json?:any) { // 파일상세 리스트등록 [BS_FILE_DTL]
-		const res = await apiConfig('/bo/cr/setFileDetailList', json ? json : {});
+		const res = await apiConfig('/bo/cr/setFileDetailList', json || {});
 		return res.data;
 	}
 	async insertFileDetail(formData:FormData) { // 파일상세 등록 [BS_FILE_DTL]

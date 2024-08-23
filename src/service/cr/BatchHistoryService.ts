@@ -2,15 +2,15 @@ import { apiConfig } from '@src/utils/apiConfig';
 
 class BatchHistoryService {
 	async getBatchHistoryList(json?:any) { // 배치이력 리스트 [BS_BTCH_HIST]
-		const res = await apiConfig('/bo/cr/getBatchHistoryList', json ? json : {});
+		const res = await apiConfig('/bo/cr/getBatchHistoryList', json || {});
 		return res.data;
 	}
 	async getBatchHistory(json?:any) { // 배치이력 상세조회 [BS_BTCH_HIST]
-		const res = await apiConfig('/bo/cr/getBatchHistory', json ? json : {});
+		const res = await apiConfig('/bo/cr/getBatchHistory', json || {});
 		return res.data;
 	}
 	async setBatchHistoryList(json?:any) { // 배치이력 리스트등록 [BS_BTCH_HIST]
-		const res = await apiConfig('/bo/cr/setBatchHistoryList', json ? json : {});
+		const res = await apiConfig('/bo/cr/setBatchHistoryList', json || {});
 		return res.data;
 	}
 	async insertBatchHistory(formData:FormData) { // 배치이력 등록 [BS_BTCH_HIST]
