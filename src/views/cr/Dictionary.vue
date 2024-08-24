@@ -117,7 +117,7 @@ const add = () => {
 }
 const del = () => {
   let selectRow = data.grid.getFocusedCell();
-  if (!selectRow.rowKey) {
+  if (selectRow.rowKey === null) {
     alert('행을 먼저 선택해주세요.');
     return;
   }
@@ -188,18 +188,28 @@ onMounted(() => {
       {
         header: '약어',
         name: 'abb',
-        editor: 'text',
         sortable: true,
+        editor: 'text',
+        disabled: false,
         align: 'left',
         validation: {dataType: 'string', required: true}
       },
       {header: '한국어', name: 'korean', hidden: false, editor: 'text', validation: {dataType: 'string', required: true}},
       {header: '영어', name: 'english', editor: 'text', validation: {dataType: 'string', required: true}},
       {header: '설명', name: 'memo', editor: 'text', validation: {dataType: 'string', required: false}},
-      {header: '등록자', name: 'creator', editor: 'text', hidden: true, defaultValue: '', width: 150},
+      {header: '등록자', name: 'creator', hidden: false, defaultValue: '', width: 150},
       {header: '등록일시', name: 'createDt', disabled: true},
-      {header: '수정자', name: 'updater', editor: 'text', hidden: true, defaultValue: '', width: 150},
-      {header: '수정일시', name: 'updateDt', disabled: true},
+      {header: '수정자', name: 'updater', hidden: false, defaultValue: '', width: 150, editor: 'text', disabled: true},
+      {header: '수정일시', name: 'updateDt',
+        editor: {
+          type: 'datePicker',
+          options: {
+            format: 'yyyy-MM-dd HH:mm',
+            timepicker: true,
+            language: 'ko',
+          }
+        }
+      },
     ],
     scrollX: true,
     scrollY: true,
@@ -217,6 +227,13 @@ onMounted(() => {
   data.grid.on('click', (e: any) => {
     if (e.columnName === 'abb') {
       //console.log('click')
+    }
+  });
+  data.grid.on('beforeChange', (e: any) => {
+    const { rowKey, columnName, value } = e;
+    const originalValue = data.grid.getValue(rowKey, columnName);
+    if (columnName === 'abb' && originalValue) {
+      e.stop(); // 수정이 불가능하게 막음
     }
   });
   getList();
