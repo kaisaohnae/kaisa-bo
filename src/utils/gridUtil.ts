@@ -2,70 +2,15 @@ import Editor from '@toast-ui/editor';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import Prism from 'prismjs';
 import XLSX from 'xlsx-js-style';
-import dateUtil from './dateUtil';
+import dateUtil from '@src/utils/dateUtil';
 
 /**
  * 행추가
- * @param grid 
- * @param n 
+ * @param grid
+ * @param n
  */
-const add = (grid: any, n: number) => {
-	let obj = {} as any;
-	for (let o of grid.getColumns()) {
-		obj[o.name] = o.defaultValue ? o.defaultValue : null;
-	}
-	grid.appendRow(obj, { at: n });
-}
-
-/**
- * 저장
- * @param o 
- * @param required 
- * @returns 
- */
-const save = (grid: any, required: any) => {
-	grid.blur();
-	let saveList = [];
-	let count = [0, 0, 0];
-	for (let o of grid.getModifiedRows().createdRows as any) {
-		o.crud = 'C';
-		if (!valid(o, required)) {
-			return false;
-		}
-		saveList.push(o);
-		count[0]++;
-	}
-	for (let o of grid.getModifiedRows().updatedRows as any) {
-		o.crud = 'U';
-		if (!valid(o, required)) {
-			return false;
-		}
-		saveList.push(o);
-		count[1]++;
-	}
-	for (let o of grid.getModifiedRows().deletedRows as any) {
-		o.crud = 'D';
-		saveList.push(o);
-		count[2]++;
-	}
-	if (count[0] == 0 && count[1] == 0 && count[2] == 0) {
-		alert('변경사항이 없습니다.');
-		return false;
-	}
-	if (confirm('등록 ' + count[0] + '건, 수정 ' + count[1] + '건, 삭제 ' + count[2] + '건을 정말 저장하시겠습니까?')) {
-		return saveList;
-	};
-}
-const valid = (o: any, required: []) => {
-	for (let c in o) {
-		for (let r of required) {
-			if (c == r && !o[c] && o[c] != 0) {
-				alert(c + ' 필수값이 없습니다.');
-				return false;
-			}
-		}
-	}
-	return true;
+const add = (grid: any) => {
+	grid.appendRow({}, {at: 0});
 }
 
 /**
@@ -73,7 +18,7 @@ const valid = (o: any, required: []) => {
  */
 const del = (grid: any) => {
 	let selectRow = grid.getFocusedCell();
-	if (selectRow.rowKey == null || selectRow.rowKey == undefined) {
+	if (selectRow.rowKey === null) {
 		alert('행을 먼저 선택해주세요.');
 		return;
 	}
@@ -190,7 +135,88 @@ const excelExport = (grid: any, gridName: string) => {
 	XLSX.utils.book_append_sheet(workBook, workSheet, gridName);
 	XLSX.writeFile(workBook, gridName + '_' + dateUtil.format(new Date(), dateUtil.DATE_FORMAT_NUMBER) + '.xlsx');
 }
+
+const valid = (o: any, required: any) => {
+	for (let c in o) {
+		for (let r of required) {
+			if (c == r && !o[c]) {
+				alert('필수값이 없습니다.');
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+const save = (grid: any, required: any) => {
+	grid.blur();
+	let saveList = [];
+	let count = [0, 0, 0];
+	for (let o of grid.getModifiedRows().createdRows as any) {
+		o.crud = 'C';
+		if (!valid(o, required)) {
+			return [];
+		}
+		saveList.push(o);
+		count[0]++;
+	}
+	for (let o of grid.getModifiedRows().updatedRows as any) {
+		o.crud = 'U';
+		if (!valid(o, required)) {
+			return [];
+		}
+		saveList.push(o);
+		count[1]++;
+	}
+	for (let o of grid.getModifiedRows().deletedRows as any) {
+		o.crud = 'D';
+		saveList.push(o);
+		count[2]++;
+	}
+	if (count[0] == 0 && count[1] == 0 && count[2] == 0) {
+		alert('변경사항이 없습니다.');
+		return [];
+	}
+	if (confirm('등록 ' + count[0] + '건, 수정 ' + count[1] + '건, 삭제 ' + count[2] + '건을 정말 저장하시겠습니까?')) {
+		return saveList;
+	}
+}
+const defaultProps = {
+	scrollX: true,
+	scrollY: true,
+	minBodyHeight: 400,
+	bodyHeight: 560,
+	columnOptions: {
+		resizable: true,
+	},
+	minRowHeight: 40,
+	rowHeight: 40,
+	header: {
+		height: 40,
+	},
+}
+const datePickerProps = {
+	editor: {
+		type: 'datePicker',
+		options: {
+			format: 'yyyy-MM-dd HH:mm',
+			timepicker: true,
+			language: 'ko',
+		}
+	}
+}
+const searchProps = {
+	creator: '',
+	createDt: '',
+	updater: '',
+	updateDt: '',
+	startUpdateDt: '', // dateUtil.format(new Date().setMonth(new Date().getMonth() - 1), 'YYYY-MM-DD'),
+	endUpdateDt: '', // dateUtil.format(new Date(),'YYYY-MM-DD'),
+}
 export default {
+	defaultProps,
+	datePickerProps,
+	searchProps,
 	add,
 	save,
 	reload,
