@@ -3,25 +3,21 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from '@src/router/router';
 
-import { globalCookiesConfig } from "vue3-cookies";
+import { globalCookiesConfig } from 'vue3-cookies';
 
-import "@src/assets/css/reset.css";
-import "@src/assets/css/common.css";
-
-import "@src/assets/css/tui-grid.css";
-import "@src/assets/css/tui-grid-datepicker.css";
-import "@src/assets/css/tui-grid-timepicker.css";
-import "@src/assets/css/tui-grid-editor.css";
+import 'handsontable/dist/handsontable.full.min.css';
+import '@src/assets/css/reset.css';
+import '@src/assets/css/common.css';
 
 const app = createApp(App);
 const pinia = createPinia();
 
 globalCookiesConfig({
-  expireTimes: "30d",
-  path: "/",
-  domain: "",
+  expireTimes: '30d',
+  path: '/',
+  domain: '',
   secure: true,
-  sameSite: "None",
+  sameSite: 'None',
 });
 
 // console.log(import.meta.env);

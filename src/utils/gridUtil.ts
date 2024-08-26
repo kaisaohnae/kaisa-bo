@@ -1,8 +1,11 @@
-import Editor from '@toast-ui/editor';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import Prism from 'prismjs';
 import XLSX from 'xlsx-js-style';
 import dateUtil from '@src/utils/dateUtil';
+import moment from 'moment';
+import 'moment/locale/ko'; // 한글 로케일을 불러옵니다
+
+moment.locale('ko'); // Moment.js의 로케일을 한글로 설정합니다
 
 /**
  * 행추가
@@ -27,32 +30,6 @@ const del = (grid: any) => {
 	}
 }
 /**
- * 에디터
- * @param obj 
- * @returns 
- */
-const createEditor = (obj: any) => {
-	return new Editor({
-		el: document.querySelector(obj.name) as HTMLElement,
-		previewStyle: 'vertical',
-		// previewStyle: 'tab',
-		toolbarItems: [
-			['heading', 'bold', 'italic', 'strike'],
-			['hr', 'quote'],
-			['ul', 'ol', 'task', 'indent', 'outdent'],
-			['table', 'link'], // 'image'
-			['code', 'codeblock']
-		],
-		initialEditType: 'markdown', // 'wysiwyg',
-		height: '400px',
-		previewHighlight: true,
-		plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
-		initialValue: obj.cnts || ' ', // null 시 에러발생 
-	});
-	// edit.editor.removeHook("addImageBlobHook"); // blob:http 임시 url 을 전달을 못한다...;;
-}
-
-/**
  * 새로고침
  */
 const reload = () => {
@@ -60,19 +37,19 @@ const reload = () => {
 }
 
 /**
- * 
+ *
  */
 const makeFileData = (obj: any) => {
 	let form = new FormData();
 	form.append('fileNo', obj.props.data.fileNo + '');
 	form.append('path', obj.name);
-	// 추가파일 
+	// 추가파일
 	let addCount = 0;
 	for (let file of obj.data.addFileList) {
 		form.append('addFileList', file);
 		addCount++;
 	}
-	// 삭제파일 
+	// 삭제파일
 	let delCount = 0;
 	if (obj.props.data.fileList) {
 		for (let file of obj.props.data.fileList) {
@@ -94,7 +71,7 @@ const excelExport = (grid: any, gridName: string) => {
 		return;
 	};
 	const workBook = XLSX.utils.book_new();
-	// data 만들기 
+	// data 만들기
 	let dataList = [];
 	for (const o of grid.getData()) {
 		let obj = {} as any;
@@ -131,7 +108,7 @@ const excelExport = (grid: any, gridName: string) => {
 		idx++;
 	}
 	workSheet['!cols'] = wscols;
-	// 그리기 
+	// 그리기
 	XLSX.utils.book_append_sheet(workBook, workSheet, gridName);
 	XLSX.writeFile(workBook, gridName + '_' + dateUtil.format(new Date(), dateUtil.DATE_FORMAT_NUMBER) + '.xlsx');
 }
@@ -181,29 +158,29 @@ const save = (grid: any, required: any) => {
 		return saveList;
 	}
 }
+
+// 사용자 정의 날짜 포맷 함수
+const datePickerConfig = {
+	language: 'ko', // 한글 로케일
+	monthNames: moment.months(), // 한글로 월 이름 설정
+	monthShortNames: moment.monthsShort(), // 한글로 축약된 월 이름 설정
+	dayNames: moment.weekdays(), // 한글로 요일 이름 설정
+	dayShortNames: moment.weekdaysShort(), // 한글로 축약된 요일 이름 설정
+};
+
 const defaultProps = {
-	scrollX: true,
-	scrollY: true,
-	minBodyHeight: 400,
-	bodyHeight: 560,
-	columnOptions: {
-		resizable: true,
-	},
-	minRowHeight: 40,
-	rowHeight: 40,
-	header: {
-		height: 40,
-	},
-}
-const datePickerProps = {
-	editor: {
-		type: 'datePicker',
-		options: {
-			format: 'yyyy-MM-dd HH:mm',
-			timepicker: true,
-			language: 'ko',
-		}
-	}
+	/*hiddenColumns: {
+    columns: [0], // 0부터 시작하는 인덱스에서 0번째 컬럼('mode')을 숨깁니다.
+    indicators: false, // 숨겨진 컬럼에 대한 표시를 비활성화합니다.
+  },*/
+	columnSorting: true, // Enable sorting
+	manualColumnResize: true, // 비활성화
+	comments: true,
+	autoWrapRow: true,
+	autoWrapCol: true,
+	height: 'auto',
+	width: '100%',
+	licenseKey: 'non-commercial-and-evaluation',
 }
 const searchProps = {
 	creator: '',
@@ -215,13 +192,12 @@ const searchProps = {
 }
 export default {
 	defaultProps,
-	datePickerProps,
 	searchProps,
+	datePickerConfig,
 	add,
 	save,
 	reload,
 	del,
-	createEditor,
 	makeFileData,
 	excelExport,
 };

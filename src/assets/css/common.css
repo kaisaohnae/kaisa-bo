@@ -6,8 +6,6 @@
 #contents::-webkit-scrollbar {display:none;}
 
 .pointer {cursor:pointer;}
-.red .tui-grid-cell-content {color:#ff0000; font-weight: bold;}
-.blue .tui-grid-cell-content {color:#1100ff; font-weight: bold;}
 .underline {text-decoration:underline;}
 .show {display:block;}
 .hide {display:none;}

@@ -36,14 +36,7 @@
           <tr>
             <th>등록일</th>
             <td colspan="2">
-              <SelectDate
-                :name="['createDt']"
-                :format="'YYYY-MM-DD'"
-                :date="[search.createDt]"
-                @set-start-date="(o:any) => {
-										search.createDt = o.date;
-									}"
-              />
+
             </td>
           </tr>
           <tr>
@@ -63,9 +56,9 @@
 				</span>
         <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
         <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
-        <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-        <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span>
-        </button>
+<!--        <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
+        <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>-->
+
         <div class="totalCount">총 {{ data.totalCount }}건</div>
       </div>
     </form>
@@ -74,11 +67,7 @@
 </template>
 <script setup lang="ts">
 import {onMounted, ref, reactive} from 'vue';
-import Grid from 'tui-grid';
 import DictionaryService from '@src/service/cr/DictionaryService';
-import SelectDate from '@src/components/SelectDate.vue';
-import SelectGroupDate from '@src/components/SelectGroupDate.vue';
-import gridUtil from '@src/utils/gridUtil';
 
 const search = reactive({
   abb: '',

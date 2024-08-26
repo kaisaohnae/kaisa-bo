@@ -1,7 +1,7 @@
 @charset "utf-8";
 @font-face {
 	font-family: 'SpoqaHanSansNeo-Regular';
-  	font-weight: normal;
+	font-weight: normal;
 	src: url('../font/spoqa/SpoqaHanSansNeo-Regular.eot');
 	src: url('../font/spoqa/SpoqaHanSansNeo-Regular.eot?#iefix') format('embedded-opentype'),
 		 url('../font/spoqa/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
@@ -156,4 +156,5 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
  {
 	transition:0.2s all linear;
 }
-.tui-grid-container div {transition: none;}
+.grid-container {transition: none; width: 100%; background:#f3f3f3;}
+

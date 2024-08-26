@@ -82,16 +82,6 @@ try {
 
 ###
 ``` 
-npm install --save @toast-ui/editor
-npm install --save @toast-ui/editor-plugin-code-syntax-highlight
-npm install --save-dev @types/prismjs
-
-- 유틸페이지에 추가
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import Prism from 'prismjs';
-...
-plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
-
 - 상세페이지에 추가
 import 'prismjs/themes/prism.css';
 import "prismjs/components/prism-java";
