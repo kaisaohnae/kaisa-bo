@@ -57,13 +57,11 @@ import { onMounted, reactive } from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import DictionaryService from '@src/service/cr/DictionaryService';
-import moment from 'moment';
-import 'moment/locale/ko'; // 한글 로케일을 불러옵니다
-
-moment.locale('ko'); // Moment.js의 로케일을 한글로 설정합니다
 
 const search = reactive({
   abb: '',
+  updater: '',
+  creator: '',
 });
 
 const data = reactive({
