@@ -1,5 +1,3 @@
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import Prism from 'prismjs';
 import XLSX from 'xlsx-js-style';
 import dateUtil from '@src/utils/dateUtil';
 import moment from 'moment';
@@ -12,21 +10,20 @@ moment.locale('ko'); // Moment.js의 로케일을 한글로 설정합니다
  * @param grid
  * @param n
  */
-const add = (grid: any) => {
-	grid.appendRow({}, {at: 0});
+const add = ({newRow, list, grid}: any) => {
+	list.unshift(newRow);
+	grid.loadData(list);
+	return list;
 }
 
 /**
  * 삭제
  */
-const del = (grid: any) => {
-	let selectRow = grid.getFocusedCell();
-	if (selectRow.rowKey === null) {
-		alert('행을 먼저 선택해주세요.');
-		return;
-	}
-	if (confirm('선택한 행을 정말 삭제하시겠습니까?')) {
-		grid.removeRow(selectRow.rowKey);
+const del = ({selectedRow, grid}: any) => {
+	if(selectedRow !== null) {
+		const rowElement = grid.getCell(selectedRow, 0)?.parentNode as any;
+		rowElement.classList?.add('row-deleted');
+		grid.setDataAtRowProp(selectedRow, 'mode', 'D');
 	}
 }
 /**
@@ -159,13 +156,64 @@ const save = (grid: any, required: any) => {
 	}
 }
 
-// 사용자 정의 날짜 포맷 함수
 const datePickerConfig = {
-	language: 'ko', // 한글 로케일
-	monthNames: moment.months(), // 한글로 월 이름 설정
-	monthShortNames: moment.monthsShort(), // 한글로 축약된 월 이름 설정
-	dayNames: moment.weekdays(), // 한글로 요일 이름 설정
-	dayShortNames: moment.weekdaysShort(), // 한글로 축약된 요일 이름 설정
+	dateFormat: 'YYYY-MM-DD HH:mm',
+	correctFormat: true,
+	datePickerConfig : {
+		i18n: {
+			previousMonth: '이전 달',
+			nextMonth: '다음 달',
+			months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+			weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+		},
+		format: 'YYYY-MM-DD HH:mm',
+		firstDay: 1,  // 월요일을 주의 첫 번째 날로 설정
+		/*disableDayFn: function(date: any) { // 특정 날짜를 비활성화하려면 여기에 로직을 추가
+			return date.getDay() === 0 || date.getDay() === 6; // 주말을 비활성화 예시
+		},
+		minDate: today // 오늘 이후의 날짜만 선택 가능
+		*/
+	}
+};
+
+const cellsEvent = ({row, col, gridProps, self}: any) => {
+	const cellProperties: any = {};
+	if (col === 1) { // 'abb' 컬럼의 경우
+		const rowData = self.instance.getDataAtRowProp(row, 'mode');
+		const mode = rowData || '';
+		if (mode === 'C') {
+			cellProperties.readOnly = false;
+		}
+	}
+	return cellProperties;
+}
+
+const afterChangeEvent = ({changes, source, gridProps, grid, self}: any) => {
+	if (source === 'edit' || source === 'CopyPaste.paste' || source === 'Autofill.fill') {
+		changes?.forEach(([row, prop, oldValue, newValue]: any) => {
+			if(prop === 'mode') {
+				return;
+			}
+			if (gridProps.required.includes(prop) && !newValue) {
+				self.setCellMeta(row, self.propToCol(prop), 'className', 'cell-required');
+			} else {
+				self.removeCellMeta(row, self.propToCol(prop), 'className'); // 값이 입력된 경우 빨간색을 제거
+			}
+			if (oldValue !== newValue) {
+				const rowData = grid.getSourceDataAtRow(row) as any;
+				if (rowData.mode !== 'C') {
+					grid.setDataAtRowProp(row, 'mode', 'U'); // 기존 행에서 수정된 경우 'U'로 설정
+
+					const rowElement = grid.getCell(row, 0)?.parentNode as any;
+					rowElement.classList?.add('row-updated');
+				}
+			} else {
+				const rowElement = grid.getCell(row, 0)?.parentNode as any;
+				rowElement.classList?.remove('row-updated');
+			}
+		});
+	}
 };
 
 const defaultProps = {
@@ -194,6 +242,8 @@ export default {
 	defaultProps,
 	searchProps,
 	datePickerConfig,
+	afterChangeEvent,
+	cellsEvent,
 	add,
 	save,
 	reload,

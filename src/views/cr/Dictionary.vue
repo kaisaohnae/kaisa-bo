@@ -44,16 +44,15 @@
       </span>
       <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
-<!--      <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>-->
-
+      <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
+      <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
     </div>
   </form>
   <div id="grid" class="grid-container"></div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import DictionaryService from '@src/service/cr/DictionaryService';
@@ -72,12 +71,14 @@ const data = reactive({
   audit: false,
 });
 
+let selectedRow = null as any;
+
 // 목록 조회
 const getList = () => {
   data.totalCount = 0;
   DictionaryService.getDictionaryList(search).then(
     (res: any) => {
-      data.list = res.data?.list.map((item: any) => ({ ...item, mode: 'R' })); // 초기 상태는 'R'
+      data.list = res.data?.list; // 초기 상태는 'R'
       data.totalCount = res.data?.totalCount;
       if (data.grid) {
         data.grid.updateSettings({
@@ -104,33 +105,20 @@ const add = () => {
     updateDt: '',
     mode: 'C'  // 새로 추가된 행의 상태를 'C'로 설정합니다.
   };
-  data.list.unshift(newRow);
-  data.grid.loadData(data.list);
+  data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
 
 // 행 삭제 기능
 const del = () => {
-  const selectedRanges = data.grid.getSelected();
-  // 선택된 범위가 없는 경우
-  if (!selectedRanges?.length) {
-    return;
-  }
-  selectedRanges.forEach((range: any) => { // 선택된 셀 범위에 대해 처리
-    for (let row = range.from.row; row <= range.to.row; row++) {
-      const rowData = data.grid.getSourceDataAtRow(row) as any;
-      if (rowData.mode === 'C') {
-        // 선택된 행 삭제
-        data.grid.alter('remove_row', row);
-      } else {
-        // 기존 데이터는 'D'로 마크
-        data.grid.setDataAtRowProp(row, 'mode', 'D');
-      }
-    }
-  });
+  gridUtil.del({selectedRow, grid: data.grid});
 };
 
 // 수정된 데이터를 저장하는 기능
 const save = () => {
+  /*if (confirm('등록 ' + count[0] + '건, 수정 ' + count[1] + '건, 삭제 ' + count[2] + '건을 정말 저장하시겠습니까?')) {
+    return saveList;
+  }
+
   const saveList = data.list.filter((item: any) => item.mode !== 'R'); // 변경된 데이터만 필터링
   if (saveList.length > 0) {
     DictionaryService.setDictionaryList(saveList).then(
@@ -141,58 +129,46 @@ const save = () => {
         console.error(err);
       },
     );
-  }
+  }*/
 };
 
 onMounted(() => {
   const container = document.querySelector('#grid');
+  const gridProps = {
+    unique : ['abb'],
+    required: ['abb', 'korean', 'english'],
+  }
   data.grid = new Handsontable(container as any, {
     data: data.list,
     rowHeaders: true, // 행번호
     colHeaders: ['mode', '약어', '한국어', '영어', '설명', '등록자', '등록일시', '수정자', '수정일시'],
+    hiddenColumns: {
+      columns: [], // 0 숨기려는 열의 인덱스 배열
+      indicators: true // 숨김 열을 표시할지 여부
+    },
     columns: [
       { data: 'mode', type: 'text', readOnly: true, hidden: true },
-      { data: 'abb', type: 'text' }, // className: 'tr',
+      { data: 'abb', type: 'text', readOnly: true}, // className: 'tr',
       { data: 'korean', type: 'text', width: 150 },
       { data: 'english', type: 'text', width: 150 },
       { data: 'memo', type: 'text', width: 150 },
       { data: 'creator', type: 'text', readOnly: true, editor: false },
-      { data: 'createDt', type: 'date', readOnly: false, dateFormat: 'YYYY-MM-DD hh:mm', correctFormat: true, },
+      { data: 'createDt', type: 'date', width: 150, readOnly: false, ...gridUtil.datePickerConfig },
       { data: 'updater', type: 'text', readOnly: true },
-      { data: 'updateDt', type: 'text', readOnly: true },
+      { data: 'updateDt', type: 'text', width: 150, readOnly: true },
     ],
     cells: function(row, col) {
-      const cellProperties: any = {};
-      if (col === 0) { // 'abb' 컬럼의 경우
-        const rowData = this.instance.getDataAtRowProp(row, 'mode');
-        const mode = rowData || ''; // rowData가 null일 경우 빈 객체를 반환하여 에러 방지
-        if (mode !== 'C') {
-          cellProperties.readOnly = true;
-        }
-      }
-      return cellProperties;
+      return gridUtil.cellsEvent({row, col, gridProps, self: this });
     },
     afterChange(changes, source) {
-      // source => loadData, updateData
-      if (source === 'edit' || source === 'CopyPaste.paste' || source === 'Autofill.fill') {
-        changes?.forEach(([row, prop, oldValue, newValue]) => {
-          if (oldValue !== newValue) {
-            const rowData = data.grid.getSourceDataAtRow(row) as any;
-            if (rowData.mode !== 'C') {
-              data.grid.setDataAtRowProp(row, 'mode', 'U'); // 기존 행에서 수정된 경우 'U'로 설정
-            }
-          }
-        });
-      }
+      gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this });
+    },
+    afterSelectionEnd: function(row, col, row2, col2) {
+      selectedRow = row;
     },
     ...gridUtil.defaultProps,
   });
   getList();
-});
-// Remove aria-hidden attribute if it's being added to textarea
-const textareas = document.querySelectorAll('textarea');
-textareas.forEach(textarea => {
-  textarea.removeAttribute('aria-hidden');
 });
 </script>
 

@@ -142,6 +142,7 @@ button:active {opacity:0.5;}
 .tc {text-align:center;}
 .tr {text-align:right;}
 
+
 div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button,iframe,textarea,label,fieldset,form {
     box-sizing:border-box;
 }
@@ -152,9 +153,13 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
 #contents,
 #tab,
 .btnMenu,
-.btnMenu li
- {
+.btnMenu li {
 	transition:0.2s all linear;
 }
+
 .grid-container {transition: none; width: 100%; background:#f3f3f3;}
+.handsontable tr.row-deleted td {background-color: #ffeeee !important; color: #ff0000; text-decoration: line-through;}
+.handsontable tr.row-updated td {background-color: #fff5e3;}
+
+.handsontable td.cell-required {background-color: #ffeaea;}
 

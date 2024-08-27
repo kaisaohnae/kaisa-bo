@@ -2,7 +2,6 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from '@src/router/router';
-
 import { globalCookiesConfig } from 'vue3-cookies';
 
 import 'handsontable/dist/handsontable.full.min.css';
@@ -20,7 +19,11 @@ globalCookiesConfig({
   sameSite: 'None',
 });
 
-// console.log(import.meta.env);
+const textareas = document.querySelectorAll('textarea');
+textareas.forEach(textarea => {
+  textarea.removeAttribute('aria-hidden');
+});
+
 app.use(router);
 app.use(pinia);
 app.mount('#app');

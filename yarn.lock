@@ -180,6 +180,11 @@
   resolved "https://registry.yarnpkg.com/@handsontable/pikaday/-/pikaday-1.0.0.tgz#21a432b727791d48f4f231094d999b1a4b5f6f5f"
   integrity sha512-1VN6N38t5/DcjJ7y7XUYrDx1LuzvvzlrFdBdMG90Qo1xc8+LXHqbWbsTEm5Ec5gXTEbDEO53vUT35R+2COmOyg==
 
+"@handsontable/vue3@^14.5.0":
+  version "14.5.0"
+  resolved "https://registry.yarnpkg.com/@handsontable/vue3/-/vue3-14.5.0.tgz#88ae9ddf2f896831e71c3e3a8e7cd31290639ee7"
+  integrity sha512-0CZMD4bV2lD4Qc/NIZfedboZNXCa4vJdFdZqvge6Lc2JSrJm6QldCDZvwBWXpD5IBEIRY1S1LRlmoNJThQbuEA==
+
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.14.tgz#d78e481a039f7566ecc9660b4ea7fe6b1fec442b"
