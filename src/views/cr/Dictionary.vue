@@ -140,16 +140,12 @@ onMounted(() => {
   }
   data.grid = new Handsontable(container as any, {
     data: data.list,
-    rowHeaders: true, // 행번호
     colHeaders: ['mode', '약어', '한국어', '영어', '설명', '등록자', '등록일시', '수정자', '수정일시'],
-    hiddenColumns: {
-      columns: [], // 0 숨기려는 열의 인덱스 배열
-      indicators: true // 숨김 열을 표시할지 여부
-    },
+    hiddenColumns: gridUtil.hiddenColumns([]),
     columns: [
       { data: 'mode', type: 'text', readOnly: true, hidden: true },
       { data: 'abb', type: 'text', readOnly: true}, // className: 'tr',
-      { data: 'korean', type: 'text', width: 150 },
+      { data: 'korean', type: 'text', width: 150, readOnly: true},
       { data: 'english', type: 'text', width: 150 },
       { data: 'memo', type: 'text', width: 150 },
       { data: 'creator', type: 'text', readOnly: true, editor: false },
@@ -158,7 +154,7 @@ onMounted(() => {
       { data: 'updateDt', type: 'text', width: 150, readOnly: true },
     ],
     cells: function(row, col) {
-      return gridUtil.cellsEvent({row, col, gridProps, self: this });
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1, 2] });
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this });

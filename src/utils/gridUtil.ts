@@ -5,6 +5,56 @@ import 'moment/locale/ko'; // 한글 로케일을 불러옵니다
 
 moment.locale('ko'); // Moment.js의 로케일을 한글로 설정합니다
 
+const defaultProps = {
+	/*hiddenColumns: {
+    columns: [0], // 0부터 시작하는 인덱스에서 0번째 컬럼('mode')을 숨깁니다.
+    indicators: false, // 숨겨진 컬럼에 대한 표시를 비활성화합니다.
+  },*/
+	rowHeaders: true, // 행번호
+	columnSorting: false,
+	manualColumnResize: true,
+	comments: true,
+	autoWrapRow: true,
+	autoWrapCol: true,
+	height: 'auto',
+	width: '100%',
+	licenseKey: 'non-commercial-and-evaluation',
+}
+const datePickerConfig = {
+	dateFormat: 'YYYY-MM-DD HH:mm',
+	correctFormat: true,
+	datePickerConfig : {
+		i18n: {
+			previousMonth: '이전 달',
+			nextMonth: '다음 달',
+			months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+			weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+		},
+		format: 'YYYY-MM-DD HH:mm',
+		firstDay: 1,  // 월요일을 주의 첫 번째 날로 설정
+		/*disableDayFn: function(date: any) { // 특정 날짜를 비활성화하려면 여기에 로직을 추가
+			return date.getDay() === 0 || date.getDay() === 6; // 주말을 비활성화 예시
+		},
+		minDate: today // 오늘 이후의 날짜만 선택 가능
+		*/
+	}
+};
+const searchProps = {
+	creator: '',
+	createDt: '',
+	updater: '',
+	updateDt: '',
+	startUpdateDt: '', // dateUtil.format(new Date().setMonth(new Date().getMonth() - 1), 'YYYY-MM-DD'),
+	endUpdateDt: '', // dateUtil.format(new Date(),'YYYY-MM-DD'),
+}
+const hiddenColumns = (arr: any) => {
+	return {
+		columns: arr, // 0 숨기려는 열의 인덱스 배열
+		indicators: true // 숨김 열을 표시할지 여부
+	}
+}
+
 /**
  * 행추가
  * @param grid
@@ -156,35 +206,32 @@ const save = (grid: any, required: any) => {
 	}
 }
 
-const datePickerConfig = {
-	dateFormat: 'YYYY-MM-DD HH:mm',
-	correctFormat: true,
-	datePickerConfig : {
-		i18n: {
-			previousMonth: '이전 달',
-			nextMonth: '다음 달',
-			months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-			weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-			weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
-		},
-		format: 'YYYY-MM-DD HH:mm',
-		firstDay: 1,  // 월요일을 주의 첫 번째 날로 설정
-		/*disableDayFn: function(date: any) { // 특정 날짜를 비활성화하려면 여기에 로직을 추가
-			return date.getDay() === 0 || date.getDay() === 6; // 주말을 비활성화 예시
-		},
-		minDate: today // 오늘 이후의 날짜만 선택 가능
-		*/
-	}
-};
-
-const cellsEvent = ({row, col, gridProps, self}: any) => {
+const cellsEvent = ({row, col, grid, self, pk}: any) => {
 	const cellProperties: any = {};
-	if (col === 1) { // 'abb' 컬럼의 경우
-		const rowData = self.instance.getDataAtRowProp(row, 'mode');
-		const mode = rowData || '';
-		if (mode === 'C') {
-			cellProperties.readOnly = false;
+	const rowData = self.instance.getDataAtRowProp(row, 'mode');
+	const mode = rowData || '';
+
+
+	if(col === 0) {
+		switch (mode){
+			case 'C':
+
+				const rowElement = grid.getCell(row, 0)?.parentNode as any;
+				rowElement.classList?.add('row-updated');
+
+				break;
 		}
+	}
+
+	if (mode === 'C') {
+		pk.forEach(arr => {
+			console.log(col, arr);
+			if (col === arr) { // 'abb' 컬럼의 경우
+				console.log(cellProperties);
+				cellProperties.readOnly = false;
+				return cellProperties;
+			}
+		});
 	}
 	return cellProperties;
 }
@@ -216,32 +263,11 @@ const afterChangeEvent = ({changes, source, gridProps, grid, self}: any) => {
 	}
 };
 
-const defaultProps = {
-	/*hiddenColumns: {
-    columns: [0], // 0부터 시작하는 인덱스에서 0번째 컬럼('mode')을 숨깁니다.
-    indicators: false, // 숨겨진 컬럼에 대한 표시를 비활성화합니다.
-  },*/
-	columnSorting: true, // Enable sorting
-	manualColumnResize: true, // 비활성화
-	comments: true,
-	autoWrapRow: true,
-	autoWrapCol: true,
-	height: 'auto',
-	width: '100%',
-	licenseKey: 'non-commercial-and-evaluation',
-}
-const searchProps = {
-	creator: '',
-	createDt: '',
-	updater: '',
-	updateDt: '',
-	startUpdateDt: '', // dateUtil.format(new Date().setMonth(new Date().getMonth() - 1), 'YYYY-MM-DD'),
-	endUpdateDt: '', // dateUtil.format(new Date(),'YYYY-MM-DD'),
-}
 export default {
 	defaultProps,
 	searchProps,
 	datePickerConfig,
+	hiddenColumns,
 	afterChangeEvent,
 	cellsEvent,
 	add,
