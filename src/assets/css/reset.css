@@ -116,7 +116,6 @@ button.button3 {background:#354d86; color:#fff; border:1px solid #354d86;}
 button.button4 {background:#e80012; color:#fff; border:1px solid #e80012;}
 
 button.audit {position:absolute; right:5px; top:0; padding:0 5px; line-height:19px; height:20px; font-size:11px; background:#eee; border:1px solid #ddd; color:#555; text-shadow:none; border-radius:0 0 5px 5px;}
-
 button.white {background:#fff; color:#666; border:1px solid #ccc; text-shadow:none;}
 button.gray {background:#666; color:#fff; border:1px solid #666; text-shadow:none;}
 button.excel {background:#107c41; color:#fff; border:1px solid #107c41;}
@@ -124,6 +123,9 @@ button.large {padding:0 20px; height:40px; line-height:40px;}
 button.big {padding:0 25px; height:50px; line-height:50px;}
 button.small {padding:0 10px; height:25px; line-height:24px;}
 button.gray.on {background:#3e22bc; color:#fff; border:1px solid #3e22bc;}
+
+.pika-lendar button {background:none; text-shadow:none;}
+
 
 input,
 select,
@@ -158,8 +160,8 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
 }
 
 .grid-container {transition: none; width: 100%; background:#f3f3f3;}
+.handsontable tr.row-created,
+.handsontable tr.row-updated td {background-color: #fff5e3 !important; color: #000;}
 .handsontable tr.row-deleted td {background-color: #ffeeee !important; color: #ff0000; text-decoration: line-through;}
-.handsontable tr.row-updated td {background-color: #fff5e3;}
-
-.handsontable td.cell-required {background-color: #ffeaea;}
+.handsontable tr.row-updated td.cell-required {background-color: #ffcccc !important;}
 

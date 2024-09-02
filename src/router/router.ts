@@ -60,6 +60,16 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   const userInfo = authStore.userInfo;
 
+  /*if (!to.query.ch) {
+    const defaultCh = '1'; // 기본 ch 값 설정
+    next({
+      path: to.path,
+      query: { ...to.query, ch: defaultCh }, // 기존 쿼리 파라미터를 유지하면서 ch 추가
+    });
+  } else {
+    next();
+  }*/
+
   if (!userInfo?.companyId && to.path !== '/login') {
     next('/login');
   } else if (to.meta.auth && !userInfo?.companyId) {

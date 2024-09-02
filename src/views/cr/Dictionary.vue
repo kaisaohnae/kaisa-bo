@@ -45,7 +45,7 @@
       <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
     </div>
   </form>
@@ -55,6 +55,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
+import excelUtil from '@src/utils/excelUtil';
 import DictionaryService from '@src/service/cr/DictionaryService';
 
 const search = reactive({
@@ -62,7 +63,6 @@ const search = reactive({
   updater: '',
   creator: '',
 });
-
 const data = reactive({
   required: ['abb', 'korean', 'english'],
   grid: {} as Handsontable,
@@ -70,15 +70,17 @@ const data = reactive({
   list: [] as any,
   audit: false,
 });
-
+const gridProps = {
+  unique : ['abb'],
+  required: ['abb', 'korean', 'english'],
+}
 let selectedRow = null as any;
 
-// 목록 조회
 const getList = () => {
   data.totalCount = 0;
   DictionaryService.getDictionaryList(search).then(
     (res: any) => {
-      data.list = res.data?.list; // 초기 상태는 'R'
+      data.list = res.data?.list;
       data.totalCount = res.data?.totalCount;
       if (data.grid) {
         data.grid.updateSettings({
@@ -91,70 +93,48 @@ const getList = () => {
     },
   );
 };
-
-// 행 추가 기능
 const add = () => {
   const newRow = {
+    ...gridUtil.commonAddColumns,
     abb: '',
     korean: '',
     english: '',
     memo: '',
-    creator: '',
-    createDt: '',
-    updater: '',
-    updateDt: '',
-    mode: 'C'  // 새로 추가된 행의 상태를 'C'로 설정합니다.
+    ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
-
-// 행 삭제 기능
 const del = () => {
   gridUtil.del({selectedRow, grid: data.grid});
 };
 
 // 수정된 데이터를 저장하는 기능
 const save = () => {
-  /*if (confirm('등록 ' + count[0] + '건, 수정 ' + count[1] + '건, 삭제 ' + count[2] + '건을 정말 저장하시겠습니까?')) {
-    return saveList;
+  const saveList = gridUtil.valid({list: data.list, required: gridProps.required});
+  if(!saveList) {
+    return;
   }
-
-  const saveList = data.list.filter((item: any) => item.mode !== 'R'); // 변경된 데이터만 필터링
-  if (saveList.length > 0) {
-    DictionaryService.setDictionaryList(saveList).then(
-      () => {
-        getList(); // 저장 후 목록 갱신
-      },
-      (err) => {
-        console.error(err);
-      },
-    );
-  }*/
+  DictionaryService.setDictionaryList(saveList).then(() => {
+    getList(); // 저장 후 목록 갱신
+  });
 };
-
 onMounted(() => {
+  // console.log(route.query.ch);
   const container = document.querySelector('#grid');
-  const gridProps = {
-    unique : ['abb'],
-    required: ['abb', 'korean', 'english'],
-  }
   data.grid = new Handsontable(container as any, {
     data: data.list,
     colHeaders: ['mode', '약어', '한국어', '영어', '설명', '등록자', '등록일시', '수정자', '수정일시'],
-    hiddenColumns: gridUtil.hiddenColumns([]),
+    hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
-      { data: 'mode', type: 'text', readOnly: true, hidden: true },
-      { data: 'abb', type: 'text', readOnly: true}, // className: 'tr',
-      { data: 'korean', type: 'text', width: 150, readOnly: true},
+      ...gridUtil.commonColumns,
+      { data: 'abb', type: 'text', readOnly: true},
+      { data: 'korean', type: 'text', width: 150},
       { data: 'english', type: 'text', width: 150 },
-      { data: 'memo', type: 'text', width: 150 },
-      { data: 'creator', type: 'text', readOnly: true, editor: false },
-      { data: 'createDt', type: 'date', width: 150, readOnly: false, ...gridUtil.datePickerConfig },
-      { data: 'updater', type: 'text', readOnly: true },
-      { data: 'updateDt', type: 'text', width: 150, readOnly: true },
+      { data: 'memo', type: 'text', width: 200 },
+      ...gridUtil.auditColumns,
     ],
     cells: function(row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1, 2] });
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1] });
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this });
