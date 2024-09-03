@@ -13,11 +13,9 @@ export const DAY_FORMAT = "YYYY-MM-DD";
 const isValid = (date: Date) => {
   return date && dayjs(date).isValid();
 };
-
 const format = (date: any, format = DATE_FORMAT) => {
   return date && dayjs(date).isValid() && dayjs(date).format(format);
 };
-
 const add = (date: Date, addDate: number, type: ManipulateType, format = DATE_FORMAT) => {
   let value: any;
   if (isValid(date)) {
@@ -26,7 +24,12 @@ const add = (date: Date, addDate: number, type: ManipulateType, format = DATE_FO
   }
   return value;
 };
-
+const getToday = (format = DATE_FORMAT) => {
+  return dayjs().format(format);
+};
+const getDay = (format = DAY_FORMAT) => {
+  return dayjs().format(format);
+};
 /**
  * 해당월의 마지막 일자 반환한다.
  * @param {*} date
@@ -36,21 +39,14 @@ const getMonthLastDay = (date: any) => {
   return date && dayjs(date).isValid() && dayjs(date).daysInMonth();
 };
 
-/**
- * 현재 날짜 반환.
- * @param {*} format
- * @returns string
- */
-const getToday = (format = DATE_FORMAT) => {
-  return dayjs().format(format);
-};
-
 export default {
   format,
   isValid,
   add,
-  getMonthLastDay,
   getToday,
-  DATE_FORMAT,
+  getDay,
+  getMonthLastDay,
   DATE_FORMAT_NUMBER,
+  DATE_FORMAT,
+  DAY_FORMAT,
 };

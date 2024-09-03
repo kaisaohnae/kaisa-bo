@@ -1,8 +1,3 @@
-import moment from 'moment';
-import 'moment/locale/ko'; // 한글 로케일을 불러옵니다
-
-moment.locale('ko'); // Moment.js의 로케일을 한글로 설정합니다
-
 /**
  * 속성
  */
@@ -54,7 +49,7 @@ const commonColumns = [
 ];
 const auditColumns = [
 	{ data: 'creator', type: 'text', width: 100, readOnly: true, editor: false },
-	{ data: 'createDt', type: 'text', width: 170, readOnly: true, editor: false }, // type: 'date', ...datePickerConfig
+	{ data: 'createDt', type: 'text', width: 170, type: 'date', ...datePickerConfig }, // type: 'date', ...datePickerConfig
 	{ data: 'updater', type: 'text', width: 100, readOnly: true, editor: false },
 	{ data: 'updateDt', type: 'text', width: 170, readOnly: true, editor: false },
 ];

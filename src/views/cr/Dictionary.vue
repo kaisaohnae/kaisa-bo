@@ -19,12 +19,24 @@
         <tr>
           <th>수정기간</th>
           <td colspan="2">
+            <SelectGroupDate
+              :name="['startUpdateDt', 'endUpdateDt']"
+              :format="'yyyy-MM-dd'"
+              :date="[search.startUpdateDt, search.endUpdateDt]"
+              @set-start-date="(o) => { search.startUpdateDt = o.date; }"
+              @set-end-date="(o) => { search.endUpdateDt = o.date; }"
+            />
           </td>
         </tr>
         <tr>
           <th>등록일</th>
           <td colspan="2">
-
+            <SelectDate
+              :name="['createDt']"
+              :format="'yyyy-MM-dd'"
+              :date="[search.createDt]"
+              @set-start-date="(o) => { search.createDt = o.date; }"
+            />
           </td>
         </tr>
         <tr>
@@ -57,11 +69,17 @@ import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import excelUtil from '@src/utils/excelUtil';
 import DictionaryService from '@src/service/cr/DictionaryService';
+import dateUtil from "@src/utils/dateUtil";
+import SelectDate from "@src/components/SelectDate.vue";
+import SelectGroupDate from "@src/components/SelectGroupDate.vue";
 
 const search = reactive({
   abb: '',
   updater: '',
   creator: '',
+  startUpdateDt: dateUtil.getToday(),
+  endUpdateDt: dateUtil.getToday(),
+  createDt: dateUtil.getToday(),
 });
 const data = reactive({
   required: ['abb', 'korean', 'english'],
@@ -119,7 +137,6 @@ const save = () => {
   });
 };
 onMounted(() => {
-  // console.log(route.query.ch);
   const container = document.querySelector('#grid');
   data.grid = new Handsontable(container as any, {
     data: data.list,
