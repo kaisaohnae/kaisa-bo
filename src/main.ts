@@ -1,8 +1,8 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import App from './App.vue';
+import {createApp} from 'vue';
+import {createPinia} from 'pinia';
+import App from '@src/App.vue';
 import router from '@src/router/router';
-import { globalCookiesConfig } from 'vue3-cookies';
+import {globalCookiesConfig} from 'vue3-cookies';
 
 import 'handsontable/dist/handsontable.full.min.css';
 import '@src/assets/css/reset.css';

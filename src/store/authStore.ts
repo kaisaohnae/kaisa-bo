@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import { useStorage, RemovableRef } from '@vueuse/core';
-import { Router } from 'vue-router';
+import {defineStore} from 'pinia';
+import {useStorage, RemovableRef} from '@vueuse/core';
+import {Router} from 'vue-router';
 
 
 export interface AuthType {
@@ -68,11 +68,11 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
     },
     setMenus(menus: any[]) {
       const baseMenus: MenuType[] = [
-        { menuGroupCode: 'or', active: true, pathName: '주문관리', menu: [] },
-        { menuGroupCode: 'cr', active: true, pathName: '기초관리', menu: [] },
-        { menuGroupCode: 'cs', active: true, pathName: '고객관리', menu: [] },
-        { menuGroupCode: 'pd', active: true, pathName: '상품관리', menu: [] },
-        { menuGroupCode: 'at', active: true, pathName: '회원관리', menu: [] },
+        {menuGroupCode: 'or', active: true, pathName: '주문관리', menu: []},
+        {menuGroupCode: 'cr', active: true, pathName: '기초관리', menu: []},
+        {menuGroupCode: 'cs', active: true, pathName: '고객관리', menu: []},
+        {menuGroupCode: 'pd', active: true, pathName: '상품관리', menu: []},
+        {menuGroupCode: 'at', active: true, pathName: '회원관리', menu: []},
       ];
       baseMenus.forEach(baseMenu => {
         baseMenu.menu = menus.filter(menu => menu.menuGroupCode === baseMenu.menuGroupCode);

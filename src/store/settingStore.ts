@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
-import { useCookies } from "vue3-cookies";
+import {defineStore} from 'pinia';
+import {useCookies} from "vue3-cookies";
 
-const { cookies } = useCookies();
+const {cookies} = useCookies();
 
 const settings = cookies.get('settings');
 // const hash = location.hash.replace("#", '');

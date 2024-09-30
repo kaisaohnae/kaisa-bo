@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAlertStore } from '@src/store/alertStore';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@src/store/authStore';
+import {useAlertStore} from '@src/store/alertStore';
+import {useRouter} from 'vue-router';
+import {useAuthStore} from '@src/store/authStore';
 
 const router = useRouter();
 const auth = useAuthStore();
@@ -34,14 +34,42 @@ interface Info {
 
 const closeAlert = () => {
   alert.close();
-  if(props.info?.redirect === '/login') {
+  if (props.info?.redirect === '/login') {
     auth.logout(router);
   }
 }
 </script>
 <style>
-#alertWrap {width:100%; z-index:9000; height:100%; background:rgba(0,0,0,0.3); position:fixed; left:0; top:0;}
-#alert {position:fixed; z-index:9001; padding:20px 30px; width:70%; left:15%; top:30%; border-radius:5px; box-shadow:0 0 5px rgba(0,0,0,0.3); background:#fff; color:#000; text-align:center; overflow:hidden;}
-#alert p {padding:20px;}
-#alert.green {background-color:#9ef0c0;}
+#alertWrap {
+  width: 100%;
+  z-index: 9000;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+#alert {
+  position: fixed;
+  z-index: 9001;
+  padding: 20px 30px;
+  width: 70%;
+  left: 15%;
+  top: 30%;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  color: #000;
+  text-align: center;
+  overflow: hidden;
+}
+
+#alert p {
+  padding: 20px;
+}
+
+#alert.green {
+  background-color: #9ef0c0;
+}
 </style>

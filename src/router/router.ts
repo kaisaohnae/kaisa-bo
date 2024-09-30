@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw} from 'vue-router';
 import Home from '@src/views/Home.vue';
-import { useAuthStore } from '@src/store/authStore'; // 경로 확인
+import {useAuthStore} from '@src/store/authStore'; // 경로 확인
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,30 +20,30 @@ const routes: RouteRecordRaw[] = [
     component: Home,
     children: [
       // 프로그램으로 만들지 않는...
-      { path: '/main', name: 'main', meta: {}, component: () => import('@src/views/main/Main.vue'), },
-      { path: '/common/calendar', name: 'calendar', meta: {title: 'calendar', auth: true,}, component: () => import( '@src/views/common/Calendar.vue'), },
-      { path: '/cr/dictionary', name: 'dictionary', meta: { title: '사전', auth: true }, component: () => import('@src/views/cr/Dictionary.vue'), },
-      { path: '/cr/code', name: 'code', meta: { title: '코드', auth: true }, component: () => import('@src/views/cr/Code.vue'), },
+      {path: '/main', name: 'main', meta: {title: '홈'}, component: () => import('@src/views/main/Main.vue'),},
+      {path: '/common/calendar', name: 'calendar', meta: {title: 'calendar', auth: true,}, component: () => import( '@src/views/common/Calendar.vue'),},
+      {path: '/cr/dictionary', name: 'dictionary', meta: {title: '사전', auth: true}, component: () => import('@src/views/cr/Dictionary.vue'),},
+      {path: '/cr/code', name: 'code', meta: {title: '코드', auth: true}, component: () => import('@src/views/cr/Code.vue'),},
       // 프로그램으로 자동생성 (xf274)
-      { path: '/at/auth', name: 'auth', meta: { title: '인증', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/at/company', name: 'company', meta: { title: '업체', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/at/member', name: 'member', meta: { title: '회원', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/at/menu', name: 'menu', meta: { title: '메뉴', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/at/menuCompanyRole', name: 'menuCompanyRole', meta: { title: '메뉴업체권한', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/at/user', name: 'user', meta: { title: '사용자', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/cr/file', name: 'file', meta: { title: '파일', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/cr/fileDetail', name: 'fileDetail', meta: { title: '파일상세', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/cr/log', name: 'log', meta: { title: '로그', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/cs/qna', name: 'qna', meta: { title: '문의', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/cs/qnaReply', name: 'qnaReply', meta: { title: '문의답변', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/od/holidayPrice', name: 'holidayPrice', meta: { title: '휴일가격', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/od/order', name: 'order', meta: { title: '주문', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/od/season', name: 'season', meta: { title: '시즌', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/od/seasonPrice', name: 'seasonPrice', meta: { title: '시즌가격', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/pd/board', name: 'board', meta: { title: '게시판', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/pd/boardCategory', name: 'boardCategory', meta: { title: '게시판카테고리', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/pd/boardReply', name: 'boardReply', meta: { title: '게시판댓글', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
-      { path: '/pd/product', name: 'product', meta: { title: '상품', auth: true }, component: () => import('@src/views/common/Calendar.vue'), },
+      {path: '/at/auth', name: 'auth', meta: {title: '인증', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/at/company', name: 'company', meta: {title: '업체', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/at/member', name: 'member', meta: {title: '회원', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/at/menu', name: 'menu', meta: {title: '메뉴', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/at/menuCompanyRole', name: 'menuCompanyRole', meta: {title: '메뉴업체권한', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/at/user', name: 'user', meta: {title: '사용자', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/cr/file', name: 'file', meta: {title: '파일', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/cr/fileDetail', name: 'fileDetail', meta: {title: '파일상세', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/cr/log', name: 'log', meta: {title: '로그', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/cs/qna', name: 'qna', meta: {title: '문의', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/cs/qnaReply', name: 'qnaReply', meta: {title: '문의답변', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/od/holidayPrice', name: 'holidayPrice', meta: {title: '휴일가격', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/od/order', name: 'order', meta: {title: '주문', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/od/season', name: 'season', meta: {title: '시즌', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/od/seasonPrice', name: 'seasonPrice', meta: {title: '시즌가격', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/pd/board', name: 'board', meta: {title: '게시판', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/pd/boardCategory', name: 'boardCategory', meta: {title: '게시판카테고리', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/pd/boardReply', name: 'boardReply', meta: {title: '게시판댓글', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
+      {path: '/pd/product', name: 'product', meta: {title: '상품', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
     ]
   },
 ];

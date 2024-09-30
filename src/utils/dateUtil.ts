@@ -1,4 +1,4 @@
-import dayjs, { ConfigType, ManipulateType } from "dayjs";
+import dayjs, {ConfigType, ManipulateType} from "dayjs";
 // const timezone = require('dayjs/plugin/timezone');
 // const utc = require('dayjs/plugin/utc');
 

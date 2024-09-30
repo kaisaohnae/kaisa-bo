@@ -64,7 +64,7 @@
   <div id="grid" class="grid-container"></div>
 </template>
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import excelUtil from '@src/utils/excelUtil';
@@ -89,7 +89,7 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique : ['abb'],
+  unique: ['abb'],
   required: ['abb', 'korean', 'english'],
 }
 let selectedRow = null as any;
@@ -129,7 +129,7 @@ const del = () => {
 // 수정된 데이터를 저장하는 기능
 const save = () => {
   const saveList = gridUtil.valid({list: data.list, required: gridProps.required});
-  if(!saveList) {
+  if (!saveList) {
     return;
   }
   DictionaryService.setDictionaryList(saveList).then(() => {
@@ -144,19 +144,19 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      { data: 'abb', type: 'text', readOnly: true},
-      { data: 'korean', type: 'text', width: 150},
-      { data: 'english', type: 'text', width: 150 },
-      { data: 'memo', type: 'text', width: 200 },
+      {data: 'abb', type: 'text', readOnly: true},
+      {data: 'korean', type: 'text', width: 150},
+      {data: 'english', type: 'text', width: 150},
+      {data: 'memo', type: 'text', width: 200},
       ...gridUtil.auditColumns,
     ],
-    cells: function(row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1] });
+    cells: function (row, col) {
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
     },
     afterChange(changes, source) {
-      gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this });
+      gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});
     },
-    afterSelectionEnd: function(row, col, row2, col2) {
+    afterSelectionEnd: function (row, col, row2, col2) {
       selectedRow = row;
     },
     ...gridUtil.defaultProps,

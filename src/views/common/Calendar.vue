@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, computed } from 'vue';
+import {reactive, onMounted, computed} from 'vue';
 import dateUtil from '@src/utils/dateUtil';
 import MainService from '@src/service/auth/MainService';
 
@@ -74,14 +74,14 @@ const getFirstDay = () => {
   return new Date(calendar.date.getFullYear(), calendar.date.getMonth(), 1).getDay();
 };
 const getList = () => {
-  MainService.calendar({ year: calendar.year, month: calendar.month }).then(
+  MainService.calendar({year: calendar.year, month: calendar.month}).then(
     (res) => {
       const data = res.data;
       const daysArray = [];
       const firstDayOfMonth = getFirstDay();
       const totalDaysInMonth = new Date(calendar.date.getFullYear(), calendar.date.getMonth() + 1, 0).getDate();
       for (let i = 0; i < firstDayOfMonth; i++) {
-        daysArray.push({ day: 0, reservations: [] });
+        daysArray.push({day: 0, reservations: []});
       }
       for (let i = 1; i <= totalDaysInMonth; i++) {
         const dayData = data.find((item: any) => item.day === `${calendar.year}-${calendar.month}-${i.toString().padStart(2, '0')}`);
@@ -108,20 +108,94 @@ onMounted(() => {
 </script>
 
 <style scoped>
-#calendar {width: 100%;}
-#calendar .calendar-controls {width: 100%; text-align: center}
-#calendar h2 {font-size:20px; line-height: 40px; color:#333; padding:23px 0 23px 0;}
-#calendar h2 .calendar-nav {display:inline-block; padding: 0 15px;}
-#calendar h2 .icon {font-size:30px; color:#333; vertical-align: middle; cursor: pointer; padding: 5px; width: 40px;}
-#calendar .calendar-grid {display:grid; grid-template-columns:repeat(7, 1fr); gap:0;}
-#calendar .calendar-day {border: 1px solid #f2f2f2; padding:8px 10px; box-sizing: border-box}
-#calendar .day-number {text-align: right; color: #000; padding-bottom: 10px;}
-#calendar .calendar-day:nth-child(7n) .day-number {color: #6172c9;}
-#calendar .calendar-day:nth-child(7n) .day-number {color: #6172c9;}
-#calendar span {display:inline-block; padding-right:3px;}
-#calendar .product {font-size:11px; text-align: right;}
-#calendar .product p {display:inline-block; width: 100px; padding-left:8px; letter-spacing: -0.5px; text-align: left; margin-bottom:5px; border-radius: 3px; color:#000;}
-#calendar .product p.paid {background: #f2f2f2; color:#999;}
-#calendar .product p.pending {background: #ffe9e9; color:#000;}
-#calendar .product p.available {background: #f1ffe2;}
+#calendar {
+  width: 100%;
+}
+
+#calendar .calendar-controls {
+  width: 100%;
+  text-align: center
+}
+
+#calendar h2 {
+  font-size: 20px;
+  line-height: 40px;
+  color: #333;
+  padding: 23px 0 23px 0;
+}
+
+#calendar h2 .calendar-nav {
+  display: inline-block;
+  padding: 0 15px;
+}
+
+#calendar h2 .icon {
+  font-size: 30px;
+  color: #333;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 5px;
+  width: 40px;
+}
+
+#calendar .calendar-grid {
+  display: grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap: 0;
+}
+
+#calendar .calendar-day {
+  border: 1px solid #f2f2f2;
+  padding: 8px 10px;
+  box-sizing: border-box
+}
+
+#calendar .day-number {
+  text-align: right;
+  color: #000;
+  padding-bottom: 10px;
+}
+
+#calendar .calendar-day:nth-child(7n) .day-number {
+  color: #6172c9;
+}
+
+#calendar .calendar-day:nth-child(7n) .day-number {
+  color: #6172c9;
+}
+
+#calendar span {
+  display: inline-block;
+  padding-right: 3px;
+}
+
+#calendar .product {
+  font-size: 11px;
+  text-align: right;
+}
+
+#calendar .product p {
+  display: inline-block;
+  width: 100px;
+  padding-left: 8px;
+  letter-spacing: -0.5px;
+  text-align: left;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  color: #000;
+}
+
+#calendar .product p.paid {
+  background: #f2f2f2;
+  color: #999;
+}
+
+#calendar .product p.pending {
+  background: #ffe9e9;
+  color: #000;
+}
+
+#calendar .product p.available {
+  background: #f1ffe2;
+}
 </style>

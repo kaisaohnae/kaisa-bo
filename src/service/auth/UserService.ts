@@ -1,5 +1,5 @@
 /* eslint-disable no-debugger */
-import { apiConfig } from '@src/utils/apiConfig';
+import {apiConfig} from '@src/utils/apiConfig';
 
 class UserService {
   async login(param: any) {
@@ -7,4 +7,5 @@ class UserService {
     return res.data;
   }
 }
+
 export default new UserService();

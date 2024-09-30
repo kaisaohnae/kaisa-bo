@@ -2,7 +2,7 @@
  * 문자열의 min max 체크
  */
 const minmax = {
-  validate(value: any, { min, max }: any) {
+  validate(value: any, {min, max}: any) {
     return value.length >= min && value.length <= max;
   },
   params: ["min", "max"],

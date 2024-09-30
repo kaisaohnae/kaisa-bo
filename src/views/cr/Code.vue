@@ -56,8 +56,8 @@
 				</span>
         <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
         <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
-<!--        <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-        <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>-->
+        <!--        <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
+                <button type="button" class="button excel" @click="gridUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>-->
 
         <div class="totalCount">총 {{ data.totalCount }}건</div>
       </div>

@@ -1,24 +1,24 @@
 <template>
   <select v-model="data.value" @change="change">
     <option v-for="(o, idx) in auth.codeList[props.cd]"
-      :key="idx"
-      :value="o.value">
+            :key="idx"
+            :value="o.value">
       {{ o.text }}
     </option>
   </select>
 </template>
 <script setup lang="ts">
 /* eslint-disable no-debugger */
-import { onMounted, ref, reactive } from 'vue';
-import { useAuthStore } from '@src/store/authStore';
+import {onMounted, ref, reactive} from 'vue';
+import {useAuthStore} from '@src/store/authStore';
 
 const emit = defineEmits(['set-data'])
 
 const auth = useAuthStore();
 
 const props = defineProps({
-  cd: { type: String, required: true },
-  model: { type: String, required: true },
+  cd: {type: String, required: true},
+  model: {type: String, required: true},
 });
 
 const data = reactive({
@@ -31,7 +31,7 @@ const change = () => {
 }
 
 onMounted(() => {
- 
+
 });
 
 </script>

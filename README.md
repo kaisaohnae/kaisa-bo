@@ -21,18 +21,21 @@ git remote add origin "https://github.com/kaisaohnae/kaisa-bo.git"
 git branch -m main master
 git push -u --force origin master
 ```
-## vscode 
+
+## vscode
+
 - hide node_modules
+
 ```
 npm create vite@latest
 ```
 
 ## env
-.env.환경 에 따라 prefix 에 VATE_ 를 붙여야만 되며 import.meta.env 로 쉽게 사용할수 있습니다. 
 
-
+.env.환경 에 따라 prefix 에 VATE_ 를 붙여야만 되며 import.meta.env 로 쉽게 사용할수 있습니다.
 
 ## 깃헙에 정적페이지로 배포할경우...
+
 ```
 yarn build
 cd dist
@@ -47,11 +50,14 @@ rm -rf .git
 cd ..
 
 ```
+
 ```
 history: createWebHashHistory(), 해시# 방법은 정적일때만...
 vue3-cookies 쿠키 사용시 set 을 잘 넣어야함...githug 정적 페이지가 안될수 있음...
 ```
+
 # 배포
+
 ```
 npm run test 로 미리 정적웹페이지보기 npm run build 이며 정적 웹페이지로 
 (backend 와 완전분리)
@@ -60,6 +66,7 @@ Fo는 서버사이드 렌더링으로 하자
 ```
 
 ## ERD
+
 ```
 1. 용어사전 정리 
 2. ERD 논리/물리명 및 관계 설계 
@@ -69,7 +76,9 @@ Fo는 서버사이드 렌더링으로 하자
 ```
 
 ## DB조회 후 초기 소스 Java로 생성하기
+
 (Vue만 아니라 Controller,Service,ServiceImpl,Dto,Vo,Mapper 등등 1800개정도 파일 자동생성하자)
+
 ```java
 OutputStream outputComment = null;
 try {
@@ -81,6 +90,7 @@ try {
 ```
 
 ###
+
 ``` 
 - 상세페이지에 추가
 import 'prismjs/themes/prism.css';
@@ -92,7 +102,8 @@ import "prismjs/components/prism-html";
 import "prismjs/components/prism-css";
 ```
 
-### Powershell node_modules 삭제 
+### Powershell node_modules 삭제
+
 ```
 Remove-Item -Recurse -Force node_modules
 ```
@@ -100,6 +111,7 @@ Remove-Item -Recurse -Force node_modules
 .env 에 싱글쿼터 쓰지말자...
 
 #### 엑셀다운로드
+
 ```
 npm install -save vue3-xlsx
 

@@ -1,4 +1,4 @@
-import interceptor from './apiInterceptor';
+import interceptor from '@src/utils/apiInterceptor';
 import {useAuthStore} from '@src/store/authStore';
 
 const auth = useAuthStore();
@@ -11,7 +11,7 @@ export const apiConfig = (apiUrl: string, apiData?: any) => {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + auth.token,
+      'Authorization': 'Bearer ' + auth.token,
     },
     withCredentials: false,
   });

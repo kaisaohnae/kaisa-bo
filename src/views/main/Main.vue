@@ -22,21 +22,21 @@
     <div style="width:100%; padding:10px 0 20px 0; overflow:auto;">
       <Chart :size="{ width: 1820, height: 500 }" :data="data.monthlyData" :margin="{ left: 0, top: 10, right: 0, bottom: 0 }" :direction="'horizontal'" :axis="computedAxis">
         <template #layers>
-          <Grid strokeDasharray="2,2" />
+          <Grid strokeDasharray="2,2"/>
           <Line :dataKeys="['reserveMonth', 'sumPrice']" type="monotone" :lineStyle="{
             stroke: '#9f7aea'
-          }" />
+          }"/>
           <defs>
             <linearGradient id="grad" gradientTransform="rotate(90)">
-              <stop offset="0%" stop-color="#be90ff" stop-opacity="1" />
-              <stop offset="100%" stop-color="white" stop-opacity="0.4" />
+              <stop offset="0%" stop-color="#be90ff" stop-opacity="1"/>
+              <stop offset="100%" stop-color="white" stop-opacity="0.4"/>
             </linearGradient>
           </defs>
         </template>
         <template #widgets>
           <Tooltip borderColor="#48CAE4" :config="{
             pl: { color: '#9f7aea' },
-          }" />
+          }"/>
         </template>
       </Chart>
     </div>
@@ -45,30 +45,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, computed } from 'vue'
-import { Chart, Grid, Line, Tooltip } from 'vue3-charts'
+import {ref, onMounted, reactive, computed} from 'vue'
+import {Chart, Grid, Line, Tooltip} from 'vue3-charts'
 import MainService from '@src/service/auth/MainService';
 
 const data = reactive({
   monthlyData: [
-    { reserveMonth: '01', sumPrice: 0 },
-    { reserveMonth: '02', sumPrice: 0 },
-    { reserveMonth: '03', sumPrice: 0 },
-    { reserveMonth: '04', sumPrice: 0 },
-    { reserveMonth: '05', sumPrice: 0 },
-    { reserveMonth: '06', sumPrice: 0 },
-    { reserveMonth: '07', sumPrice: 0 },
-    { reserveMonth: '08', sumPrice: 0 },
-    { reserveMonth: '09', sumPrice: 0 },
-    { reserveMonth: '10', sumPrice: 0 },
-    { reserveMonth: '11', sumPrice: 0 },
-    { reserveMonth: '12', sumPrice: 0 },
+    {reserveMonth: '01', sumPrice: 0},
+    {reserveMonth: '02', sumPrice: 0},
+    {reserveMonth: '03', sumPrice: 0},
+    {reserveMonth: '04', sumPrice: 0},
+    {reserveMonth: '05', sumPrice: 0},
+    {reserveMonth: '06', sumPrice: 0},
+    {reserveMonth: '07', sumPrice: 0},
+    {reserveMonth: '08', sumPrice: 0},
+    {reserveMonth: '09', sumPrice: 0},
+    {reserveMonth: '10', sumPrice: 0},
+    {reserveMonth: '11', sumPrice: 0},
+    {reserveMonth: '12', sumPrice: 0},
   ],
   orderStateData: [
-    { orderStateCount: 0, orderStateCode: '예약중' },
-    { orderStateCount: 0, orderStateCode: '예약취소' },
-    { orderStateCount: 0, orderStateCode: '결제취소' },
-    { orderStateCount: 0, orderStateCode: '결제완료' },
+    {orderStateCount: 0, orderStateCode: '예약중'},
+    {orderStateCount: 0, orderStateCode: '예약취소'},
+    {orderStateCount: 0, orderStateCode: '결제취소'},
+    {orderStateCount: 0, orderStateCode: '결제완료'},
   ],
   totalPrice: 0,
 });
@@ -112,16 +112,68 @@ onMounted(() => {
 </script>
 
 <style scoped>
-h2 {color:#000; font-size:14px; padding:10px 0;}
-.orderState {width:100%; clear:both; white-space:nowrap; text-align:center; padding: 20px 0;}
-.orderState li {width:25%; display:inline-block; line-height:30px; height:100px; border-right:1px solid #eee; color:#000;}
-.orderState li:last-child {border-right: 0;}
-.orderState li .codeName {padding-top:10px; font-size:14px;}
-.orderState li .count {font-size:28px; padding-top:10px; font-weight:bold;}
-.orderState li.reserving {color:#ff5500;}
-.orderState li.canceled {color:#bbb;}
-.orderState li.canceled .count {text-decoration:line-through;}
-.orderState li.paymentCanceled {color:#999;}
-.orderState li.paymentCompleted {color:#000;}
-.totalPrice {text-align:right; font-size:13px; color:#000; padding:5px 10px 0 0;}
+h2 {
+  color: #000;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+.orderState {
+  width: 100%;
+  clear: both;
+  white-space: nowrap;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.orderState li {
+  width: 25%;
+  display: inline-block;
+  line-height: 30px;
+  height: 100px;
+  border-right: 1px solid #eee;
+  color: #000;
+}
+
+.orderState li:last-child {
+  border-right: 0;
+}
+
+.orderState li .codeName {
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.orderState li .count {
+  font-size: 28px;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.orderState li.reserving {
+  color: #ff5500;
+}
+
+.orderState li.canceled {
+  color: #bbb;
+}
+
+.orderState li.canceled .count {
+  text-decoration: line-through;
+}
+
+.orderState li.paymentCanceled {
+  color: #999;
+}
+
+.orderState li.paymentCompleted {
+  color: #000;
+}
+
+.totalPrice {
+  text-align: right;
+  font-size: 13px;
+  color: #000;
+  padding: 5px 10px 0 0;
+}
 </style>
