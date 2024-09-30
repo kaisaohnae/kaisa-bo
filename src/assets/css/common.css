@@ -12,8 +12,8 @@
 
 form.search {width:100%; white-space:nowrap;}
 form.search fieldset {width:100%; line-height:40px; padding:5px 10px 8px 10px; border:0.5px solid #ddd; background:#eee; display:block; border-radius: 5px;}
-form.search fieldset  table th {padding:1px 20px 1px 10px; color:#333;}
-form.search fieldset  table td {padding:1px 1px 1px 1px;}
+form.search fieldset table th {padding:1px 20px 1px 10px; color:#333; height:45px;}
+form.search fieldset table td {padding:1px 1px 1px 1px; height:45px;}
 form.search fieldset legend {display:none;}
 
 .btnWrap {padding:10px 0; text-align:center; position:relative;}
@@ -21,7 +21,7 @@ form.search fieldset legend {display:none;}
 
 .btnWrap .crud {position:absolute; left:0; bottom:5px;}
 .btnWrap .crud button {line-height:19px; height:20px; padding:0 5px 0 0; font-size:11px; background:#eee; border:1px solid #ddd; color:#555; text-shadow:none;}
-.btnWrap .crud button .icon {line-height:19px; font-size:12px; margin-right:0 -1px;}
+.btnWrap .crud button .icon {line-height:19px; font-size:12px;}
 .btnWrap .crud button.add .icon {color:#000;}
 .btnWrap .crud button.save .icon {color:#047a00;}
 .btnWrap .crud button.del .icon {color:#b63434;}
@@ -43,6 +43,8 @@ th.required:after {content:'*'; display:inline-block; font-size:12px; color:#ff0
 .popup table.popT td.td input.tit {width:70%;}
 
 #side ul li span.name u {color:#ff2600;} /* 뒤늦게 v-html 한곳은 style 안먹힐때가... */
+
+.no-list {margin-top: -17px; background: #f2f2f2; z-index: 100; position: relative; text-align: center; padding: 100px 0;}
 
 @media print {
 	html,

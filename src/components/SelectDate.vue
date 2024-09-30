@@ -1,35 +1,33 @@
 <template>
-  <div class="select-date">
-    <div class="term-wrap">
-      <label v-show="isAll">
-        <input type="checkbox" v-model="data.clickChecked" @change="toggleDatePicker"/> 전체
-      </label>
-    </div>
-    <div class="picker-wrap" v-show="!data.clickChecked">
-      <VueDatePicker
-        v-model="props.date[0]"
-        :locale="ko"
-        :format="props.format"
-        :name="props.name[0]"
-        class="input"
-        :placeholder="placeholderText"
-        :disabled="data.clickChecked"
-      />
-    </div>
+  <div class="all-wrap">
+    <label v-show="isAll">
+      <input type="checkbox" v-model="data.allChecked" @change="allChecked"/> 전체
+    </label>
+  </div>
+  <div class="picker-wrap" v-show="!data.allChecked" style="padding-right: 5px;">
+    <VueDatePicker
+      v-model="startDate"
+      :locale="'ko'"
+      :format="props.format"
+      :style="{width: props.format === 'yyyy-MM-dd' ? '160px' : '200px'}"
+      class="input"
+      :placeholder="placeholderText"
+      :disabled="data.allChecked"
+      :enable-time-picker="false"
+      :clearable="false"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import {ref, reactive, watch} from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
-import {ko} from 'date-fns/locale';
 import '@vuepic/vue-datepicker/dist/main.css';
 import dateUtil from '@src/utils/dateUtil';
 
 const emit = defineEmits(['set-start-date']);
 
 const props = defineProps({
-  name: {type: Array, required: true},
   date: {type: Array, required: false, default: () => [dateUtil.format(new Date(), 'yyyy-MM-dd')]},
   format: {type: String, required: false, default: 'yyyy-MM-dd'},
   isAll: {type: Boolean, required: false, default: true},
@@ -37,37 +35,56 @@ const props = defineProps({
 });
 
 const data = reactive({
-  clickChecked: props.isAll,
+  allChecked: props.isAll,
 });
 
-const toggleDatePicker = () => {
-  data.clickChecked = !data.clickChecked;
-  if (data.clickChecked) {
-    props.date[0] = '';
+const startDate = ref(props.date[0]);
+
+const isAllChecked = ref(true);
+
+const allChecked = () => {
+  let selectDate: Date = new Date()
+  isAllChecked.value = !isAllChecked.value;
+  data.allChecked = isAllChecked.value ;
+  if (isAllChecked.value ) {
+    startDate.value = null;
+    emit('set-start-date', {date: startDate.value});
   } else {
-    props.date[0] = dateUtil.format(new Date(), props.format);
+    startDate.value = dateUtil.format(selectDate, props.format === 'yyyy-MM-dd' ? 'YYYY-MM-DD' : 'YYYY-MM-DD HH:mm');
+    emit('set-start-date', {date: startDate.value});
   }
-  emit('set-start-date', {date: props.date[0]});
 };
 
 const placeholderText = props.format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택';
 
-watch(() => props.date[0], (newDate) => {
+watch(() => startDate, (newDate) => {
   emit('set-start-date', {date: newDate});
 });
 </script>
 
 <style scoped>
-.select-date {
-  display: flex;
-  flex-direction: row;
+.all-wrap {
+  display: inline-block;
+  padding-right: 5px;
+  margin-left: -5px;
+  width: 80px;
 }
 
-.select-date .term-wrap {
-  flex: 1;
+.picker-wrap {
+  position: relative;
+  display: inline-block;
 }
 
-.select-date .picker-wrap {
-  flex: 9;
+.picker-wrap .icon {
+  font-size: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  width: 30px;
+  margin: 4px 10px 0 0;
+  color: #aaa;
+}
+
+.picker-wrap input.input {
+  vertical-align: middle;
 }
 </style>

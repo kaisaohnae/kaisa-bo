@@ -4,23 +4,22 @@
       <legend>검색</legend>
       <table>
         <colgroup>
-          <col width="100"/>
-          <col width="*"/>
-          <col width="100"/>
-          <col width="*"/>
+          <col style="width: 80px">
+          <col style="width: 30%">
+          <col style="width: 80px">
+          <col>
         </colgroup>
         <tbody>
         <tr>
           <th>약어</th><!-- class="required"-->
-          <td colspan="2"><input type="text" v-model="search.abb"/></td>
+          <td colspan="3"><input type="text" v-model="search.abb"/></td>
         </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
           <th>수정기간</th>
-          <td colspan="2">
+          <td colspan="3">
             <SelectGroupDate
-              :name="['startUpdateDt', 'endUpdateDt']"
               :format="'yyyy-MM-dd'"
               :date="[search.startUpdateDt, search.endUpdateDt]"
               @set-start-date="(o) => { search.startUpdateDt = o.date; }"
@@ -30,9 +29,8 @@
         </tr>
         <tr>
           <th>등록일</th>
-          <td colspan="2">
+          <td colspan="3">
             <SelectDate
-              :name="['createDt']"
               :format="'yyyy-MM-dd'"
               :date="[search.createDt]"
               @set-start-date="(o) => { search.createDt = o.date; }"
@@ -55,13 +53,17 @@
         <button type="button" class="button save" @click="save"><span class="icon">&#xe814;</span>저장</button>
       </span>
       <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
+
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '사전')"><span class="icon">&#xf1c3;</span></button>
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+        <span class="icon">&#xf1c3;</span>
+      </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
     </div>
   </form>
   <div id="grid" class="grid-container"></div>
+  <div class="no-list" v-show="data.list.length === 0">조회 내역이 없습니다.</div>
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -77,9 +79,9 @@ const search = reactive({
   abb: '',
   updater: '',
   creator: '',
-  startUpdateDt: dateUtil.getToday(),
-  endUpdateDt: dateUtil.getToday(),
-  createDt: dateUtil.getToday(),
+  startUpdateDt: null,
+  endUpdateDt: null,
+  createDt: null,
 });
 const data = reactive({
   required: ['abb', 'korean', 'english'],
@@ -94,7 +96,8 @@ const gridProps = {
 }
 let selectedRow = null as any;
 
-const getList = () => {
+const getList = (event: Event) => {
+  event?.preventDefault(); // submit 기본 동작을 막음
   data.totalCount = 0;
   DictionaryService.getDictionaryList(search).then(
     (res: any) => {
@@ -140,7 +143,14 @@ onMounted(() => {
   const container = document.querySelector('#grid');
   data.grid = new Handsontable(container as any, {
     data: data.list,
-    colHeaders: ['mode', '약어', '한국어', '영어', '설명', '등록자', '등록일시', '수정자', '수정일시'],
+    colHeaders: [
+      ...gridUtil.commonColumnNames,
+      '약어',
+      '한국어',
+      '영어',
+      '설명',
+      ...gridUtil.auditColumnNames
+    ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,

@@ -3,10 +3,11 @@
  */
 const defaultProps = {
   /*hiddenColumns: {
+    copyPasteEnabled: true,
     columns: [0], // 0부터 시작하는 인덱스에서 0번째 컬럼('mode')을 숨깁니다.
     indicators: false, // 숨겨진 컬럼에 대한 표시를 비활성화합니다.
   },*/
-  rowHeaders: true, // 행번호
+  rowHeaders: false, // 행번호
   columnSorting: false,
   manualColumnResize: true,
   comments: true,
@@ -44,12 +45,15 @@ const searchProps = {
   startUpdateDt: '', // dateUtil.format(new Date().setMonth(new Date().getMonth() - 1), 'YYYY-MM-DD'),
   endUpdateDt: '', // dateUtil.format(new Date(),'YYYY-MM-DD'),
 };
+const commonColumnNames = ['mode']
 const commonColumns = [
-  {data: 'mode', type: 'text', readOnly: true},
+  {data: 'mode', type: 'text', width: 1, readOnly: true, hidden: true},
 ];
+const auditColumnNames = ['등록자', '등록일시', '수정자', '수정일시']
 const auditColumns = [
   {data: 'creator', type: 'text', width: 100, readOnly: true, editor: false},
-  {data: 'createDt', type: 'date', width: 170, ...datePickerConfig}, // type: 'date', ...datePickerConfig
+  {data: 'createDt', type: 'text', width: 170, readOnly: true, editor: false},
+  // {data: 'createDt', type: 'date', width: 170, ...datePickerConfig},
   {data: 'updater', type: 'text', width: 100, readOnly: true, editor: false},
   {data: 'updateDt', type: 'text', width: 170, readOnly: true, editor: false},
 ];
@@ -189,7 +193,9 @@ export default {
   defaultProps,
   searchProps,
   datePickerConfig,
+  commonColumnNames,
   commonColumns,
+  auditColumnNames,
   auditColumns,
   commonAddColumns,
   auditAddColumns,
