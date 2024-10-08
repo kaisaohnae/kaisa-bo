@@ -1,6 +1,6 @@
 import {apiConfig} from '@src/utils/apiConfig';
 
-class FtpService {
+class FileService {
   /**
    * file & 정보저장전에 최종으로 파일 업로드
    *
@@ -13,5 +13,5 @@ class FtpService {
   }
 }
 
-export default new FtpService();
+export default new FileService();
 
