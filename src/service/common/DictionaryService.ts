@@ -1,5 +1,8 @@
 import {apiConfig} from '@src/utils/apiConfig';
 
+/**
+ * cr_dictionary
+ */
 class DictionaryService {
   async getDictionaryList(json?: any) { // 사전 리스트
     const res = await apiConfig('/cr/getDictionaryList', json || {});

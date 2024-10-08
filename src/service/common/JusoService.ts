@@ -7,7 +7,7 @@ class JusoService {
    * @returns
    */
   async getJuso(form?: any) {
-    const res = await apiConfig('/bo/juso/getJuso', form ? form : {});
+    const res = await apiConfig('/juso/getJuso', form ? form : {});
     return res.data;
   }
 
@@ -17,7 +17,7 @@ class JusoService {
    * @returns
    */
   async getPosition(form?: any) {
-    const res = await apiConfig('/bo/juso/getPosition', form ? form : {});
+    const res = await apiConfig('/juso/getPosition', form ? form : {});
     return res.data;
   }
 }

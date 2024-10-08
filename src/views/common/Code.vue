@@ -70,7 +70,7 @@ import {onMounted, reactive, ref} from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import excelUtil from '@src/utils/excelUtil';
-import CodeService from '@src/service/cr/CodeService';
+import CodeService from '@src/service/common/CodeService';
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
 

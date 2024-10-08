@@ -22,8 +22,8 @@ const routes: RouteRecordRaw[] = [
       // 프로그램으로 만들지 않는...
       {path: '/main', name: 'main', meta: {title: '홈'}, component: () => import('@src/views/main/Main.vue'),},
       {path: '/common/calendar', name: 'calendar', meta: {title: 'calendar', auth: true,}, component: () => import( '@src/views/common/Calendar.vue'),},
-      {path: '/cr/dictionary', name: 'dictionary', meta: {title: '사전', auth: true}, component: () => import('@src/views/cr/Dictionary.vue'),},
-      {path: '/cr/code', name: 'code', meta: {title: '코드', auth: true}, component: () => import('@src/views/cr/Code.vue'),},
+      {path: '/cr/dictionary', name: 'dictionary', meta: {title: '사전', auth: true}, component: () => import('@src/views/common/Dictionary.vue'),},
+      {path: '/cr/code', name: 'code', meta: {title: '코드', auth: true}, component: () => import('@src/views/common/Code.vue'),},
       // 프로그램으로 자동생성 (xf274)
       {path: '/at/auth', name: 'auth', meta: {title: '인증', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},
       {path: '/at/company', name: 'company', meta: {title: '업체', auth: true}, component: () => import('@src/views/common/Calendar.vue'),},

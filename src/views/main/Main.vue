@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import {ref, onMounted, reactive, computed} from 'vue'
 import {Chart, Grid, Line, Tooltip} from 'vue3-charts'
-import MainService from '@src/service/auth/MainService';
+import MainService from '@src/service/common/MainService';
 
 const data = reactive({
   monthlyData: [

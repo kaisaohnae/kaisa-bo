@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import {reactive, onMounted, computed} from 'vue';
 import dateUtil from '@src/utils/dateUtil';
-import MainService from '@src/service/auth/MainService';
+import MainService from '@src/service/common/MainService';
 
 const calendar = reactive({
   date: new Date(),
