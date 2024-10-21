@@ -15,6 +15,10 @@ import {useSettingStore} from '@src/store/settingStore';
 const alert = useAlertStore();
 const setting = useSettingStore();
 
+if (location.hash === '#/main') {
+  setting.hash = '/main';
+}
+
 </script>
 <style scoped>
 #container {

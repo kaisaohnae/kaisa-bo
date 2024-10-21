@@ -1,7 +1,7 @@
 import {defineStore} from 'pinia';
-import {useStorage, RemovableRef} from '@vueuse/core';
+import {useStorage} from '@vueuse/core';
+import {useSettingStore} from '@src/store/settingStore';
 import {Router} from 'vue-router';
-
 
 export interface AuthType {
   active: boolean;
@@ -51,6 +51,8 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
         this.token = data.token;
         this.setMenus(data.menuList);
       }
+      const setting = useSettingStore();
+      setting.hash = '/main';
       router.push('/main');
     },
     loginFail() {
@@ -74,8 +76,20 @@ export const useAuthStore = defineStore<'auth', AuthType, {}, {
         {menuGroupCode: 'pd', active: true, pathName: '상품관리', menu: []},
         {menuGroupCode: 'at', active: true, pathName: '회원관리', menu: []},
       ];
+
+      // useSettingStore를 통해 favList 가져오기
+      const setting = useSettingStore();
+
       baseMenus.forEach(baseMenu => {
-        baseMenu.menu = menus.filter(menu => menu.menuGroupCode === baseMenu.menuGroupCode);
+        baseMenu.menu = menus
+          .filter(menu => menu.menuGroupCode === baseMenu.menuGroupCode)
+          .map(menu => {
+            const isFav = setting.favList.some((fav: any) => fav.menuId === menu.menuId);
+            return {
+              ...menu,
+              fav: isFav,
+            };
+          });
       });
       this.menuList = baseMenus;
     }

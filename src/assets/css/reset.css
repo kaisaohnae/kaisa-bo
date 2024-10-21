@@ -164,3 +164,5 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
 .handsontable tr.row-updated td {background-color: #fff5e3 !important; color: #000;}
 .handsontable tr.row-deleted td {background-color: #ffeeee !important; color: #ff0000; text-decoration: line-through;}
 .handsontable tr.row-updated td.cell-required {background-color: #ffcccc !important;}
+.handsontable td,
+.handsontable thead th {padding:3px 5px 2px 5px;}
