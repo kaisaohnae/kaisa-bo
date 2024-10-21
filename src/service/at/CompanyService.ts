@@ -5,12 +5,12 @@ import {apiConfig} from '@src/utils/apiConfig';
  */
 class CompanyService {
   async getCompanyList(json?: any) { // 업체 리스트
-    const res = await apiConfig('/cr/getCompanyList', json || {});
+    const res = await apiConfig('/at/getCompanyList', json || {});
     return res.data;
   }
 
   async setCompanyList(json?: any) { // 업체 리스트등록
-    const res = await apiConfig('/cr/setCompanyList', json || {});
+    const res = await apiConfig('/at/setCompanyList', json || {});
     return res.data;
   }
 }

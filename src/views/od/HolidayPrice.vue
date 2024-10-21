@@ -157,10 +157,10 @@ onMounted(() => {
     columns: [
       ...gridUtil.commonColumns,
       {data: 'holiday', type: 'date', width: 150},
-      {data: 'companyId', type: 'varchar', width: 150},
-      {data: 'holidayName', type: 'varchar', width: 150},
-      {data: 'price', type: 'number', width: 150},
-      {data: 'holidayCode', type: 'varchar', width: 150},
+      {data: 'companyId', type: 'text', width: 150},
+      {data: 'holidayName', type: 'text', width: 150},
+      {data: 'price', type: 'text', width: 150},
+      {data: 'holidayCode', type: 'text', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

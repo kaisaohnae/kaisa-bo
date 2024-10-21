@@ -154,10 +154,10 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'varchar', width: 150},
-      {data: 'companyId', type: 'varchar', width: 150},
-      {data: 'menuName', type: 'varchar', width: 150},
-      {data: 'buttonRole', type: 'varchar', width: 150},
+      {data: 'menuId', type: 'text', width: 150},
+      {data: 'companyId', type: 'text', width: 150},
+      {data: 'menuName', type: 'text', width: 150},
+      {data: 'buttonRole', type: 'text', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

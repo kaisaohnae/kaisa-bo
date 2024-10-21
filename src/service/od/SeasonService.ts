@@ -5,12 +5,12 @@ import {apiConfig} from '@src/utils/apiConfig';
  */
 class SeasonService {
   async getSeasonList(json?: any) { // 시즌 리스트
-    const res = await apiConfig('/cr/getSeasonList', json || {});
+    const res = await apiConfig('/od/getSeasonList', json || {});
     return res.data;
   }
 
   async setSeasonList(json?: any) { // 시즌 리스트등록
-    const res = await apiConfig('/cr/setSeasonList', json || {});
+    const res = await apiConfig('/od/setSeasonList', json || {});
     return res.data;
   }
 }

@@ -160,13 +160,13 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'number', width: 150},
-      {data: 'memberName', type: 'varchar', width: 150},
-      {data: 'phoneNo', type: 'varchar', width: 150},
-      {data: 'email', type: 'varchar', width: 150},
-      {data: 'pwd', type: 'varchar', width: 150},
-      {data: 'title', type: 'varchar', width: 150},
-      {data: 'content', type: 'varchar', width: 150},
+      {data: 'qnaNo', type: 'text', width: 150},
+      {data: 'memberName', type: 'text', width: 150},
+      {data: 'phoneNo', type: 'text', width: 150},
+      {data: 'email', type: 'text', width: 150},
+      {data: 'pwd', type: 'text', width: 150},
+      {data: 'title', type: 'text', width: 150},
+      {data: 'content', type: 'text', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

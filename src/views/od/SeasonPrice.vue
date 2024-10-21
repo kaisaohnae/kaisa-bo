@@ -162,14 +162,14 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonPriceNo', type: 'number', width: 150},
-      {data: 'companyId', type: 'varchar', width: 150},
-      {data: 'seasonPriceName', type: 'varchar', width: 150},
-      {data: 'hotWaterPrice', type: 'number', width: 150},
-      {data: 'bbqPrice', type: 'number', width: 150},
-      {data: 'headCountOverPrice', type: 'number', width: 150},
-      {data: 'petPrice', type: 'number', width: 150},
-      {data: 'pickupPrice', type: 'number', width: 150},
+      {data: 'seasonPriceNo', type: 'text', width: 150},
+      {data: 'companyId', type: 'text', width: 150},
+      {data: 'seasonPriceName', type: 'text', width: 150},
+      {data: 'hotWaterPrice', type: 'text', width: 150},
+      {data: 'bbqPrice', type: 'text', width: 150},
+      {data: 'headCountOverPrice', type: 'text', width: 150},
+      {data: 'petPrice', type: 'text', width: 150},
+      {data: 'pickupPrice', type: 'text', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

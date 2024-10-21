@@ -152,9 +152,9 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'fileNo', type: 'number', width: 150},
-      {data: 'tableName', type: 'varchar', width: 150},
-      {data: 'columnName', type: 'varchar', width: 150},
+      {data: 'fileNo', type: 'text', width: 150},
+      {data: 'tableName', type: 'text', width: 150},
+      {data: 'columnName', type: 'text', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

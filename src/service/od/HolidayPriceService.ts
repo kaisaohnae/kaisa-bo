@@ -5,12 +5,12 @@ import {apiConfig} from '@src/utils/apiConfig';
  */
 class HolidayPriceService {
   async getHolidayPriceList(json?: any) { // 휴일가격 리스트
-    const res = await apiConfig('/cr/getHolidayPriceList', json || {});
+    const res = await apiConfig('/od/getHolidayPriceList', json || {});
     return res.data;
   }
 
   async setHolidayPriceList(json?: any) { // 휴일가격 리스트등록
-    const res = await apiConfig('/cr/setHolidayPriceList', json || {});
+    const res = await apiConfig('/od/setHolidayPriceList', json || {});
     return res.data;
   }
 }
