@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>파일번호</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '상품')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,22 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    productNo: '',
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    seasonPriceNo: '',
+    productName: '',
+    headCount: '',
+    maxHeadCount: '',
+    m2: '',
+    isDisplay: '',
+    isPet: '',
+    isBBQ: '',
+    isPickup: '',
+    isStone: '',
+    memo: '',
+    content: '',
+    fileNo: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +156,41 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '상품번호',
+      '업체아이디',
+      '시즌가격번호',
+      '상품명',
+      '인원수',
+      '최대인원수',
+      '평형',
+      '전시여부',
+      '애완동물여부',
+      '바베큐여부',
+      '픽업여부',
+      '온돌여부',
+      '메모',
+      '내용',
+      '파일번호',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'productNo', type: 'number', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'seasonPriceNo', type: 'number', width: 150},
+      {data: 'productName', type: 'varchar', width: 150},
+      {data: 'headCount', type: 'varchar', width: 150},
+      {data: 'maxHeadCount', type: 'varchar', width: 150},
+      {data: 'm2', type: 'varchar', width: 150},
+      {data: 'isDisplay', type: 'number', width: 150},
+      {data: 'isPet', type: 'number', width: 150},
+      {data: 'isBBQ', type: 'number', width: 150},
+      {data: 'isPickup', type: 'number', width: 150},
+      {data: 'isStone', type: 'number', width: 150},
+      {data: 'memo', type: 'varchar', width: 150},
+      {data: 'content', type: 'varchar', width: 150},
+      {data: 'fileNo', type: 'number', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

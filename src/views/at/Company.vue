@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>전화번호</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '업체')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -118,7 +118,14 @@ const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    companyTypeCode: '',
+    companyName: '',
+    lttd: '',
+    lotd: '',
+    addr1: '',
+    addr2: '',
+    phoneNo: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +149,27 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '업체아이디',
+      '업체유형코드[펜션,회사]',
+      '업체명',
+      '위도',
+      '경도',
+      '주소1',
+      '주소2',
+      '전화번호',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'companyTypeCode', type: 'varchar', width: 150},
+      {data: 'companyName', type: 'varchar', width: 150},
+      {data: 'lttd', type: 'varchar', width: 150},
+      {data: 'lotd', type: 'varchar', width: 150},
+      {data: 'addr1', type: 'varchar', width: 150},
+      {data: 'addr2', type: 'varchar', width: 150},
+      {data: 'phoneNo', type: 'varchar', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

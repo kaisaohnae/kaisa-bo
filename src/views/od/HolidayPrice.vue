@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>휴일코드 [휴일,휴일전날,특정일] (S)</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '휴일가격')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,12 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    holiday: '',
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    holidayName: '',
+    price: '',
+    holidayCode: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +146,21 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '휴일',
+      '업체아이디',
+      '휴일명',
+      '가격',
+      '휴일코드[휴일,휴일전날,특정일]',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'holiday', type: 'date', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'holidayName', type: 'varchar', width: 150},
+      {data: 'price', type: 'number', width: 150},
+      {data: 'holidayCode', type: 'varchar', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

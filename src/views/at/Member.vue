@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>회원상태코드 [정상,정지]</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '회원')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,17 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    memberId: '',
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    memberName: '',
+    email: '',
+    pwd: '',
+    phoneNo: '',
+    passwordUpdateDt: '',
+    loginDt: '',
+    memo: '',
+    memberStateCode: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +151,31 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '회원아이디',
+      '업체아이디',
+      '회원이름',
+      '이메일',
+      '비밀번호',
+      '전화번호',
+      '비밀번호수정일시',
+      '로그인일시',
+      '메모',
+      '회원상태코드[정상,정지]',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'memberId', type: 'varchar', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'memberName', type: 'varchar', width: 150},
+      {data: 'email', type: 'varchar', width: 150},
+      {data: 'pwd', type: 'varchar', width: 150},
+      {data: 'phoneNo', type: 'varchar', width: 150},
+      {data: 'passwordUpdateDt', type: 'date', width: 150},
+      {data: 'loginDt', type: 'date', width: 150},
+      {data: 'memo', type: 'varchar', width: 150},
+      {data: 'memberStateCode', type: 'varchar', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

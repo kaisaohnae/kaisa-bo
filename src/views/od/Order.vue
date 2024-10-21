@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>메모</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '주문')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,25 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    orderNo: '',
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    productNo: '',
+    reserveDay: '',
+    orderStateCode: '',
+    reserveCode: '',
+    phoneNo: '',
+    orderName: '',
+    email: '',
+    price: '',
+    addPrice: '',
+    salePrice: '',
+    headCount: '',
+    isHotWater: '',
+    isPickup: '',
+    isBBQ: '',
+    isPet: '',
+    memo: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +159,47 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '주문번호',
+      '업체아이디',
+      '상품번호',
+      '예약일',
+      '주문상태코드[예약,결제완료,취소,결제취소]',
+      '예약코드[네이버,야놀자,여기어때]',
+      '전화번호',
+      '이름',
+      '이메일',
+      '가격',
+      '추가요금',
+      '할인요금',
+      '인원수',
+      '온수여부',
+      '픽업여부',
+      '바베큐여부',
+      '애완동물여부',
+      '메모',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'orderNo', type: 'number', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'productNo', type: 'number', width: 150},
+      {data: 'reserveDay', type: 'date', width: 150},
+      {data: 'orderStateCode', type: 'varchar', width: 150},
+      {data: 'reserveCode', type: 'varchar', width: 150},
+      {data: 'phoneNo', type: 'varchar', width: 150},
+      {data: 'orderName', type: 'varchar', width: 150},
+      {data: 'email', type: 'varchar', width: 150},
+      {data: 'price', type: 'number', width: 150},
+      {data: 'addPrice', type: 'number', width: 150},
+      {data: 'salePrice', type: 'number', width: 150},
+      {data: 'headCount', type: 'varchar', width: 150},
+      {data: 'isHotWater', type: 'number', width: 150},
+      {data: 'isPickup', type: 'number', width: 150},
+      {data: 'isBBQ', type: 'number', width: 150},
+      {data: 'isPet', type: 'number', width: 150},
+      {data: 'memo', type: 'varchar', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

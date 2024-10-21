@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>태그</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.boardCategoryId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '게시판')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,14 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    boardNo: '',
+    companyId: '',
     boardCategoryId: '',
-    ...gridUtil.auditAddColumns,
+    title: '',
+    contents: '',
+    isDisplay: '',
+    tag: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +148,25 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '게시판번호',
+      '업체아이디',
+      '게시판카테고리아이디',
+      '제목',
+      '내용',
+      '전시여부',
+      '태그',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'boardNo', type: 'number', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'boardCategoryId', type: 'number', width: 150},
+      {data: 'title', type: 'varchar', width: 150},
+      {data: 'contents', type: 'varchar', width: 150},
+      {data: 'isDisplay', type: 'number', width: 150},
+      {data: 'tag', type: 'varchar', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

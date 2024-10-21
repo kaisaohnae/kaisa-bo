@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
         <tr>
-          <th>약어</th><!-- class="required"-->
+          <th>일요일가격</th><!-- class="required"-->
           <td colspan="3"><input type="text" v-model="search.companyId"/></td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '코드')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '시즌')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -117,8 +117,18 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
+    seasonNo: '',
+    seasonPriceNo: '',
     companyId: '',
-    ...gridUtil.auditAddColumns,
+    sortOrder: '',
+    seasonName: '',
+    seasonStartDay: '',
+    seasonEndDay: '',
+    price: '',
+    friPrice: '',
+    satPrice: '',
+    sunPrice: '',
+      ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
 };
@@ -142,19 +152,33 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '약어',
-      '한국어',
-      '영어',
-      '설명',
+      '시즌번호',
+      '시즌가격번호',
+      '업체아이디',
+      '정렬순서',
+      '시즌명',
+      '시즌시작일시',
+      '시즌종료일시',
+      '가격',
+      '금요일가격',
+      '토요일가격',
+      '일요일가격',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'abb', type: 'text', readOnly: true},
-      {data: 'korean', type: 'text', width: 150},
-      {data: 'english', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 200},
+      {data: 'seasonNo', type: 'number', width: 150},
+      {data: 'seasonPriceNo', type: 'number', width: 150},
+      {data: 'companyId', type: 'varchar', width: 150},
+      {data: 'sortOrder', type: 'number', width: 150},
+      {data: 'seasonName', type: 'varchar', width: 150},
+      {data: 'seasonStartDay', type: 'varchar', width: 150},
+      {data: 'seasonEndDay', type: 'varchar', width: 150},
+      {data: 'price', type: 'number', width: 150},
+      {data: 'friPrice', type: 'number', width: 150},
+      {data: 'satPrice', type: 'number', width: 150},
+      {data: 'sunPrice', type: 'number', width: 150},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
