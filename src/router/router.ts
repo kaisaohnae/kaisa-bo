@@ -26,6 +26,7 @@ const routes: RouteRecordRaw[] = [
       {path: '/cr/code', name: 'code', meta: {title: '코드', auth: true}, component: () => import('@src/views/common/Code.vue'),},
       // 프로그램으로 자동생성 (xf274)
       {path: '/at/company', name: 'company', meta: {title: '업체', auth: true}, component: () => import('@src/views/at/Company.vue'),},
+      {path: '/at/user', name: 'user', meta: {title: '사용자', auth: true}, component: () => import('@src/views/at/User.vue'),},
       {path: '/at/member', name: 'member', meta: {title: '회원', auth: true}, component: () => import('@src/views/at/Member.vue'),},
       {path: '/at/menu', name: 'menu', meta: {title: '메뉴', auth: true}, component: () => import('@src/views/at/Menu.vue'),},
       {path: '/at/menuCompanyRole', name: 'menuCompanyRole', meta: {title: '메뉴업체권한', auth: true}, component: () => import('@src/views/at/MenuCompanyRole.vue'),},

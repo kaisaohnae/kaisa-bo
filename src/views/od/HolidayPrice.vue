@@ -10,10 +10,10 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>휴일코드 [휴일,휴일전날,특정일] (S)</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
+            <tr>
+              <th>휴일코드</th>
+              <td colspan="3"><CommonCode :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +74,26 @@ import HolidayPriceService from '@src/service/od/HolidayPriceService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
+  holidayCode: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'holiday',
+    'companyId',
+    'price',
+    'holidayCode',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +101,12 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'holiday',
+    'companyId',
+    'price',
+    'holidayCode',
+  ],
 }
 let selectedRow = null as any;
 
@@ -150,17 +164,17 @@ onMounted(() => {
       '업체아이디',
       '휴일명',
       '가격',
-      '휴일코드[휴일,휴일전날,특정일]',
+      '휴일코드',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'holiday', type: 'date', width: 150},
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'holidayName', type: 'text', width: 150},
-      {data: 'price', type: 'text', width: 150},
-      {data: 'holidayCode', type: 'text', width: 150},
+      {data: 'holiday', type: 'date', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'holidayName', type: 'text', width: 150, },
+      {data: 'price', type: 'text', width: 150, },
+      {data: 'holidayCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['holidayCode']?.map(o => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

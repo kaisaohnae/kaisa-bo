@@ -10,10 +10,10 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>메모</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
+            <tr>
+              <th>주문상태코드</th>
+              <td colspan="3"><CommonCode :cd="'orderStateCode'" :model="search.orderStateCode" @set-data="(val) => { search.orderStateCode = val; }" /></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +74,37 @@ import OrderService from '@src/service/od/OrderService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
+  orderStateCode: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'orderNo',
+    'companyId',
+    'productNo',
+    'reserveDay',
+    'orderStateCode',
+    'phoneNo',
+    'orderName',
+    'price',
+    'addPrice',
+    'salePrice',
+    'headCount',
+    'isHotWater',
+    'isPickup',
+    'isBBQ',
+    'isPet',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +112,23 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'orderNo',
+    'companyId',
+    'productNo',
+    'reserveDay',
+    'orderStateCode',
+    'phoneNo',
+    'orderName',
+    'price',
+    'addPrice',
+    'salePrice',
+    'headCount',
+    'isHotWater',
+    'isPickup',
+    'isBBQ',
+    'isPet',
+  ],
 }
 let selectedRow = null as any;
 
@@ -163,8 +199,8 @@ onMounted(() => {
       '업체아이디',
       '상품번호',
       '예약일',
-      '주문상태코드[예약,결제완료,취소,결제취소]',
-      '예약코드[네이버,야놀자,여기어때]',
+      '주문상태코드',
+      '예약코드',
       '전화번호',
       '이름',
       '이메일',
@@ -182,24 +218,24 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'orderNo', type: 'text', width: 150},
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'productNo', type: 'text', width: 150},
-      {data: 'reserveDay', type: 'date', width: 150},
-      {data: 'orderStateCode', type: 'text', width: 150},
-      {data: 'reserveCode', type: 'text', width: 150},
-      {data: 'phoneNo', type: 'text', width: 150},
-      {data: 'orderName', type: 'text', width: 150},
-      {data: 'email', type: 'text', width: 150},
-      {data: 'price', type: 'text', width: 150},
-      {data: 'addPrice', type: 'text', width: 150},
-      {data: 'salePrice', type: 'text', width: 150},
-      {data: 'headCount', type: 'text', width: 150},
-      {data: 'isHotWater', type: 'text', width: 150},
-      {data: 'isPickup', type: 'text', width: 150},
-      {data: 'isBBQ', type: 'text', width: 150},
-      {data: 'isPet', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 150},
+      {data: 'orderNo', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'productNo', type: 'text', width: 150, },
+      {data: 'reserveDay', type: 'date', width: 170, ...gridUtil.datePickerConfig  },
+      {data: 'orderStateCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['orderStateCode']?.map(o => o.codeValue)) }},
+      {data: 'reserveCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['reserveCode']?.map(o => o.codeValue)) }},
+      {data: 'phoneNo', type: 'text', width: 150, },
+      {data: 'orderName', type: 'text', width: 150, },
+      {data: 'email', type: 'text', width: 150, },
+      {data: 'price', type: 'text', width: 150, },
+      {data: 'addPrice', type: 'text', width: 150, },
+      {data: 'salePrice', type: 'text', width: 150, },
+      {data: 'headCount', type: 'text', width: 150, },
+      {data: 'isHotWater', type: 'text', width: 150, },
+      {data: 'isPickup', type: 'text', width: 150, },
+      {data: 'isBBQ', type: 'text', width: 150, },
+      {data: 'isPet', type: 'text', width: 150, },
+      {data: 'memo', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

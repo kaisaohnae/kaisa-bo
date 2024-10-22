@@ -1242,10 +1242,10 @@ graphemer@^1.4.0:
   resolved "https://registry.yarnpkg.com/graphemer/-/graphemer-1.4.0.tgz#fb2f1d55e0e3a1849aeffc90c4fa0dd53a0e66c6"
   integrity sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==
 
-handsontable@^14.5.0:
-  version "14.5.0"
-  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-14.5.0.tgz#d6ea14a23b4884345057e80c41896807ed1e19c2"
-  integrity sha512-fxCjDZS4z2LFwrmHXqtEKIcfrPxoD8+5AmX7r3pEYp2rjIhmtYKA45DFQ/3PP8PYvSFW8BGR58ZaKecMpGfJXg==
+handsontable@^14.6.1:
+  version "14.6.1"
+  resolved "https://registry.yarnpkg.com/handsontable/-/handsontable-14.6.1.tgz#687b80ab909ac86a37c5916f0be759e90f8e38a4"
+  integrity sha512-uPvGTkV9dgndwRhSjlJpBzSLW7o7LX18GE70HbaBlcaNKUCEEXhzJ7WGlaw6X8rQZqShIB1HAC+h/t98odqVQQ==
   dependencies:
     "@handsontable/pikaday" "^1.0.0"
     "@types/pikaday" "1.7.4"

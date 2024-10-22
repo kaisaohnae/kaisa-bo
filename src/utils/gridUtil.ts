@@ -7,17 +7,39 @@ const defaultProps = {
     columns: [0], // 0부터 시작하는 인덱스에서 0번째 컬럼('mode')을 숨깁니다.
     indicators: false, // 숨겨진 컬럼에 대한 표시를 비활성화합니다.
   },*/
-  rowHeaders: false, // 행번호
+  rowHeaders: true, // 행번호
   columnSorting: false,
   manualColumnResize: true,
   comments: true,
   autoWrapRow: true,
   autoWrapCol: true,
-  height: 'auto',
+  //height: 'auto',
+  height: '550px',
   width: '100%',
   licenseKey: 'non-commercial-and-evaluation',
 }
 const datePickerConfig = {
+  dateFormat: 'YYYY-MM-DD',
+  correctFormat: true,
+  datePickerConfig: {
+    i18n: {
+      previousMonth: '이전 달',
+      nextMonth: '다음 달',
+      months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+      weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+      weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+    },
+    format: 'YYYY-MM-DD',
+    firstDay: 1,  // 월요일을 주의 첫 번째 날로 설정
+    /*disableDayFn: function(date: any) { // 특정 날짜를 비활성화하려면 여기에 로직을 추가
+      return date.getDay() === 0 || date.getDay() === 6; // 주말을 비활성화 예시
+    },
+    minDate: today // 오늘 이후의 날짜만 선택 가능
+    */
+  }
+};
+
+const dateTimePickerConfig = {
   dateFormat: 'YYYY-MM-DD HH:mm',
   correctFormat: true,
   datePickerConfig: {
@@ -37,6 +59,7 @@ const datePickerConfig = {
     */
   }
 };
+
 const searchProps = {
   creator: '',
   createDt: '',
@@ -193,6 +216,7 @@ export default {
   defaultProps,
   searchProps,
   datePickerConfig,
+  dateTimePickerConfig,
   commonColumnNames,
   commonColumns,
   auditColumnNames,

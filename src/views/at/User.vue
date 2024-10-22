@@ -11,12 +11,24 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>회원명</th>
-              <td colspan="3"><input type="text" v-model="search.memberName"/></td>
+              <th>사용자아이디</th>
+              <td colspan="3"><input type="text" v-model="search.userId"/></td>
+            </tr>
+            <tr>
+              <th>사용자이름</th>
+              <td colspan="3"><input type="text" v-model="search.userName"/></td>
             </tr>
             <tr>
               <th>전화번호</th>
               <td colspan="3"><input type="text" v-model="search.phoneNo"/></td>
+            </tr>
+            <tr>
+              <th>메모</th>
+              <td colspan="3"><input type="text" v-model="search.memo"/></td>
+            </tr>
+            <tr>
+              <th>사용자상태코드</th>
+              <td colspan="3"><CommonCode :cd="'userStateCode'" :model="search.userStateCode" @set-data="(val) => { search.userStateCode = val; }" /></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
@@ -60,7 +72,7 @@
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
-      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '문의')">
+      <button type="button" class="button excel" @click="excelUtil.excelExport(data.grid, '사용자')">
         <span class="icon">&#xf1c3;</span>
       </button>
       <div class="totalCount">총 {{ data.totalCount }}건</div>
@@ -74,7 +86,7 @@ import {onMounted, reactive, ref} from 'vue';
 import Handsontable from 'handsontable';
 import gridUtil from '@src/utils/gridUtil';
 import excelUtil from '@src/utils/excelUtil';
-import QnaService from '@src/service/cs/QnaService';
+import UserService from '@src/service/at/UserService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
@@ -84,8 +96,11 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
-  memberName: '',
+  userId: '',
+  userName: '',
   phoneNo: '',
+  memo: '',
+  userStateCode: '',
   updater: '',
   creator: '',
   startUpdateDt: '',
@@ -94,12 +109,14 @@ const search = reactive({
 });
 const data = reactive({
   required: [
-    'qnaNo',
-    'memberName',
-    'phoneNo',
+    'userId',
+    'companyId',
+    'userName',
     'pwd',
-    'title',
-    'content',
+    'phoneNo',
+    'passwordUpdateDt',
+    'loginDt',
+    'userStateCode',
   ],
   grid: {} as Handsontable,
   totalCount: 0,
@@ -107,14 +124,16 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique: ['qnaNo'],
+  unique: ['companyId'],
   required: [
-    'qnaNo',
-    'memberName',
-    'phoneNo',
+    'userId',
+    'companyId',
+    'userName',
     'pwd',
-    'title',
-    'content',
+    'phoneNo',
+    'passwordUpdateDt',
+    'loginDt',
+    'userStateCode',
   ],
 }
 let selectedRow = null as any;
@@ -122,7 +141,7 @@ let selectedRow = null as any;
 const getList = (event: Event) => {
   event?.preventDefault(); // submit 기본 동작을 막음
   data.totalCount = 0;
-  QnaService.getQnaList(search).then(
+  UserService.getUserList(search).then(
     (res: any) => {
       data.list = res.data?.list;
       data.totalCount = res.data?.totalCount;
@@ -140,13 +159,15 @@ const getList = (event: Event) => {
 const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
-    qnaNo: '',
-    memberName: '',
-    phoneNo: '',
-    email: '',
+    userId: '',
+    companyId: '',
+    userName: '',
     pwd: '',
-    title: '',
-    content: '',
+    phoneNo: '',
+    passwordUpdateDt: '',
+    memo: '',
+    loginDt: '',
+    userStateCode: '',
       ...gridUtil.auditAddColumns,
   };
   data.list = gridUtil.add({newRow, list: data.list, grid: data.grid});
@@ -161,7 +182,7 @@ const save = () => {
   if (!saveList) {
     return;
   }
-  QnaService.setQnaList(saveList).then(() => {
+  UserService.setUserList(saveList).then(() => {
     getList(); // 저장 후 목록 갱신
   });
 };
@@ -171,25 +192,29 @@ onMounted(() => {
     data: data.list,
     colHeaders: [
       ...gridUtil.commonColumnNames,
-      '질문번호',
-      '회원명',
-      '전화번호',
-      '이메일',
+      '사용자아이디',
+      '업체아이디',
+      '사용자이름',
       '비밀번호',
-      '제목',
-      '내용',
+      '전화번호',
+      '비밀번호수정일시',
+      '메모',
+      '로그인일시',
+      '사용자상태코드',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'text', width: 150, },
-      {data: 'memberName', type: 'text', width: 150, },
-      {data: 'phoneNo', type: 'text', width: 150, },
-      {data: 'email', type: 'text', width: 150, },
+      {data: 'userId', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'userName', type: 'text', width: 150, },
       {data: 'pwd', type: 'text', width: 150, },
-      {data: 'title', type: 'text', width: 150, },
-      {data: 'content', type: 'text', width: 150, },
+      {data: 'phoneNo', type: 'text', width: 150, },
+      {data: 'passwordUpdateDt', type: 'date', width: 170, ...gridUtil.dateTimePickerConfig  },
+      {data: 'memo', type: 'text', width: 150, },
+      {data: 'loginDt', type: 'date', width: 170, ...gridUtil.dateTimePickerConfig  },
+      {data: 'userStateCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['userStateCode']?.map(o => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

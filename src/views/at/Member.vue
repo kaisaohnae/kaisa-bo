@@ -10,10 +10,14 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>회원상태코드 [정상,정지]</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
+            <tr>
+              <th>회원아이디</th>
+              <td colspan="3"><input type="text" v-model="search.memberId"/></td>
+            </tr>
+            <tr>
+              <th>회원이름</th>
+              <td colspan="3"><input type="text" v-model="search.memberName"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +78,31 @@ import MemberService from '@src/service/at/MemberService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
+  memberId: '',
+  memberName: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'memberId',
+    'companyId',
+    'memberName',
+    'pwd',
+    'phoneNo',
+    'passwordUpdateDt',
+    'loginDt',
+    'memberStateCode',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +110,16 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'memberId',
+    'companyId',
+    'memberName',
+    'pwd',
+    'phoneNo',
+    'passwordUpdateDt',
+    'loginDt',
+    'memberStateCode',
+  ],
 }
 let selectedRow = null as any;
 
@@ -160,22 +187,22 @@ onMounted(() => {
       '비밀번호수정일시',
       '로그인일시',
       '메모',
-      '회원상태코드[정상,정지]',
+      '회원상태코드',
       ...gridUtil.auditColumnNames
     ],
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'memberId', type: 'text', width: 150},
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'memberName', type: 'text', width: 150},
-      {data: 'email', type: 'text', width: 150},
-      {data: 'pwd', type: 'text', width: 150},
-      {data: 'phoneNo', type: 'text', width: 150},
-      {data: 'passwordUpdateDt', type: 'date', width: 150},
-      {data: 'loginDt', type: 'date', width: 150},
-      {data: 'memo', type: 'text', width: 150},
-      {data: 'memberStateCode', type: 'text', width: 150},
+      {data: 'memberId', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'memberName', type: 'text', width: 150, },
+      {data: 'email', type: 'text', width: 150, },
+      {data: 'pwd', type: 'text', width: 150, },
+      {data: 'phoneNo', type: 'text', width: 150, },
+      {data: 'passwordUpdateDt', type: 'date', width: 170, ...gridUtil.dateTimePickerConfig  },
+      {data: 'loginDt', type: 'date', width: 170, ...gridUtil.dateTimePickerConfig  },
+      {data: 'memo', type: 'text', width: 150, },
+      {data: 'memberStateCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['memberStateCode']?.map(o => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

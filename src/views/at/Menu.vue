@@ -10,10 +10,6 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>정렬순서</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.menuId"/></td>
-        </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +70,28 @@ import MenuService from '@src/service/at/MenuService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  menuId: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['menuId', 'korean', 'english'],
+  required: [
+    'menuId',
+    'menuName',
+    'path',
+    'isDisplay',
+    'isLast',
+    'depth',
+    'sortOrder',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +99,15 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['menuId'],
-  required: ['menuId'],
+  required: [
+    'menuId',
+    'menuName',
+    'path',
+    'isDisplay',
+    'isLast',
+    'depth',
+    'sortOrder',
+  ],
 }
 let selectedRow = null as any;
 
@@ -152,7 +167,7 @@ onMounted(() => {
       ...gridUtil.commonColumnNames,
       '메뉴아이디',
       '메뉴명',
-      '메뉴그룹코드[at,cr,od,pd]',
+      '메뉴그룹코드',
       '경로',
       '아이콘',
       '전시여부',
@@ -164,15 +179,15 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'text', width: 150},
-      {data: 'menuName', type: 'text', width: 150},
-      {data: 'menuGroupCode', type: 'text', width: 150},
-      {data: 'path', type: 'text', width: 150},
-      {data: 'icon', type: 'text', width: 150},
-      {data: 'isDisplay', type: 'text', width: 150},
-      {data: 'isLast', type: 'text', width: 150},
-      {data: 'depth', type: 'text', width: 150},
-      {data: 'sortOrder', type: 'text', width: 150},
+      {data: 'menuId', type: 'text', width: 150, },
+      {data: 'menuName', type: 'text', width: 150, },
+      {data: 'menuGroupCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['menuGroupCode']?.map(o => o.codeValue)) }},
+      {data: 'path', type: 'text', width: 150, },
+      {data: 'icon', type: 'text', width: 150, },
+      {data: 'isDisplay', type: 'text', width: 150, },
+      {data: 'isLast', type: 'text', width: 150, },
+      {data: 'depth', type: 'text', width: 150, },
+      {data: 'sortOrder', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

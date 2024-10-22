@@ -10,10 +10,14 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>전화번호</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
+            <tr>
+              <th>업체명</th>
+              <td colspan="3"><input type="text" v-model="search.companyName"/></td>
+            </tr>
+            <tr>
+              <th>주소1</th>
+              <td colspan="3"><input type="text" v-model="search.addr1"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +78,27 @@ import CompanyService from '@src/service/at/CompanyService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
+  companyName: '',
+  addr1: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'companyId',
+    'companyTypeCode',
+    'companyName',
+    'phoneNo',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +106,12 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'companyId',
+    'companyTypeCode',
+    'companyName',
+    'phoneNo',
+  ],
 }
 let selectedRow = null as any;
 
@@ -150,7 +169,7 @@ onMounted(() => {
     colHeaders: [
       ...gridUtil.commonColumnNames,
       '업체아이디',
-      '업체유형코드[펜션,회사]',
+      '업체유형코드',
       '업체명',
       '위도',
       '경도',
@@ -162,14 +181,14 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'companyTypeCode', type: 'text', width: 150},
-      {data: 'companyName', type: 'text', width: 150},
-      {data: 'lttd', type: 'text', width: 150},
-      {data: 'lotd', type: 'text', width: 150},
-      {data: 'addr1', type: 'text', width: 150},
-      {data: 'addr2', type: 'text', width: 150},
-      {data: 'phoneNo', type: 'text', width: 150},
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'companyTypeCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['companyTypeCode']?.map(o => o.codeValue)) }},
+      {data: 'companyName', type: 'text', width: 150, },
+      {data: 'lttd', type: 'text', width: 150, },
+      {data: 'lotd', type: 'text', width: 150, },
+      {data: 'addr1', type: 'text', width: 150, },
+      {data: 'addr2', type: 'text', width: 150, },
+      {data: 'phoneNo', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

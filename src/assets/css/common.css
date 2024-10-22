@@ -44,7 +44,7 @@ th.required:after {content:'*'; display:inline-block; font-size:12px; color:#ff0
 
 #side ul li span.name u {color:#ff2600;} /* 뒤늦게 v-html 한곳은 style 안먹힐때가... */
 
-.no-list {margin-top: -17px; background: #f2f2f2; z-index: 100; position: relative; text-align: center; padding: 100px 0;}
+.no-list {text-align:right;}
 
 @media print {
 	html,

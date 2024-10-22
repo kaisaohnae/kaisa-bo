@@ -1,9 +1,10 @@
 <template>
   <select v-model="data.value" @change="change">
+    <option disabled value="">{{props.default}}</option>
     <option v-for="(o, idx) in auth.codeList[props.cd]"
             :key="idx"
-            :value="o.value">
-      {{ o.text }}
+            :value="o.codeValue">
+      {{ o.codeName }}
     </option>
   </select>
 </template>
@@ -12,13 +13,13 @@
 import {onMounted, ref, reactive} from 'vue';
 import {useAuthStore} from '@src/store/authStore';
 
-const emit = defineEmits(['set-data'])
-
 const auth = useAuthStore();
+const emit = defineEmits(['set-data'])
 
 const props = defineProps({
   cd: {type: String, required: true},
   model: {type: String, required: true},
+  default: {type: String, default: '선택하세요.'},
 });
 
 const data = reactive({
@@ -26,12 +27,10 @@ const data = reactive({
 });
 
 const change = () => {
-  console.log(data.value);
   emit('set-data', data.value);
 }
 
 onMounted(() => {
-
 });
 
 </script>

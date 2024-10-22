@@ -10,10 +10,6 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>컬럼명</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.fileNo"/></td>
-        </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +70,19 @@ import FileService from '@src/service/cr/FileService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  fileNo: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
 });
 const data = reactive({
-  required: ['fileNo', 'korean', 'english'],
+  required: [
+    'fileNo',
+    'tableName',
+    'columnName',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +90,11 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['fileNo'],
-  required: ['fileNo'],
+  required: [
+    'fileNo',
+    'tableName',
+    'columnName',
+  ],
 }
 let selectedRow = null as any;
 
@@ -152,9 +154,9 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'fileNo', type: 'text', width: 150},
-      {data: 'tableName', type: 'text', width: 150},
-      {data: 'columnName', type: 'text', width: 150},
+      {data: 'fileNo', type: 'text', width: 150, },
+      {data: 'tableName', type: 'text', width: 150, },
+      {data: 'columnName', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

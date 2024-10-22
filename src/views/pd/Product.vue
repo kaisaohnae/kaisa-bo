@@ -10,10 +10,6 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>파일번호</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +70,34 @@ import ProductService from '@src/service/pd/ProductService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'productNo',
+    'companyId',
+    'seasonPriceNo',
+    'productName',
+    'headCount',
+    'maxHeadCount',
+    'm2',
+    'isDisplay',
+    'isPet',
+    'isBBQ',
+    'isPickup',
+    'isStone',
+    'fileNo',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +105,21 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'productNo',
+    'companyId',
+    'seasonPriceNo',
+    'productName',
+    'headCount',
+    'maxHeadCount',
+    'm2',
+    'isDisplay',
+    'isPet',
+    'isBBQ',
+    'isPickup',
+    'isStone',
+    'fileNo',
+  ],
 }
 let selectedRow = null as any;
 
@@ -176,21 +203,21 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'productNo', type: 'text', width: 150},
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'seasonPriceNo', type: 'text', width: 150},
-      {data: 'productName', type: 'text', width: 150},
-      {data: 'headCount', type: 'text', width: 150},
-      {data: 'maxHeadCount', type: 'text', width: 150},
-      {data: 'm2', type: 'text', width: 150},
-      {data: 'isDisplay', type: 'text', width: 150},
-      {data: 'isPet', type: 'text', width: 150},
-      {data: 'isBBQ', type: 'text', width: 150},
-      {data: 'isPickup', type: 'text', width: 150},
-      {data: 'isStone', type: 'text', width: 150},
-      {data: 'memo', type: 'text', width: 150},
-      {data: 'content', type: 'text', width: 150},
-      {data: 'fileNo', type: 'text', width: 150},
+      {data: 'productNo', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'seasonPriceNo', type: 'text', width: 150, },
+      {data: 'productName', type: 'text', width: 150, },
+      {data: 'headCount', type: 'text', width: 150, },
+      {data: 'maxHeadCount', type: 'text', width: 150, },
+      {data: 'm2', type: 'text', width: 150, },
+      {data: 'isDisplay', type: 'text', width: 150, },
+      {data: 'isPet', type: 'text', width: 150, },
+      {data: 'isBBQ', type: 'text', width: 150, },
+      {data: 'isPickup', type: 'text', width: 150, },
+      {data: 'isStone', type: 'text', width: 150, },
+      {data: 'memo', type: 'text', width: 150, },
+      {data: 'content', type: 'text', width: 150, },
+      {data: 'fileNo', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

@@ -10,10 +10,6 @@
           <col>
         </colgroup>
         <tbody>
-        <tr>
-          <th>일요일가격</th><!-- class="required"-->
-          <td colspan="3"><input type="text" v-model="search.companyId"/></td>
-        </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -74,17 +70,32 @@ import SeasonService from '@src/service/od/SeasonService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
+import CommonCode from "@src/components/CommonCode.vue";
+import {useAuthStore} from "@src/store/authStore";
+
+const auth = useAuthStore();
 
 const search = reactive({
-  companyId: '',
   updater: '',
   creator: '',
-  startUpdateDt: null,
-  endUpdateDt: null,
-  createDt: null,
+  startUpdateDt: '',
+  endUpdateDt: '',
+  createDt: '',
 });
 const data = reactive({
-  required: ['companyId', 'korean', 'english'],
+  required: [
+    'seasonNo',
+    'seasonPriceNo',
+    'companyId',
+    'sortOrder',
+    'seasonName',
+    'seasonStartDay',
+    'seasonEndDay',
+    'price',
+    'friPrice',
+    'satPrice',
+    'sunPrice',
+  ],
   grid: {} as Handsontable,
   totalCount: 0,
   list: [] as any,
@@ -92,7 +103,19 @@ const data = reactive({
 });
 const gridProps = {
   unique: ['companyId'],
-  required: ['companyId'],
+  required: [
+    'seasonNo',
+    'seasonPriceNo',
+    'companyId',
+    'sortOrder',
+    'seasonName',
+    'seasonStartDay',
+    'seasonEndDay',
+    'price',
+    'friPrice',
+    'satPrice',
+    'sunPrice',
+  ],
 }
 let selectedRow = null as any;
 
@@ -168,17 +191,17 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonNo', type: 'text', width: 150},
-      {data: 'seasonPriceNo', type: 'text', width: 150},
-      {data: 'companyId', type: 'text', width: 150},
-      {data: 'sortOrder', type: 'text', width: 150},
-      {data: 'seasonName', type: 'text', width: 150},
-      {data: 'seasonStartDay', type: 'text', width: 150},
-      {data: 'seasonEndDay', type: 'text', width: 150},
-      {data: 'price', type: 'text', width: 150},
-      {data: 'friPrice', type: 'text', width: 150},
-      {data: 'satPrice', type: 'text', width: 150},
-      {data: 'sunPrice', type: 'text', width: 150},
+      {data: 'seasonNo', type: 'text', width: 150, },
+      {data: 'seasonPriceNo', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
+      {data: 'sortOrder', type: 'text', width: 150, },
+      {data: 'seasonName', type: 'text', width: 150, },
+      {data: 'seasonStartDay', type: 'text', width: 170, ...gridUtil.datePickerConfig  },
+      {data: 'seasonEndDay', type: 'text', width: 170, ...gridUtil.datePickerConfig  },
+      {data: 'price', type: 'text', width: 150, },
+      {data: 'friPrice', type: 'text', width: 150, },
+      {data: 'satPrice', type: 'text', width: 150, },
+      {data: 'sunPrice', type: 'text', width: 150, },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
