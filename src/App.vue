@@ -11,6 +11,7 @@ import Loading from '@src/components/Loading.vue';
 import Alert from '@src/components/Alert.vue';
 import {useAlertStore} from '@src/store/alertStore';
 import {useSettingStore} from '@src/store/settingStore';
+import { onMounted } from 'vue';
 
 const alert = useAlertStore();
 const setting = useSettingStore();
@@ -18,7 +19,12 @@ const setting = useSettingStore();
 if (location.hash === '#/main') {
   setting.hash = '/main';
 }
-
+onMounted(() => {
+  const metaTag = document.createElement('meta');
+  metaTag.name = "google";
+  metaTag.content = "notranslate";
+  document.head.appendChild(metaTag);
+});
 </script>
 <style scoped>
 #container {

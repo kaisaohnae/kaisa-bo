@@ -31,6 +31,7 @@ const change = () => {
 }
 
 onMounted(() => {
+  console.log(auth.codeList[props.cd]);
 });
 
 </script>
