@@ -19,35 +19,35 @@
               <td colspan="3"><input type="text" v-model="search.memberName"/></td>
             </tr>
         </tbody>
-  <tbody class="audit" v-show="data.audit">
-    <tr>
-      <th>수정기간</th>
-      <td colspan="3">
-        <SelectGroupDate
-        :format="'yyyy-MM-dd'"
-          :date="[search.startUpdateDt, search.endUpdateDt]"
-          @set-start-date="(o: any) => { search.startUpdateDt = o.date; }"
-          @set-end-date="(o: any) => { search.endUpdateDt = o.date; }"
+        <tbody class="audit" v-show="data.audit">
+          <tr>
+            <th>수정기간</th>
+            <td colspan="3">
+              <SelectGroupDate
+                :format="'yyyy-MM-dd'"
+                :date="[search.startUpdateDt, search.endUpdateDt]"
+                @set-start-date="(o: any) => { search.startUpdateDt = o.date; }"
+                @set-end-date="(o: any) => { search.endUpdateDt = o.date; }"
               />
-      </td>
-    </tr>
-    <tr>
-      <th>등록일</th>
-      <td colspan="3">
-        <SelectDate
-        :format="'yyyy-MM-dd'"
-          :date="[search.createDt]"
-          @set-start-date="(o: any) => { search.createDt = o.date; }"
+            </td>
+          </tr>
+          <tr>
+            <th>등록일</th>
+            <td colspan="3">
+              <SelectDate
+                :format="'yyyy-MM-dd'"
+                :date="[search.createDt]"
+                @set-start-date="(o: any) => { search.createDt = o.date; }"
               />
-      </td>
-    </tr>
-    <tr>
-      <th>수정ID</th>
-      <td><input type="text" v-model="search.updater"/></td>
-      <th>등록ID</th>
-      <td><input type="text" v-model="search.creator"/></td>
-    </tr>
-  </tbody>
+            </td>
+          </tr>
+          <tr>
+            <th>수정ID</th>
+            <td><input type="text" v-model="search.updater"/></td>
+            <th>등록ID</th>
+            <td><input type="text" v-model="search.creator"/></td>
+          </tr>
+        </tbody>
 
       </table>
     </fieldset>
@@ -57,7 +57,7 @@
         <button type="button" class="button del" @click="del"><span class="icon">&#xe815;</span>삭제</button>
         <button type="button" class="button save" @click="save"><span class="icon">&#xe814;</span>저장</button>
       </span>
-  <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
+      <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
