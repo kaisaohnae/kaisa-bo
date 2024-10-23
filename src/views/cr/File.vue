@@ -10,6 +10,14 @@
           <col>
         </colgroup>
         <tbody>
+            <tr>
+              <th>테이블명</th>
+              <td colspan="3"><input type="text" v-model="search.tableName"/></td>
+            </tr>
+            <tr>
+              <th>컬럼명</th>
+              <td colspan="3"><input type="text" v-model="search.columnName"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -76,6 +84,8 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
+  tableName: '',
+  columnName: '',
 });
 const data = reactive({
   required: [

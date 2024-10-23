@@ -86,6 +86,7 @@ const data = reactive({
   required: [
     'menuId',
     'menuName',
+    'menuGroupCode',
     'path',
     'isDisplay',
     'isLast',
@@ -102,6 +103,7 @@ const gridProps = {
   required: [
     'menuId',
     'menuName',
+    'menuGroupCode',
     'path',
     'isDisplay',
     'isLast',

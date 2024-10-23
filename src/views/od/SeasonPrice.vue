@@ -10,6 +10,14 @@
           <col>
         </colgroup>
         <tbody>
+            <tr>
+              <th>업체아이디</th>
+              <td colspan="3"><input type="text" v-model="search.companyId"/></td>
+            </tr>
+            <tr>
+              <th>시즌가격명</th>
+              <td colspan="3"><input type="text" v-model="search.seasonPriceName"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -76,6 +84,8 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
+  companyId: '',
+  seasonPriceName: '',
   updater: '',
   creator: '',
   startUpdateDt: '',
@@ -99,7 +109,7 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique: ['companyId'],
+  unique: ['seasonPriceNo'],
   required: [
     'seasonPriceNo',
     'companyId',

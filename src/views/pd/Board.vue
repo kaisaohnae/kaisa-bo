@@ -10,6 +10,22 @@
           <col>
         </colgroup>
         <tbody>
+            <tr>
+              <th>게시판카테고리아이디</th>
+              <td colspan="3"><input type="text" v-model="search.boardCategoryId"/></td>
+            </tr>
+            <tr>
+              <th>업체아이디</th>
+              <td colspan="3"><input type="text" v-model="search.companyId"/></td>
+            </tr>
+            <tr>
+              <th>제목</th>
+              <td colspan="3"><input type="text" v-model="search.title"/></td>
+            </tr>
+            <tr>
+              <th>내용</th>
+              <td colspan="3"><input type="text" v-model="search.contents"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -76,6 +92,10 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
+  boardCategoryId: '',
+  companyId: '',
+  title: '',
+  contents: '',
   updater: '',
   creator: '',
   startUpdateDt: '',
@@ -85,8 +105,8 @@ const search = reactive({
 const data = reactive({
   required: [
     'boardNo',
-    'companyId',
     'boardCategoryId',
+    'companyId',
     'title',
     'contents',
     'isDisplay',
@@ -97,11 +117,11 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique: ['boardCategoryId'],
+  unique: ['boardNo'],
   required: [
     'boardNo',
-    'companyId',
     'boardCategoryId',
+    'companyId',
     'title',
     'contents',
     'isDisplay',
@@ -131,8 +151,8 @@ const add = () => {
   const newRow = {
     ...gridUtil.commonAddColumns,
     boardNo: '',
-    companyId: '',
     boardCategoryId: '',
+    companyId: '',
     title: '',
     contents: '',
     isDisplay: '',
@@ -162,8 +182,8 @@ onMounted(() => {
     colHeaders: [
       ...gridUtil.commonColumnNames,
       '게시판번호',
-      '업체아이디',
       '게시판카테고리아이디',
+      '업체아이디',
       '제목',
       '내용',
       '전시여부',
@@ -174,8 +194,8 @@ onMounted(() => {
     columns: [
       ...gridUtil.commonColumns,
       {data: 'boardNo', type: 'text', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
       {data: 'boardCategoryId', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, },
       {data: 'title', type: 'text', width: 150, },
       {data: 'contents', type: 'text', width: 150, },
       {data: 'isDisplay', type: 'text', width: 150, },

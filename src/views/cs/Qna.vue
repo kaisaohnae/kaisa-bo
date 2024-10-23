@@ -18,6 +18,18 @@
               <th>전화번호</th>
               <td colspan="3"><input type="text" v-model="search.phoneNo"/></td>
             </tr>
+            <tr>
+              <th>이메일</th>
+              <td colspan="3"><input type="text" v-model="search.email"/></td>
+            </tr>
+            <tr>
+              <th>제목</th>
+              <td colspan="3"><input type="text" v-model="search.title"/></td>
+            </tr>
+            <tr>
+              <th>내용</th>
+              <td colspan="3"><input type="text" v-model="search.content"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -86,6 +98,9 @@ const auth = useAuthStore();
 const search = reactive({
   memberName: '',
   phoneNo: '',
+  email: '',
+  title: '',
+  content: '',
   updater: '',
   creator: '',
   startUpdateDt: '',

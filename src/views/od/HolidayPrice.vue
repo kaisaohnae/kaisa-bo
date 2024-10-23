@@ -11,6 +11,18 @@
         </colgroup>
         <tbody>
             <tr>
+              <th>휴일</th>
+              <td colspan="3"><input type="text" v-model="search.holiday"/></td>
+            </tr>
+            <tr>
+              <th>업체아이디</th>
+              <td colspan="3"><input type="text" v-model="search.companyId"/></td>
+            </tr>
+            <tr>
+              <th>휴일명</th>
+              <td colspan="3"><input type="text" v-model="search.holidayName"/></td>
+            </tr>
+            <tr>
               <th>휴일코드</th>
               <td colspan="3"><CommonCode :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
             </tr>
@@ -80,6 +92,9 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
+  holiday: '',
+  companyId: '',
+  holidayName: '',
   holidayCode: '',
   updater: '',
   creator: '',
@@ -100,7 +115,7 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique: ['companyId'],
+  unique: ['holiday'],
   required: [
     'holiday',
     'companyId',

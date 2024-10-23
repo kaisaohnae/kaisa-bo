@@ -14,10 +14,6 @@
               <th>업체명</th>
               <td colspan="3"><input type="text" v-model="search.companyName"/></td>
             </tr>
-            <tr>
-              <th>주소1</th>
-              <td colspan="3"><input type="text" v-model="search.addr1"/></td>
-            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -85,7 +81,6 @@ const auth = useAuthStore();
 
 const search = reactive({
   companyName: '',
-  addr1: '',
   updater: '',
   creator: '',
   startUpdateDt: '',

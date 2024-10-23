@@ -11,8 +11,32 @@
         </colgroup>
         <tbody>
             <tr>
+              <th>주문번호</th>
+              <td colspan="3"><input type="text" v-model="search.orderNo"/></td>
+            </tr>
+            <tr>
+              <th>업체아이디</th>
+              <td colspan="3"><input type="text" v-model="search.companyId"/></td>
+            </tr>
+            <tr>
+              <th>예약일</th>
+              <td colspan="3"><input type="text" v-model="search.reserveDay"/></td>
+            </tr>
+            <tr>
               <th>주문상태코드</th>
               <td colspan="3"><CommonCode :cd="'orderStateCode'" :model="search.orderStateCode" @set-data="(val) => { search.orderStateCode = val; }" /></td>
+            </tr>
+            <tr>
+              <th>전화번호</th>
+              <td colspan="3"><input type="text" v-model="search.phoneNo"/></td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td colspan="3"><input type="text" v-model="search.orderName"/></td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td colspan="3"><input type="text" v-model="search.email"/></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
@@ -80,7 +104,13 @@ import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
 const search = reactive({
+  orderNo: '',
+  companyId: '',
+  reserveDay: '',
   orderStateCode: '',
+  phoneNo: '',
+  orderName: '',
+  email: '',
   updater: '',
   creator: '',
   startUpdateDt: '',
@@ -111,7 +141,7 @@ const data = reactive({
   audit: false,
 });
 const gridProps = {
-  unique: ['companyId'],
+  unique: ['orderNo'],
   required: [
     'orderNo',
     'companyId',

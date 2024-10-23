@@ -15,6 +15,10 @@
               <td colspan="3"><input type="text" v-model="search.userId"/></td>
             </tr>
             <tr>
+              <th>업체아이디</th>
+              <td colspan="3"><input type="text" v-model="search.companyId"/></td>
+            </tr>
+            <tr>
               <th>사용자이름</th>
               <td colspan="3"><input type="text" v-model="search.userName"/></td>
             </tr>
@@ -97,6 +101,7 @@ const auth = useAuthStore();
 
 const search = reactive({
   userId: '',
+  companyId: '',
   userName: '',
   phoneNo: '',
   memo: '',
