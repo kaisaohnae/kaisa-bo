@@ -80,6 +80,12 @@
   </form>
   <div id="grid" class="grid-container"></div>
   <div class="no-list" v-show="data.list.length === 0">조회 내역이 없습니다.</div>
+
+  <Pagination
+    :currentPage="data.currentPage"
+    :lastPage="data.lastPage"
+    @update:page="handlePageChange"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -92,6 +98,7 @@ import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
 import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
+import Pagination from "@src/components/Pagination.vue";
 
 const auth = useAuthStore();
 
@@ -117,9 +124,11 @@ const data = reactive({
     'content',
   ],
   grid: {} as Handsontable,
-  totalCount: 0,
   list: [] as any,
   audit: false,
+  totalCount: 0,
+  currentPage: 1,
+  lastPage: 1,
 });
 const gridProps = {
   unique: ['qnaNo'],
@@ -137,10 +146,15 @@ let selectedRow = null as any;
 const getList = (event: Event) => {
   event?.preventDefault(); // submit 기본 동작을 막음
   data.totalCount = 0;
-  QnaService.getQnaList(search).then(
+  QnaService.getQnaList({
+    ...search,
+    page: data.currentPage,
+  }).then(
     (res: any) => {
       data.list = res.data?.list;
       data.totalCount = res.data?.totalCount;
+      data.currentPage = res.data?.currentPage;
+      data.lastPage = res.data?.lastPage;
       if (data.grid) {
         data.grid.updateSettings({
           data: data.list,
@@ -151,6 +165,10 @@ const getList = (event: Event) => {
       console.log(err);
     },
   );
+};
+const handlePageChange = (page: number) => {
+  data.currentPage = page;
+  getList();
 };
 const add = () => {
   const newRow = {

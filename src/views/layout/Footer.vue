@@ -1,14 +1,14 @@
 <template>
-  <div id="footer">copyright (c) kaisa</div>
+  <div id="footer">copyright (c) kaisa. all right reserved</div>
 </template>
 <script setup lang="ts">
 </script>
 <style scoped>
 #footer {
-  font-size: 11px;
+  font-size: 9px;
   position: fixed;
-  color: #ccc;
+  color: #999;
   right: 10px;
-  bottom: 0px;
+  bottom: 0;
 }
 </style>

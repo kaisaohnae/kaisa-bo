@@ -15,9 +15,8 @@ const setting = useSettingStore();
 
 <style scoped>
 #contents {
-  padding: 10px;
   background: #fff;
-  border: 1px solid #ccc;
+  border: 10px solid #fff;
   height: calc(100% - 109px);
   z-index: 1;
   overflow: auto;

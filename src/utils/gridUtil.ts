@@ -14,7 +14,7 @@ const defaultProps = {
   autoWrapRow: true,
   autoWrapCol: true,
   //height: 'auto',
-  height: '550px',
+  height: '500px',
   width: '100%',
   licenseKey: 'non-commercial-and-evaluation',
 }
