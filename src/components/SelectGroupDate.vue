@@ -57,8 +57,8 @@ const data = reactive({
 });
 
 // props.date 값을 ref로 복사하여 관리
-const startDate = ref(props.date[0]);
-const endDate = ref(props.date[1]);
+const startDate = ref(props.date[0]) as any;
+const endDate = ref(props.date[1]) as any;
 
 const setTerm = (n: number) => {
   data.term = n;

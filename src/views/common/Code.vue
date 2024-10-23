@@ -1,5 +1,5 @@
 <template>
-  <form class="search" @submit="getList" @keyup.enter="getList">
+  <form class="search" @submit="submitList" @keyup.enter="submitList">
     <fieldset>
       <legend>검색</legend>
       <table>
@@ -102,8 +102,11 @@ const gridProps = {
   required: ['code', 'codeValue'],
 }
 let selectedRow = null as any;
-
-const getList = (event: Event) => {
+const submitList = (event: Event) => {
+  event?.preventDefault(); // submit 기본 동작을 막음
+  getList();
+}
+const getList = () => {
   event?.preventDefault(); // submit 기본 동작을 막음
   data.totalCount = 0;
   CodeService.getCodeList({

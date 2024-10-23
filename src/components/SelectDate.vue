@@ -38,7 +38,7 @@ const data = reactive({
   allChecked: props.isAll,
 });
 
-const startDate = ref(props.date[0]);
+const startDate = ref(props.date[0]) as any;
 
 const isAllChecked = ref(true);
 

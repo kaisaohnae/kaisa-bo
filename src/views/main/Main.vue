@@ -91,7 +91,7 @@ const computedAxis = computed(() => {
       ticks: 20
     }
   };
-});
+}) as any;
 
 const setDashboard = () => {
   MainService.dashboard({}).then(

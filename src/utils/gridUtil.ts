@@ -180,7 +180,7 @@ const cellsEvent = ({row, col, grid, self, pk}: any) => {
     }
   }
   if (mode === 'C') { // pk 체크
-    pk.forEach(arr => {
+    pk.forEach((arr: any) => {
       if (col === arr) { // pk 는 readOnly 지만 추가는 가능
         cellProperties.readOnly = false;
         return cellProperties;

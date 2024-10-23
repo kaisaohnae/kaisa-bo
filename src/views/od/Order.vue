@@ -1,5 +1,5 @@
 <template>
-  <form class="search" @submit="getList" @keyup.enter="getList">
+  <form class="search" @submit="submitList" @keyup.enter="submitList">
     <fieldset>
       <legend>검색</legend>
       <table>
@@ -39,35 +39,36 @@
               <td colspan="3"><input type="text" v-model="search.email"/></td>
             </tr>
         </tbody>
-        <tbody class="audit" v-show="data.audit">
-        <tr>
-          <th>수정기간</th>
-          <td colspan="3">
-            <SelectGroupDate
-              :format="'yyyy-MM-dd'"
-              :date="[search.startUpdateDt, search.endUpdateDt]"
-              @set-start-date="(o) => { search.startUpdateDt = o.date; }"
-              @set-end-date="(o) => { search.endUpdateDt = o.date; }"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>등록일</th>
-          <td colspan="3">
-            <SelectDate
-              :format="'yyyy-MM-dd'"
-              :date="[search.createDt]"
-              @set-start-date="(o) => { search.createDt = o.date; }"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>수정ID</th>
-          <td><input type="text" v-model="search.updater"/></td>
-          <th>등록ID</th>
-          <td><input type="text" v-model="search.creator"/></td>
-        </tr>
-        </tbody>
+  <tbody class="audit" v-show="data.audit">
+    <tr>
+      <th>수정기간</th>
+      <td colspan="3">
+        <SelectGroupDate
+        :format="'yyyy-MM-dd'"
+          :date="[search.startUpdateDt, search.endUpdateDt]"
+          @set-start-date="(o: any) => { search.startUpdateDt = o.date; }"
+          @set-end-date="(o: any) => { search.endUpdateDt = o.date; }"
+              />
+      </td>
+    </tr>
+    <tr>
+      <th>등록일</th>
+      <td colspan="3">
+        <SelectDate
+        :format="'yyyy-MM-dd'"
+          :date="[search.createDt]"
+          @set-start-date="(o: any) => { search.createDt = o.date; }"
+              />
+      </td>
+    </tr>
+    <tr>
+      <th>수정ID</th>
+      <td><input type="text" v-model="search.updater"/></td>
+      <th>등록ID</th>
+      <td><input type="text" v-model="search.creator"/></td>
+    </tr>
+  </tbody>
+
       </table>
     </fieldset>
     <div class="btnWrap">
@@ -76,7 +77,7 @@
         <button type="button" class="button del" @click="del"><span class="icon">&#xe815;</span>삭제</button>
         <button type="button" class="button save" @click="save"><span class="icon">&#xe814;</span>저장</button>
       </span>
-      <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
+  <button type="button" class="audit" @click="data.audit = !data.audit">상세조회</button>
 
       <button type="submit" class="button3"><span class="icon">&#xe096;</span></button>
       <button type="reset" @click="gridUtil.reload()"><span class="icon">&#x22;</span></button>
@@ -88,7 +89,6 @@
   </form>
   <div id="grid" class="grid-container"></div>
   <div class="no-list" v-show="data.list.length === 0">조회 내역이 없습니다.</div>
-
   <Pagination
     :currentPage="data.currentPage"
     :lastPage="data.lastPage"
@@ -170,9 +170,11 @@ const gridProps = {
   ],
 }
 let selectedRow = null as any;
-
-const getList = (event: Event) => {
+const submitList = (event: Event) => {
   event?.preventDefault(); // submit 기본 동작을 막음
+  getList();
+}
+const getList = () => {
   data.totalCount = 0;
   OrderService.getOrderList({
     ...search,
@@ -270,8 +272,8 @@ onMounted(() => {
       {data: 'companyId', type: 'text', width: 150, readOnly: true, },
       {data: 'productNo', type: 'numeric', width: 150,  },
       {data: 'reserveDay', type: 'date', width: 170,  ...gridUtil.datePickerConfig },
-      {data: 'orderStateCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['orderStateCode']?.map(o => o.codeValue)) }},
-      {data: 'reserveCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['reserveCode']?.map(o => o.codeValue)) }},
+      {data: 'orderStateCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['orderStateCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'reserveCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['reserveCode']?.map((o: any) => o.codeValue)) }},
       {data: 'phoneNo', type: 'text', width: 150,  },
       {data: 'orderName', type: 'text', width: 150,  },
       {data: 'email', type: 'text', width: 150,  },

@@ -3,7 +3,7 @@ import {defineStore} from 'pinia';
 export const useAlertStore = defineStore('alert', {
   state: () => ({
     active: false,
-    info: {},
+    info: {} as any,
   }),
   actions: {
     open(info: any) {

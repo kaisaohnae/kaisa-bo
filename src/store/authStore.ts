@@ -5,10 +5,10 @@ import {Router} from 'vue-router';
 
 export interface AuthType {
   active: boolean;
-  userInfo: RemovableRef<UserType>;
-  menuList: RemovableRef<any[]>;
+  userInfo: any; // RemovableRef<UserType>;
+  menuList: any;
   codeList: any;
-  token: RemovableRef<string>;
+  token: any;
 }
 
 export interface UserType {
