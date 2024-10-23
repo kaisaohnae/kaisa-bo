@@ -18,7 +18,7 @@
         <p class="count">{{ getStateCount('결제완료') }}</p>
       </li>
     </ul>
-    <h2>월별 매출현황</h2>
+<!--    <h2>월별 매출현황</h2>-->
     <div style="width:100%; padding:10px 0 20px 0; overflow:auto;">
       <Chart :size="{ width: 1820, height: 500 }" :data="data.monthlyData" :margin="{ left: 0, top: 10, right: 0, bottom: 0 }" :direction="'horizontal'" :axis="computedAxis">
         <template #layers>

@@ -186,19 +186,19 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'text', width: 150, },
-      {data: 'menuName', type: 'text', width: 150, },
-      {data: 'menuGroupCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['menuGroupCode']?.map(o => o.codeValue)) }},
-      {data: 'path', type: 'text', width: 150, },
-      {data: 'icon', type: 'text', width: 150, },
-      {data: 'isDisplay', type: 'text', width: 150, },
-      {data: 'isLast', type: 'text', width: 150, },
-      {data: 'depth', type: 'text', width: 150, },
-      {data: 'sortOrder', type: 'text', width: 150, },
+      {data: 'menuId', type: 'text', width: 150, readOnly: true, },
+      {data: 'menuName', type: 'text', width: 150,  },
+      {data: 'menuGroupCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['menuGroupCode']?.map(o => o.codeValue)) }},
+      {data: 'path', type: 'text', width: 150,  },
+      {data: 'icon', type: 'text', width: 150,  },
+      {data: 'isDisplay', type: 'numeric', width: 150,  },
+      {data: 'isLast', type: 'numeric', width: 150,  },
+      {data: 'depth', type: 'numeric', width: 150,  },
+      {data: 'sortOrder', type: 'numeric', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

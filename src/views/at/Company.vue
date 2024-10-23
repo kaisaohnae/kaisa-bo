@@ -176,18 +176,18 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'companyTypeCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['companyTypeCode']?.map(o => o.codeValue)) }},
-      {data: 'companyName', type: 'text', width: 150, },
-      {data: 'lttd', type: 'text', width: 150, },
-      {data: 'lotd', type: 'text', width: 150, },
-      {data: 'addr1', type: 'text', width: 150, },
-      {data: 'addr2', type: 'text', width: 150, },
-      {data: 'phoneNo', type: 'text', width: 150, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'companyTypeCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['companyTypeCode']?.map(o => o.codeValue)) }},
+      {data: 'companyName', type: 'text', width: 150,  },
+      {data: 'lttd', type: 'text', width: 150,  },
+      {data: 'lotd', type: 'text', width: 150,  },
+      {data: 'addr1', type: 'text', width: 150,  },
+      {data: 'addr2', type: 'text', width: 150,  },
+      {data: 'phoneNo', type: 'text', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

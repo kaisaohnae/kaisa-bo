@@ -46,5 +46,5 @@ onMounted(() => {});
 </script>
 
 <style scoped>
-.common-code-radio {padding: 5px 0;}
+.common-code-radio {padding: 7px 0 4px 0;}
 </style>

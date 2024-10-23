@@ -173,14 +173,14 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'text', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'menuName', type: 'text', width: 150, },
-      {data: 'buttonRole', type: 'text', width: 150, },
+      {data: 'menuId', type: 'text', width: 150, readOnly: true, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'menuName', type: 'text', width: 150,  },
+      {data: 'buttonRole', type: 'text', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

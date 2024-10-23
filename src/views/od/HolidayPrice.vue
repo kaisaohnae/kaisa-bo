@@ -185,15 +185,15 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'holiday', type: 'date', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'holidayName', type: 'text', width: 150, },
-      {data: 'price', type: 'text', width: 150, },
-      {data: 'holidayCode', type: 'dropdown', width: 150, source: function (query, process) { process(auth.codeList['holidayCode']?.map(o => o.codeValue)) }},
+      {data: 'holiday', type: 'date', width: 150, readOnly: true, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'holidayName', type: 'text', width: 150,  },
+      {data: 'price', type: 'numeric', width: 150,  },
+      {data: 'holidayCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['holidayCode']?.map(o => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

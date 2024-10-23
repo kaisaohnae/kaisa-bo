@@ -189,18 +189,18 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonPriceNo', type: 'text', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'seasonPriceName', type: 'text', width: 150, },
-      {data: 'hotWaterPrice', type: 'text', width: 150, },
-      {data: 'bbqPrice', type: 'text', width: 150, },
-      {data: 'headCountOverPrice', type: 'text', width: 150, },
-      {data: 'petPrice', type: 'text', width: 150, },
-      {data: 'pickupPrice', type: 'text', width: 150, },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'seasonPriceName', type: 'text', width: 150,  },
+      {data: 'hotWaterPrice', type: 'numeric', width: 150,  },
+      {data: 'bbqPrice', type: 'numeric', width: 150,  },
+      {data: 'headCountOverPrice', type: 'numeric', width: 150,  },
+      {data: 'petPrice', type: 'numeric', width: 150,  },
+      {data: 'pickupPrice', type: 'numeric', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

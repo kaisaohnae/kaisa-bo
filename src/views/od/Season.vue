@@ -201,21 +201,21 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonNo', type: 'text', width: 150, },
-      {data: 'seasonPriceNo', type: 'text', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'sortOrder', type: 'text', width: 150, },
-      {data: 'seasonName', type: 'text', width: 150, },
-      {data: 'seasonStartDay', type: 'text', width: 170, ...gridUtil.datePickerConfig  },
-      {data: 'seasonEndDay', type: 'text', width: 170, ...gridUtil.datePickerConfig  },
-      {data: 'price', type: 'text', width: 150, },
-      {data: 'friPrice', type: 'text', width: 150, },
-      {data: 'satPrice', type: 'text', width: 150, },
-      {data: 'sunPrice', type: 'text', width: 150, },
+      {data: 'seasonNo', type: 'numeric', width: 150, readOnly: true, },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'sortOrder', type: 'numeric', width: 150,  },
+      {data: 'seasonName', type: 'text', width: 150,  },
+      {data: 'seasonStartDay', type: 'text', width: 170,  ...gridUtil.datePickerConfig },
+      {data: 'seasonEndDay', type: 'text', width: 170,  ...gridUtil.datePickerConfig },
+      {data: 'price', type: 'numeric', width: 150,  },
+      {data: 'friPrice', type: 'numeric', width: 150,  },
+      {data: 'satPrice', type: 'numeric', width: 150,  },
+      {data: 'sunPrice', type: 'numeric', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

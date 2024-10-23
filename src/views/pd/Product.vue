@@ -213,25 +213,25 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'productNo', type: 'text', width: 150, },
-      {data: 'companyId', type: 'text', width: 150, },
-      {data: 'seasonPriceNo', type: 'text', width: 150, },
-      {data: 'productName', type: 'text', width: 150, },
-      {data: 'headCount', type: 'text', width: 150, },
-      {data: 'maxHeadCount', type: 'text', width: 150, },
-      {data: 'm2', type: 'text', width: 150, },
-      {data: 'isDisplay', type: 'text', width: 150, },
-      {data: 'isPet', type: 'text', width: 150, },
-      {data: 'isBBQ', type: 'text', width: 150, },
-      {data: 'isPickup', type: 'text', width: 150, },
-      {data: 'isStone', type: 'text', width: 150, },
-      {data: 'memo', type: 'text', width: 150, },
-      {data: 'content', type: 'text', width: 150, },
-      {data: 'fileNo', type: 'text', width: 150, },
+      {data: 'productNo', type: 'numeric', width: 150, readOnly: true, },
+      {data: 'companyId', type: 'text', width: 150, readOnly: true, },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150,  },
+      {data: 'productName', type: 'text', width: 150,  },
+      {data: 'headCount', type: 'numeric', width: 150,  },
+      {data: 'maxHeadCount', type: 'numeric', width: 150,  },
+      {data: 'm2', type: 'numeric', width: 150,  },
+      {data: 'isDisplay', type: 'numeric', width: 150,  },
+      {data: 'isPet', type: 'numeric', width: 150,  },
+      {data: 'isBBQ', type: 'numeric', width: 150,  },
+      {data: 'isPickup', type: 'numeric', width: 150,  },
+      {data: 'isStone', type: 'numeric', width: 150,  },
+      {data: 'memo', type: 'text', width: 150,  },
+      {data: 'content', type: 'text', width: 150,  },
+      {data: 'fileNo', type: 'numeric', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});

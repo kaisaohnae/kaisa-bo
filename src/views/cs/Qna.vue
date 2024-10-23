@@ -198,17 +198,17 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'text', width: 150, },
-      {data: 'memberName', type: 'text', width: 150, },
-      {data: 'phoneNo', type: 'text', width: 150, },
-      {data: 'email', type: 'text', width: 150, },
-      {data: 'pwd', type: 'text', width: 150, },
-      {data: 'title', type: 'text', width: 150, },
-      {data: 'content', type: 'text', width: 150, },
+      {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true, },
+      {data: 'memberName', type: 'text', width: 150,  },
+      {data: 'phoneNo', type: 'text', width: 150,  },
+      {data: 'email', type: 'text', width: 150,  },
+      {data: 'pwd', type: 'text', width: 150,  },
+      {data: 'title', type: 'text', width: 150,  },
+      {data: 'content', type: 'text', width: 150,  },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
-      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: [1]});
+      return gridUtil.cellsEvent({row, col, grid: data.grid, self: this, pk: []}); // pk 배열 추가시 수정은 된다.
     },
     afterChange(changes, source) {
       gridUtil.afterChangeEvent({changes, source, gridProps, grid: data.grid, self: this});
