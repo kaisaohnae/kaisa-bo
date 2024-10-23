@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <th>휴일코드</th>
-              <td colspan="3"><CommonCode :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
+              <td colspan="3"><CommonCodeRadio :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
@@ -86,7 +86,7 @@ import HolidayPriceService from '@src/service/od/HolidayPriceService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
-import CommonCode from "@src/components/CommonCode.vue";
+import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
 
 const auth = useAuthStore();

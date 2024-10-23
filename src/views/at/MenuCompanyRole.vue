@@ -78,7 +78,7 @@ import MenuCompanyRoleService from '@src/service/at/MenuCompanyRoleService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
-import CommonCode from "@src/components/CommonCode.vue";
+import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
 
 const auth = useAuthStore();

@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <th>주문상태코드</th>
-              <td colspan="3"><CommonCode :cd="'orderStateCode'" :model="search.orderStateCode" @set-data="(val) => { search.orderStateCode = val; }" /></td>
+              <td colspan="3"><CommonCodeRadio :cd="'orderStateCode'" :model="search.orderStateCode" @set-data="(val) => { search.orderStateCode = val; }" /></td>
             </tr>
             <tr>
               <th>전화번호</th>
@@ -98,7 +98,7 @@ import OrderService from '@src/service/od/OrderService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
-import CommonCode from "@src/components/CommonCode.vue";
+import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
 
 const auth = useAuthStore();

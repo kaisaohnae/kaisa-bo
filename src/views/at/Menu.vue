@@ -10,6 +10,10 @@
           <col>
         </colgroup>
         <tbody>
+            <tr>
+              <th>메뉴명</th>
+              <td colspan="3"><input type="text" v-model="search.menuName"/></td>
+            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
         <tr>
@@ -70,12 +74,13 @@ import MenuService from '@src/service/at/MenuService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
-import CommonCode from "@src/components/CommonCode.vue";
+import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
 
 const auth = useAuthStore();
 
 const search = reactive({
+  menuName: '',
   updater: '',
   creator: '',
   startUpdateDt: '',

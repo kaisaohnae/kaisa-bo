@@ -32,7 +32,7 @@
             </tr>
             <tr>
               <th>사용자상태코드</th>
-              <td colspan="3"><CommonCode :cd="'userStateCode'" :model="search.userStateCode" @set-data="(val) => { search.userStateCode = val; }" /></td>
+              <td colspan="3"><CommonCodeRadio :cd="'userStateCode'" :model="search.userStateCode" @set-data="(val) => { search.userStateCode = val; }" /></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
@@ -94,7 +94,7 @@ import UserService from '@src/service/at/UserService';
 import dateUtil from "@src/utils/dateUtil";
 import SelectDate from "@src/components/SelectDate.vue";
 import SelectGroupDate from "@src/components/SelectGroupDate.vue";
-import CommonCode from "@src/components/CommonCode.vue";
+import CommonCodeRadio from "@src/components/CommonCodeRadio.vue";
 import {useAuthStore} from "@src/store/authStore";
 
 const auth = useAuthStore();
