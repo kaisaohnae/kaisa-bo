@@ -1,3 +1,6 @@
+import {useAuthStore} from "@src/store/authStore";
+const auth = useAuthStore();
+
 /**
  * 속성
  */
@@ -102,6 +105,9 @@ const hiddenColumns = (arr: any) => {
  * 행추가
  */
 const add = ({newRow, list, grid}: any) => {
+  if ('companyId' in newRow) {
+    newRow.companyId = auth.userInfo.companyId;
+  }
   list.unshift(newRow);
   grid.loadData(list);
   return list;
@@ -130,7 +136,7 @@ const reload = () => {
  */
 const valid = ({list, required}: any) => {
   const invalidRows = list.filter((item: any) => {
-    return required.some((field: string) => !item[field]);
+    return required.some((field: string) => !item[field] && item[field] != 0);
   });
   if (invalidRows.length > 0) {
     alert('모든 필수 항목을 입력해야 합니다.');

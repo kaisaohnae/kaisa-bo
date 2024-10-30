@@ -116,7 +116,6 @@ const search = reactive({
 });
 const data = reactive({
   required: [
-    'qnaNo',
     'memberName',
     'phoneNo',
     'pwd',
@@ -133,7 +132,6 @@ const data = reactive({
 const gridProps = {
   unique: ['qnaNo'],
   required: [
-    'qnaNo',
     'memberName',
     'phoneNo',
     'pwd',

@@ -126,7 +126,6 @@ const search = reactive({
 });
 const data = reactive({
   required: [
-    'orderNo',
     'companyId',
     'productNo',
     'reserveDay',
@@ -152,7 +151,6 @@ const data = reactive({
 const gridProps = {
   unique: ['orderNo'],
   required: [
-    'orderNo',
     'companyId',
     'productNo',
     'reserveDay',

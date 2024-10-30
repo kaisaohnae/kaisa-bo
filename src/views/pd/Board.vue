@@ -111,7 +111,6 @@ const search = reactive({
 });
 const data = reactive({
   required: [
-    'boardNo',
     'boardCategoryId',
     'companyId',
     'title',
@@ -128,7 +127,6 @@ const data = reactive({
 const gridProps = {
   unique: ['boardNo'],
   required: [
-    'boardNo',
     'boardCategoryId',
     'companyId',
     'title',
@@ -218,7 +216,7 @@ onMounted(() => {
       {data: 'companyId', type: 'text', width: 150, readOnly: true, },
       {data: 'title', type: 'text', width: 150,  },
       {data: 'contents', type: 'text', width: 150,  },
-      {data: 'isDisplay', type: 'numeric', width: 150,  },
+      {data: 'isDisplay', type: 'checkbox', checkedTemplate: 1, uncheckedTemplate: 0, width: 150,  },
       {data: 'tag', type: 'text', width: 150,  },
       ...gridUtil.auditColumns,
     ],

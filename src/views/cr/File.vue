@@ -66,7 +66,6 @@ const search = reactive({
 });
 const data = reactive({
   required: [
-    'fileNo',
     'tableName',
     'columnName',
   ],
@@ -80,7 +79,6 @@ const data = reactive({
 const gridProps = {
   unique: ['fileNo'],
   required: [
-    'fileNo',
     'tableName',
     'columnName',
   ],

@@ -83,10 +83,12 @@ label {cursor: pointer;}
 input[type="radio"] {font-size:0; background:#fff; line-height:0; vertical-align:middle; margin:-3px 5px 0 5px; appearance:none; outline:1px solid #ddd; border:1px solid #ddd; border-radius:100%; width:20px; height:20px;}
 [type="radio"]:checked {background:#555; height:20px; outline:1px solid #666; border:3px solid #fff;}
 
+/*
 input[type="checkbox"] {vertical-align:middle; background:#fff; margin:-2px 5px 0 5px; appearance:none; border:1px solid #888; width:25px; height:25px;}
 [type="checkbox"]:checked {height:25px; position:relative; background:#eee;}
 [type="checkbox"]:checked::before {content:''; position:absolute; left:2px; top:10px; width:10px; height:4px; rotate:45deg; display:block; overflow:hidden; background:#333;}
 [type="checkbox"]:checked::after {content:''; position:absolute; left:7px; top:10px; width:15px; height:4px; rotate:-45deg; display:block; overflow:hidden; background:#333;}
+*/
 
 select[disabled],
 input[disabled],
