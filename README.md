@@ -118,3 +118,11 @@ npm install -save vue3-xlsx
 import { XlsxRead, XlsxJson } from 'vue3-xlsx'
 
 ```
+
+```
+brew install gh
+gh auth login
+ssh-keygen -t ed25519 -C "kaisaohnae@gmail.com"
+pbcopy < ~/.ssh/id_ed25519.pub
+git config --global credential.helper osxkeychain
+```
