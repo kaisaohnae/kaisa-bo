@@ -1,0 +1,45 @@
+{
+  "name": "kaisa-bo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite serve --port 8886 --mode dev",
+    "test": "vue-tsc && vite build --base=/ --mode prod && vite preview --port 8886",
+    "build": "vue-tsc && vite build --base=/ --mode prod",
+    "preview": "vite preview --port 8886"
+  },
+  "dependencies": {
+    "@handsontable/vue3": "^14.6.1",
+    "@vuepic/vue-datepicker": "^9.0.3",
+    "@vueuse/core": "^10.11.1",
+    "axios": "^0.28.1",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "handsontable": "^14.6.1",
+    "pinia": "^2.2.6",
+    "vue": "^3.5.12",
+    "vue-clipboard3": "^2.0.0",
+    "vue-cookies": "^1.8.4",
+    "vue-router": "^4.4.5",
+    "vue3-charts": "^1.1.33",
+    "vue3-cookies": "^1.0.6",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/prismjs": "^1.26.5",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "path": "^0.12.7",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-vue-setup-extend": "^0.4.0",
+    "vue-tsc": "^2.1.10"
+  },
+  "packageManager": "yarn@4.5.1"
+}
