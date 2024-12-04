@@ -15,7 +15,7 @@ rm -rf .git
 cd ..
 ```
 
-## 방법2. 
+## 방법2. (현재 사용중)
 
 ```
 mkdir -p .github/workflows
