@@ -8,6 +8,8 @@ import 'handsontable/dist/handsontable.full.min.css';
 import '@src/assets/css/reset.css';
 import '@src/assets/css/common.css';
 
+import '@src/assets/css/lib/tui-grid-editor.css';
+
 const app = createApp(App);
 const pinia = createPinia();
 

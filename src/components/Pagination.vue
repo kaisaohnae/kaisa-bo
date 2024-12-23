@@ -76,6 +76,7 @@ const changePage = (page: number) => {
   align-items: center;
 }
 .pagination span {
+  cursor: pointer;
   font-size: 20px;
   text-align: center;
   width: 28px;

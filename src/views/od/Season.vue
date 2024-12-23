@@ -90,6 +90,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -222,17 +224,17 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'sortOrder', type: 'numeric', width: 150,  },
-      {data: 'seasonName', type: 'text', width: 150,  },
-      {data: 'seasonStartDay', type: 'text', width: 170,  ...gridUtil.datePickerConfig },
-      {data: 'seasonEndDay', type: 'text', width: 170,  ...gridUtil.datePickerConfig },
-      {data: 'price', type: 'numeric', width: 150,  },
-      {data: 'friPrice', type: 'numeric', width: 150,  },
-      {data: 'satPrice', type: 'numeric', width: 150,  },
-      {data: 'sunPrice', type: 'numeric', width: 150,  },
+      {data: 'seasonNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'sortOrder', type: 'numeric', width: 150,   },
+      {data: 'seasonName', type: 'text', width: 150,   },
+      {data: 'seasonStartDay', type: 'text', width: 170,   ...gridUtil.datePickerConfig },
+      {data: 'seasonEndDay', type: 'text', width: 170,   ...gridUtil.datePickerConfig },
+      {data: 'price', type: 'numeric', width: 150,   },
+      {data: 'friPrice', type: 'numeric', width: 150,   },
+      {data: 'satPrice', type: 'numeric', width: 150,   },
+      {data: 'sunPrice', type: 'numeric', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

@@ -90,6 +90,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -210,14 +212,14 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'seasonPriceName', type: 'text', width: 150,  },
-      {data: 'hotWaterPrice', type: 'numeric', width: 150,  },
-      {data: 'bbqPrice', type: 'numeric', width: 150,  },
-      {data: 'headCountOverPrice', type: 'numeric', width: 150,  },
-      {data: 'petPrice', type: 'numeric', width: 150,  },
-      {data: 'pickupPrice', type: 'numeric', width: 150,  },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'seasonPriceName', type: 'text', width: 150,   },
+      {data: 'hotWaterPrice', type: 'numeric', width: 150,   },
+      {data: 'bbqPrice', type: 'numeric', width: 150,   },
+      {data: 'headCountOverPrice', type: 'numeric', width: 150,   },
+      {data: 'petPrice', type: 'numeric', width: 150,   },
+      {data: 'pickupPrice', type: 'numeric', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

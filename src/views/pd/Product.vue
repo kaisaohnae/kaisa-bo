@@ -90,6 +90,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -234,21 +236,21 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'productNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'seasonPriceNo', type: 'numeric', width: 150,  },
-      {data: 'productName', type: 'text', width: 150,  },
-      {data: 'headCount', type: 'numeric', width: 150,  },
-      {data: 'maxHeadCount', type: 'numeric', width: 150,  },
-      {data: 'm2', type: 'numeric', width: 150,  },
-      {data: 'isDisplay', type: 'numeric', width: 150,  },
-      {data: 'isPet', type: 'numeric', width: 150,  },
-      {data: 'isBBQ', type: 'numeric', width: 150,  },
-      {data: 'isPickup', type: 'numeric', width: 150,  },
-      {data: 'isStone', type: 'numeric', width: 150,  },
-      {data: 'memo', type: 'text', width: 150,  },
-      {data: 'content', type: 'text', width: 150,  },
-      {data: 'fileNo', type: 'numeric', width: 150,  },
+      {data: 'productNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'seasonPriceNo', type: 'numeric', width: 150,   },
+      {data: 'productName', type: 'text', width: 150,   },
+      {data: 'headCount', type: 'numeric', width: 150,   },
+      {data: 'maxHeadCount', type: 'numeric', width: 150,   },
+      {data: 'm2', type: 'numeric', width: 150,   },
+      {data: 'isDisplay', type: 'numeric', width: 150,   },
+      {data: 'isPet', type: 'numeric', width: 150,   },
+      {data: 'isBBQ', type: 'numeric', width: 150,   },
+      {data: 'isPickup', type: 'numeric', width: 150,   },
+      {data: 'isStone', type: 'numeric', width: 150,   },
+      {data: 'memo', type: 'text', width: 150,   },
+      {data: 'content', type: 'text', width: 150,   },
+      {data: 'fileNo', type: 'numeric', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

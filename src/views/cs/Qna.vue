@@ -102,6 +102,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -219,13 +221,13 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'memberName', type: 'text', width: 150,  },
-      {data: 'phoneNo', type: 'text', width: 150,  },
-      {data: 'email', type: 'text', width: 150,  },
-      {data: 'pwd', type: 'text', width: 150,  },
-      {data: 'title', type: 'text', width: 150,  },
-      {data: 'content', type: 'text', width: 150,  },
+      {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'memberName', type: 'text', width: 150,   },
+      {data: 'phoneNo', type: 'text', width: 150,   },
+      {data: 'email', type: 'text', width: 150,   },
+      {data: 'pwd', type: 'text', width: 150,   },
+      {data: 'title', type: 'text', width: 150,   },
+      {data: 'content', type: 'text', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

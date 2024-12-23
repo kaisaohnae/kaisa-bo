@@ -90,6 +90,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -216,16 +218,16 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'memberId', type: 'text', width: 150, readOnly: true, },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'memberName', type: 'text', width: 150,  },
-      {data: 'email', type: 'text', width: 150,  },
-      {data: 'pwd', type: 'text', width: 150,  },
-      {data: 'phoneNo', type: 'text', width: 150,  },
-      {data: 'passwordUpdateDt', type: 'date', width: 170,  ...gridUtil.dateTimePickerConfig },
-      {data: 'loginDt', type: 'date', width: 170,  ...gridUtil.dateTimePickerConfig },
-      {data: 'memo', type: 'text', width: 150,  },
-      {data: 'memberStateCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['memberStateCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'memberId', type: 'text', width: 150, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'memberName', type: 'text', width: 150,   },
+      {data: 'email', type: 'text', width: 150,   },
+      {data: 'pwd', type: 'text', width: 150,   },
+      {data: 'phoneNo', type: 'text', width: 150,   },
+      {data: 'passwordUpdateDt', type: 'date', width: 170,   ...gridUtil.dateTimePickerConfig },
+      {data: 'loginDt', type: 'date', width: 170,   ...gridUtil.dateTimePickerConfig },
+      {data: 'memo', type: 'text', width: 150,   },
+      {data: 'memberStateCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['memberStateCode']?.map((o: any) => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

@@ -86,6 +86,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -209,15 +211,15 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'text', width: 150, readOnly: true, },
-      {data: 'menuName', type: 'text', width: 150,  },
-      {data: 'menuGroupCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['menuGroupCode']?.map((o: any) => o.codeValue)) }},
-      {data: 'path', type: 'text', width: 150,  },
-      {data: 'icon', type: 'text', width: 150,  },
-      {data: 'isDisplay', type: 'numeric', width: 150,  },
-      {data: 'isLast', type: 'numeric', width: 150,  },
-      {data: 'depth', type: 'numeric', width: 150,  },
-      {data: 'sortOrder', type: 'numeric', width: 150,  },
+      {data: 'menuId', type: 'text', width: 150, readOnly: true,  },
+      {data: 'menuName', type: 'text', width: 150,   },
+      {data: 'menuGroupCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['menuGroupCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'path', type: 'text', width: 150,   },
+      {data: 'icon', type: 'text', width: 150,   },
+      {data: 'isDisplay', type: 'numeric', width: 150,   },
+      {data: 'isLast', type: 'numeric', width: 150,   },
+      {data: 'depth', type: 'numeric', width: 150,   },
+      {data: 'sortOrder', type: 'numeric', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

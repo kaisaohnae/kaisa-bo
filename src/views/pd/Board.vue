@@ -83,6 +83,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="BoardDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -98,7 +105,15 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+// detail
+import Detail from "@src/views/common/Detail.vue";
+import BoardDetail from "@src/views/pd/BoardDetail.vue";
+
 const auth = useAuthStore();
+
+// detail
+const showDetailData = ref<any>(null); // 선택된 데이터를 저장
+const showDetail = ref(false); // Detail 컴포넌트 표시 여부
 
 const search = reactive({
   boardCategoryId: '',
@@ -214,13 +229,13 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'boardNo', type: 'numeric', width: 150, readOnly: true, },
-      {data: 'boardCategoryId', type: 'numeric', width: 150,  },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'title', type: 'text', width: 150,  },
-      {data: 'contents', type: 'text', width: 150,  },
-      {data: 'isDisplay', type: 'numeric', width: 150,  },
-      {data: 'tag', type: 'text', width: 150,  },
+      {data: 'boardNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'boardCategoryId', type: 'numeric', width: 150,   },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'title', type: 'text', width: 150,  className: 'underline', },
+      {data: 'contents', type: 'text', width: 150,   },
+      {data: 'isDisplay', type: 'numeric', width: 150,   },
+      {data: 'tag', type: 'text', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {
@@ -234,9 +249,15 @@ onMounted(() => {
     },
     afterOnCellMouseDown: (event, coords) => {
       const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
-      if (colHeader === '제목') {
-        const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+
+      // detail
+      const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+      if (colHeader === '제목' && rowData) {
         console.log('제목 칼럼 클릭:', rowData);
+
+        // 선택된 데이터를 저장하고 Detail 컴포넌트를 표시
+        showDetailData.value = rowData;
+        showDetail.value = true;
       }
     },
     ...gridUtil.defaultProps,

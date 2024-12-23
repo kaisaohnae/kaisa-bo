@@ -63,7 +63,9 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }*/
-
+  if(!userInfo) {
+    next('/login');
+  }
   if (!userInfo?.companyId && to.path !== '/login') {
     next('/login');
   } else if (to.meta.auth && !userInfo?.companyId) {

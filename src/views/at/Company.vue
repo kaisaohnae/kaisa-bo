@@ -86,6 +86,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -199,14 +201,14 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'companyTypeCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['companyTypeCode']?.map((o: any) => o.codeValue)) }},
-      {data: 'companyName', type: 'text', width: 150,  },
-      {data: 'lttd', type: 'text', width: 150,  },
-      {data: 'lotd', type: 'text', width: 150,  },
-      {data: 'addr1', type: 'text', width: 150,  },
-      {data: 'addr2', type: 'text', width: 150,  },
-      {data: 'phoneNo', type: 'text', width: 150,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'companyTypeCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['companyTypeCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'companyName', type: 'text', width: 150,   },
+      {data: 'lttd', type: 'text', width: 150,   },
+      {data: 'lotd', type: 'text', width: 150,   },
+      {data: 'addr1', type: 'text', width: 150,   },
+      {data: 'addr2', type: 'text', width: 150,   },
+      {data: 'phoneNo', type: 'text', width: 150,   },
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

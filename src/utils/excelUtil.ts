@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import * as XLSX from 'xlsx-js-style';
 import dateUtil from '@src/utils/dateUtil';
 
 /**
@@ -36,10 +36,9 @@ const excelExport = (gridInstance: any, gridName: any) => {
   // 워크시트 생성
   const workSheet = XLSX.utils.json_to_sheet(dataList);
   // 열 너비 조정 (map 내부에 debugger 추가)
-  const wscols = columns && Array.isArray(columns) ? columns.map((col, index) => {
-    return { width: (colHeaders[index] ? colHeaders[index].length : 0) * 4 };
+  workSheet['!cols'] = columns && Array.isArray(columns) ? columns.map((col, index) => {
+    return {width: (colHeaders[index] ? colHeaders[index].length : 0) * 4};
   }) : [];
-  workSheet['!cols'] = wscols;
   // 워크북에 워크시트 추가
   XLSX.utils.book_append_sheet(workBook, workSheet, gridName);
   // 파일로 다운로드

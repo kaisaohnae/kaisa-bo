@@ -109,6 +109,8 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+
+
 const auth = useAuthStore();
 
 const search = reactive({
@@ -219,11 +221,11 @@ onMounted(() => {
     hiddenColumns: gridUtil.hiddenColumns([]), // 0 mode 는 감추기
     columns: [
       ...gridUtil.commonColumns,
-      {data: 'holiday', type: 'date', width: 170, readOnly: true, ...gridUtil.datePickerConfig },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true, },
-      {data: 'holidayName', type: 'text', width: 150,  },
-      {data: 'price', type: 'numeric', width: 150,  },
-      {data: 'holidayCode', type: 'dropdown', width: 150,  source: function (query, process) { process(auth.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'holiday', type: 'date', width: 170, readOnly: true,  ...gridUtil.datePickerConfig },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
+      {data: 'holidayName', type: 'text', width: 150,   },
+      {data: 'price', type: 'numeric', width: 150,   },
+      {data: 'holidayCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
       ...gridUtil.auditColumns,
     ],
     cells: function (row, col) {

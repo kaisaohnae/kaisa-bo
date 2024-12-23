@@ -1,0 +1,83 @@
+<template>
+  <div class="detail-content">
+    <h2>게시판 상세</h2>
+    <div class="detail-scroll">
+      <table class="detail-table">
+        <caption>게시판 상세</caption>
+        <tbody>
+        <tr>
+          <th scope="col">게시판 번호</th>
+          <td>{{ data.boardNo }}</td>
+        </tr>
+        <tr>
+          <th scope="col">카테고리</th>
+          <td>{{ data.boardCategoryId }}</td>
+        </tr>
+        <tr>
+          <th scope="col">제목</th>
+          <td><input type="text" v-model="data.title" required/></td>
+        </tr>
+        <tr>
+          <th scope="col">전시여부</th>
+          <td>
+            <CommonCode :cd="'isDisplay'" :model="data.isDisplay" @set-data="(val) => { data.isDisplay = val; }"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div id="boardEditor"></div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- 기타 데이터 렌더링 -->
+    </div>
+    <div class="detail-bottom">
+      <button type="button">저장</button>
+      <button type="button">취소</button>
+    </div>
+  </div>
+</template>
+<script setup>
+import { defineProps, onMounted, reactive} from 'vue';
+import CommonCode from "@src/components/CommonCode.vue";
+import gridUtil from '@src/utils/gridUtil';
+
+const props = defineProps({
+  data: { type: Object, required: true },
+});
+
+const edit = reactive({
+  editor: {},
+  editorOption: {}
+});
+
+const drawDetail = () => {
+  edit.editor = gridUtil.createEditor({name: '#boardEditor', cnts: props.data }); // props.data.contents
+}
+const getDetail = () => {
+  drawDetail();
+  /*
+  if(props.data.blogNo) {
+    BlogService.getBlog({ blogNo: props.data.blogNo}).then(
+      (res) => {
+        props.data.blogNo = res.data.blogNo;
+        props.data.cnts = res.data.cnts;
+        props.data.fileList = res.data.fileList;
+        drawDetail();
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
+  } else {
+    drawDetail();
+  }*/
+}
+
+onMounted(() => {
+  getDetail();
+});
+</script>
+<style scoped>
+</style>

@@ -1,3 +1,7 @@
+import Editor from '@toast-ui/editor';
+import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+import Prism from 'prismjs';
+
 import {useAuthStore} from "@src/store/authStore";
 const auth = useAuthStore();
 
@@ -221,7 +225,34 @@ const afterChangeEvent = ({changes, source, gridProps, grid, self}: any) => {
     });
   }
 };
+/**
+ * 에디터
+ * @param obj
+ * @returns
+ */
+const createEditor = (obj: any) => {
+  const initialValue = typeof obj.cnts === 'string' ? obj.cnts : ' '; // Ensure it's a string
+  return new Editor({
+    el: document.querySelector(obj.name) as HTMLElement,
+    previewStyle: 'vertical',
+    // previewStyle: 'tab',
+    toolbarItems: [
+      ['heading', 'bold', 'italic', 'strike'],
+      ['hr', 'quote'],
+      ['ul', 'ol', 'task', 'indent', 'outdent'],
+      ['table', 'link', 'image'], // 'image'
+      ['code', 'codeblock']
+    ],
+    initialEditType: 'wysiwyg', // 'wysiwyg','markdown'
+    height: '400px',
+    previewHighlight: true,
+    plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+    initialValue: initialValue,
+  });
+};
+
 export default {
+  createEditor,
   defaultProps,
   searchProps,
   datePickerConfig,
