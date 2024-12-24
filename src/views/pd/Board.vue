@@ -22,10 +22,6 @@
               <th scope="row">제목</th>
               <td colspan="3"><input type="text" v-model="search.title"/></td>
             </tr>
-            <tr>
-              <th scope="row">내용</th>
-              <td colspan="3"><input type="text" v-model="search.contents"/></td>
-            </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
@@ -118,7 +114,6 @@ const search = reactive({
   boardCategoryId: '',
   companyId: '',
   title: '',
-  contents: '',
   updater: '',
   creator: '',
   startUpdateDt: '',
@@ -130,7 +125,6 @@ const data = reactive({
     'boardCategoryId',
     'companyId',
     'title',
-    'contents',
     'isDisplay',
   ],
   grid: {} as Handsontable,
@@ -147,7 +141,6 @@ const gridProps = {
     'boardCategoryId',
     'companyId',
     'title',
-    'contents',
     'isDisplay',
   ],
 }
@@ -189,7 +182,6 @@ const add = () => {
     boardCategoryId: '',
     companyId: '',
     title: '',
-    contents: '',
     isDisplay: '',
     tag: '',
       ...gridUtil.auditAddColumns,
@@ -220,7 +212,6 @@ onMounted(() => {
       '게시판카테고리아이디',
       '업체아이디',
       '제목',
-      '내용',
       '전시여부',
       '태그',
       ...gridUtil.auditColumnNames
@@ -232,7 +223,6 @@ onMounted(() => {
       {data: 'boardCategoryId', type: 'numeric', width: 150,   },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'title', type: 'text', width: 150,  className: 'underline', },
-      {data: 'contents', type: 'text', width: 150,   },
       {data: 'isDisplay', type: 'numeric', width: 150,   },
       {data: 'tag', type: 'text', width: 150,   },
       ...gridUtil.auditColumns,
