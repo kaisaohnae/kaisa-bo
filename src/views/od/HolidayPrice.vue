@@ -11,7 +11,7 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>휴일</th>
+              <th scope="row">휴일</th>
               <td colspan="3">
                 <VueDatePicker
                   v-model="search.holiday"
@@ -26,21 +26,21 @@
               </td>
             </tr>
             <tr v-show="auth.userInfo.companyId === 'kaisa'">
-              <th>업체아이디</th>
+              <th scope="row">업체아이디</th>
               <td colspan="3"><input type="text" v-model="search.companyId"/></td>
             </tr>
             <tr>
-              <th>휴일명</th>
+              <th scope="row">휴일명</th>
               <td colspan="3"><input type="text" v-model="search.holidayName"/></td>
             </tr>
             <tr>
-              <th>휴일코드</th>
+              <th scope="row">휴일코드</th>
               <td colspan="3"><CommonCodeRadio :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
-            <th>수정기간</th>
+            <th scope="row">수정기간</th>
             <td colspan="3">
               <SelectGroupDate
                 :format="'yyyy-MM-dd'"
@@ -51,7 +51,7 @@
             </td>
           </tr>
           <tr>
-            <th>등록일</th>
+            <th scope="row">등록일</th>
             <td colspan="3">
               <SelectDate
                 :format="'yyyy-MM-dd'"
@@ -61,9 +61,9 @@
             </td>
           </tr>
           <tr>
-            <th>수정ID</th>
+            <th scope="row">수정ID</th>
             <td><input type="text" v-model="search.updater"/></td>
-            <th>등록ID</th>
+            <th scope="row">등록ID</th>
             <td><input type="text" v-model="search.creator"/></td>
           </tr>
         </tbody>
@@ -94,6 +94,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="HolidayPriceDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -112,7 +119,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 
 const auth = useAuthStore();
-
 const search = reactive({
   holiday: '',
   companyId: '',

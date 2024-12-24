@@ -11,29 +11,29 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>회원명</th>
+              <th scope="row">회원명</th>
               <td colspan="3"><input type="text" v-model="search.memberName"/></td>
             </tr>
             <tr>
-              <th>전화번호</th>
+              <th scope="row">전화번호</th>
               <td colspan="3"><input type="text" v-model="search.phoneNo"/></td>
             </tr>
             <tr>
-              <th>이메일</th>
+              <th scope="row">이메일</th>
               <td colspan="3"><input type="text" v-model="search.email"/></td>
             </tr>
             <tr>
-              <th>제목</th>
+              <th scope="row">제목</th>
               <td colspan="3"><input type="text" v-model="search.title"/></td>
             </tr>
             <tr>
-              <th>내용</th>
+              <th scope="row">내용</th>
               <td colspan="3"><input type="text" v-model="search.content"/></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
-            <th>수정기간</th>
+            <th scope="row">수정기간</th>
             <td colspan="3">
               <SelectGroupDate
                 :format="'yyyy-MM-dd'"
@@ -44,7 +44,7 @@
             </td>
           </tr>
           <tr>
-            <th>등록일</th>
+            <th scope="row">등록일</th>
             <td colspan="3">
               <SelectDate
                 :format="'yyyy-MM-dd'"
@@ -54,9 +54,9 @@
             </td>
           </tr>
           <tr>
-            <th>수정ID</th>
+            <th scope="row">수정ID</th>
             <td><input type="text" v-model="search.updater"/></td>
-            <th>등록ID</th>
+            <th scope="row">등록ID</th>
             <td><input type="text" v-model="search.creator"/></td>
           </tr>
         </tbody>
@@ -87,6 +87,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="QnaDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -105,7 +112,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 
 const auth = useAuthStore();
-
 const search = reactive({
   memberName: '',
   phoneNo: '',

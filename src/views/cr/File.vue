@@ -11,11 +11,11 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>테이블명</th>
+              <th scope="row">테이블명</th>
               <td colspan="3"><input type="text" v-model="search.tableName"/></td>
             </tr>
             <tr>
-              <th>컬럼명</th>
+              <th scope="row">컬럼명</th>
               <td colspan="3"><input type="text" v-model="search.columnName"/></td>
             </tr>
         </tbody>
@@ -45,6 +45,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="FileDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -63,7 +70,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 
 const auth = useAuthStore();
-
 const search = reactive({
   tableName: '',
   columnName: '',

@@ -11,33 +11,33 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>사용자아이디</th>
+              <th scope="row">사용자아이디</th>
               <td colspan="3"><input type="text" v-model="search.userId"/></td>
             </tr>
             <tr v-show="auth.userInfo.companyId === 'kaisa'">
-              <th>업체아이디</th>
+              <th scope="row">업체아이디</th>
               <td colspan="3"><input type="text" v-model="search.companyId"/></td>
             </tr>
             <tr>
-              <th>사용자이름</th>
+              <th scope="row">사용자이름</th>
               <td colspan="3"><input type="text" v-model="search.userName"/></td>
             </tr>
             <tr>
-              <th>전화번호</th>
+              <th scope="row">전화번호</th>
               <td colspan="3"><input type="text" v-model="search.phoneNo"/></td>
             </tr>
             <tr>
-              <th>메모</th>
+              <th scope="row">메모</th>
               <td colspan="3"><input type="text" v-model="search.memo"/></td>
             </tr>
             <tr>
-              <th>사용자상태코드</th>
+              <th scope="row">사용자상태코드</th>
               <td colspan="3"><CommonCodeRadio :cd="'userStateCode'" :model="search.userStateCode" @set-data="(val) => { search.userStateCode = val; }" /></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
-            <th>수정기간</th>
+            <th scope="row">수정기간</th>
             <td colspan="3">
               <SelectGroupDate
                 :format="'yyyy-MM-dd'"
@@ -48,7 +48,7 @@
             </td>
           </tr>
           <tr>
-            <th>등록일</th>
+            <th scope="row">등록일</th>
             <td colspan="3">
               <SelectDate
                 :format="'yyyy-MM-dd'"
@@ -58,9 +58,9 @@
             </td>
           </tr>
           <tr>
-            <th>수정ID</th>
+            <th scope="row">수정ID</th>
             <td><input type="text" v-model="search.updater"/></td>
-            <th>등록ID</th>
+            <th scope="row">등록ID</th>
             <td><input type="text" v-model="search.creator"/></td>
           </tr>
         </tbody>
@@ -91,6 +91,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="UserDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -109,7 +116,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 
 const auth = useAuthStore();
-
 const search = reactive({
   userId: '',
   companyId: '',

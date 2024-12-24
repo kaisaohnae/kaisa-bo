@@ -11,17 +11,17 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>회원아이디</th>
+              <th scope="row">회원아이디</th>
               <td colspan="3"><input type="text" v-model="search.memberId"/></td>
             </tr>
             <tr>
-              <th>회원이름</th>
+              <th scope="row">회원이름</th>
               <td colspan="3"><input type="text" v-model="search.memberName"/></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
-            <th>수정기간</th>
+            <th scope="row">수정기간</th>
             <td colspan="3">
               <SelectGroupDate
                 :format="'yyyy-MM-dd'"
@@ -32,7 +32,7 @@
             </td>
           </tr>
           <tr>
-            <th>등록일</th>
+            <th scope="row">등록일</th>
             <td colspan="3">
               <SelectDate
                 :format="'yyyy-MM-dd'"
@@ -42,9 +42,9 @@
             </td>
           </tr>
           <tr>
-            <th>수정ID</th>
+            <th scope="row">수정ID</th>
             <td><input type="text" v-model="search.updater"/></td>
-            <th>등록ID</th>
+            <th scope="row">등록ID</th>
             <td><input type="text" v-model="search.creator"/></td>
           </tr>
         </tbody>
@@ -75,6 +75,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="MemberDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';
@@ -93,7 +100,6 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 
 
 const auth = useAuthStore();
-
 const search = reactive({
   memberId: '',
   memberName: '',

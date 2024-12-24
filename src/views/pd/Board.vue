@@ -11,25 +11,25 @@
         </colgroup>
         <tbody>
             <tr>
-              <th>게시판카테고리아이디</th>
+              <th scope="row">게시판카테고리아이디</th>
               <td colspan="3"><input type="text" v-model="search.boardCategoryId"/></td>
             </tr>
             <tr v-show="auth.userInfo.companyId === 'kaisa'">
-              <th>업체아이디</th>
+              <th scope="row">업체아이디</th>
               <td colspan="3"><input type="text" v-model="search.companyId"/></td>
             </tr>
             <tr>
-              <th>제목</th>
+              <th scope="row">제목</th>
               <td colspan="3"><input type="text" v-model="search.title"/></td>
             </tr>
             <tr>
-              <th>내용</th>
+              <th scope="row">내용</th>
               <td colspan="3"><input type="text" v-model="search.contents"/></td>
             </tr>
         </tbody>
         <tbody class="audit" v-show="data.audit">
           <tr>
-            <th>수정기간</th>
+            <th scope="row">수정기간</th>
             <td colspan="3">
               <SelectGroupDate
                 :format="'yyyy-MM-dd'"
@@ -40,7 +40,7 @@
             </td>
           </tr>
           <tr>
-            <th>등록일</th>
+            <th scope="row">등록일</th>
             <td colspan="3">
               <SelectDate
                 :format="'yyyy-MM-dd'"
@@ -50,9 +50,9 @@
             </td>
           </tr>
           <tr>
-            <th>수정ID</th>
+            <th scope="row">수정ID</th>
             <td><input type="text" v-model="search.updater"/></td>
-            <th>등록ID</th>
+            <th scope="row">등록ID</th>
             <td><input type="text" v-model="search.creator"/></td>
           </tr>
         </tbody>
@@ -105,16 +105,14 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
-// detail
 import Detail from "@src/views/common/Detail.vue";
 import BoardDetail from "@src/views/pd/BoardDetail.vue";
 
-const auth = useAuthStore();
-
-// detail
 const showDetailData = ref<any>(null); // 선택된 데이터를 저장
 const showDetail = ref(false); // Detail 컴포넌트 표시 여부
 
+
+const auth = useAuthStore();
 const search = reactive({
   boardCategoryId: '',
   companyId: '',
@@ -249,13 +247,8 @@ onMounted(() => {
     },
     afterOnCellMouseDown: (event, coords) => {
       const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
-
-      // detail
       const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
       if (colHeader === '제목' && rowData) {
-        console.log('제목 칼럼 클릭:', rowData);
-
-        // 선택된 데이터를 저장하고 Detail 컴포넌트를 표시
         showDetailData.value = rowData;
         showDetail.value = true;
       }
