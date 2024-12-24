@@ -30,9 +30,11 @@
             </td>
           </tr>
           <tr>
-            <th scope="col">내용</th>
-            <td>
-              <input type="text" v-model="data.contents"  />
+            <th scope="col" colspan="2">내용</th>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div id="BoardEditor" />
             </td>
           </tr>
           <tr>
@@ -116,7 +118,7 @@ const getDetail = () => {
         props.data.updater = res.data.updater
         props.data.updateDt = res.data.updateDt
 
-        // drawDetail();
+        drawDetail();
       },
       (err) => {
         console.log(err);
