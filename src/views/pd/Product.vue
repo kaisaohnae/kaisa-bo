@@ -75,6 +75,13 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
+  <Detail
+    :component="ProductDetail"
+    :data="showDetailData"
+    :show="showDetail"
+    v-if="showDetail"
+    @close="showDetail = false"
+  />
 
 </template>
 <script setup lang="ts">
@@ -91,6 +98,11 @@ import {useAuthStore} from "@src/store/authStore";
 import Pagination from "@src/components/Pagination.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 
+import Detail from "@src/views/common/Detail.vue";
+import ProductDetail from "@src/views/pd/ProductDetail.vue";
+
+const showDetailData = ref<any>(null); // 선택된 데이터를 저장
+const showDetail = ref(false); // Detail 컴포넌트 표시 여부
 
 
 const auth = useAuthStore();
@@ -239,7 +251,7 @@ onMounted(() => {
       {data: 'productNo', type: 'numeric', width: 150, readOnly: true,  },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'seasonPriceNo', type: 'numeric', width: 150,   },
-      {data: 'productName', type: 'text', width: 150,   },
+      {data: 'productName', type: 'text', width: 150,  className: 'underline', },
       {data: 'headCount', type: 'numeric', width: 150,   },
       {data: 'maxHeadCount', type: 'numeric', width: 150,   },
       {data: 'm2', type: 'numeric', width: 150,   },
@@ -261,6 +273,14 @@ onMounted(() => {
     },
     afterSelectionEnd: function (row, col, row2, col2) {
       selectedRow = row;
+    },
+    afterOnCellMouseDown: (event, coords) => {
+      const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
+      const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+      if (colHeader === '상품명' && rowData) {
+        showDetailData.value = rowData;
+        showDetail.value = true;
+      }
     },
     ...gridUtil.defaultProps,
   });
