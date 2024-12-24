@@ -8,7 +8,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import {onMounted, reactive, defineProps, defineEmits } from 'vue';
+import {onMounted, reactive } from 'vue';
 
 interface Props {
   component: any; // 컴포넌트의 타입을 명확히 지정할 수 있다면 수정

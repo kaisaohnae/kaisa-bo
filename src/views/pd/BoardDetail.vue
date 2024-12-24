@@ -39,7 +39,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, onMounted, reactive} from 'vue';
+import { onMounted, reactive} from 'vue';
 import CommonCode from "@src/components/CommonCode.vue";
 import gridUtil from '@src/utils/gridUtil';
 
