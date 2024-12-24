@@ -90,6 +90,7 @@
     v-if="showDetail"
     @close="showDetail = false"
   />
+
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';

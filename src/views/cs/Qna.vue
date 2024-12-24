@@ -87,13 +87,7 @@
     :lastPage="data.lastPage"
     @update:page="handlePageChange"
   />
-  <Detail
-    :component="QnaDetail"
-    :data="showDetailData"
-    :show="showDetail"
-    v-if="showDetail"
-    @close="showDetail = false"
-  />
+
 </template>
 <script setup lang="ts">
 import {onMounted, reactive, ref} from 'vue';

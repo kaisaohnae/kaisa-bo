@@ -7,14 +7,17 @@
     <div class="detail-dimmed" :class="{'on': data.open}" @click="close"></div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import {onMounted, reactive, defineProps, defineEmits } from 'vue';
 
-const props = defineProps({
-  component: Object,
-  data: Object,
-  show: false,
-});
+interface Props {
+  component: any; // 컴포넌트의 타입을 명확히 지정할 수 있다면 수정
+  data: Record<string, any>; // 데이터의 구조를 명확히 정의 가능
+  show: boolean;
+}
+
+const props = defineProps<Props>();
+
 const data = reactive({
   show: props.show,
   open: false,
