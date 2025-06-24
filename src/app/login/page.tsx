@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import React, {useState, useEffect, useRef} from 'react';
+import {useRouter} from 'next/navigation';
 
 import AuthService from '@/service/common/auth-service';
 import useSettingStore from '@/store/use-setting-store';
 import useAuthStore from '@/store/use-auth-store';
-import { useAlertStore } from '@/store/use-alert-store';
+import useAlertStore from '@/store/use-alert-store';
 
 interface LoginInfo {
   userId: string;
@@ -21,14 +21,14 @@ const Login: React.FC = () => {
 
   const setting = useSettingStore();
   const auth = useAuthStore();
-  const alert = useAlertStore();
+  const {showAlert} = useAlertStore();
 
   const savedSettings = null;
 
   const [param, setParam] = useState<LoginInfo>({
     userId: '',
     pwd: '',
-    remember: false,
+    remember: false
   });
 
   useEffect(() => {
@@ -38,10 +38,10 @@ const Login: React.FC = () => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setParam((prev) => ({
+    const {name, value, type, checked} = e.target;
+    setParam(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
         auth.loginSuccess(res.data, router.push);
       } else {
         auth.loginFail();
-        alert.open({ title: null, message: '회원정보와 일치하지 않습니다.' });
+        showAlert({message: '회원정보와 일치하지 않습니다.'});
       }
     } catch (err) {
       console.error(err);
@@ -77,36 +77,16 @@ const Login: React.FC = () => {
 
           <label className="label">
             <span className="icon">&#xe809;</span>
-            <input
-              type="text"
-              name="userId"
-              value={param.userId}
-              onChange={handleChange}
-              placeholder="아이디를 입력해주세요"
-              required
-            />
+            <input type="text" name="userId" value={param.userId} onChange={handleChange} placeholder="아이디를 입력해주세요" required />
           </label>
 
           <label className="label">
             <span className="icon">&#xe81c;</span>
-            <input
-              type="password"
-              name="pwd"
-              value={param.pwd}
-              onChange={handleChange}
-              placeholder="비밀번호를 입력해주세요"
-              required
-            />
+            <input type="password" name="pwd" value={param.pwd} onChange={handleChange} placeholder="비밀번호를 입력해주세요" required />
           </label>
 
           <label>
-            <input
-              type="checkbox"
-              name="remember"
-              checked={param.remember}
-              onChange={handleChange}
-            />{' '}
-            <span className="remember">아이디 저장</span>
+            <input type="checkbox" name="remember" checked={param.remember} onChange={handleChange} /> <span className="remember">아이디 저장</span>
           </label>
 
           <button type="submit">로그인</button>

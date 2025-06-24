@@ -2,6 +2,13 @@
 
 import { create } from 'zustand';
 
+type AlertProps = {
+  type?: string;
+  title?: string;
+  message: any;
+  button?:  any; // ButtonProps | ButtonProps[];
+};
+
 type State = {
   alert: AlertProps | null;
   error: boolean;
@@ -20,12 +27,6 @@ type Actions = {
   text: string;
   callback: () => void;
 }*/
-
-type AlertProps = {
-  type?: string;
-  message: any;
-  button?:  any; // ButtonProps | ButtonProps[];
-};
 
 const useAlertStore = create<State & Actions>((set) => ({
   alert: null,

@@ -1,6 +1,7 @@
 // src/store/use-setting-store.ts
 import {create} from 'zustand';
 import {persist} from 'zustand/middleware';
+import Cookies from 'js-cookie';
 
 interface SettingState {
   id: string;
@@ -34,11 +35,11 @@ const useSettingStore = create<SettingState>()(
         set({hash});
       },
       setStateToCookie: () => {
-        // Cookies.set('settings', JSON.stringify(get()));
+        Cookies.set('settings', JSON.stringify(get()));
       },
       reset: () => {
         set(DefaultState);
-        // Cookies.remove('settings');
+        Cookies.remove('settings');
       },
     }),
     {
