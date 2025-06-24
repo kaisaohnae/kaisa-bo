@@ -1,6 +1,6 @@
-# kaisa-fo
+# kaisa-bo
 
-kaisa-fo 2.0 홈페이지
+kaisa-bo 2.0 홈페이지
 
 #### 버전 정보
 

@@ -3272,9 +3272,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"kaisa-fo@workspace:.":
+"kaisa-bo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "kaisa-fo@workspace:."
+  resolution: "kaisa-bo@workspace:."
   dependencies:
     "@handsontable/react": "npm:^15.3.0"
     "@toast-ui/editor": "npm:^3.2.2"

@@ -4,8 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 import AuthService from '@/service/common/auth-service';
-import { useSettingStore } from '@/store/use-setting-store';
-import { useAuthStore } from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
+import useAuthStore from '@/store/use-auth-store';
 import { useAlertStore } from '@/store/use-alert-store';
 
 interface LoginInfo {

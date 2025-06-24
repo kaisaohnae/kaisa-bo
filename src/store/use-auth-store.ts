@@ -1,7 +1,7 @@
 // src/store/use-auth-store.ts
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useSettingStore } from './use-setting-store';
+import useSettingStore from './use-setting-store';
 
 interface AuthState {
   active: boolean;
@@ -17,7 +17,7 @@ interface AuthState {
   setMenus: (menus: any[]) => void;
 }
 
-export const useAuthStore = create<AuthState>()(
+const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       active: false,
@@ -84,3 +84,5 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+
+export default useAuthStore;

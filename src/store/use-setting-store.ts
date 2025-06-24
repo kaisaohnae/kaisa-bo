@@ -26,7 +26,7 @@ const DefaultState: Omit<SettingState, 'setHash' | 'setStateToCookie' | 'reset'>
   favList: [],
 };
 
-export const useSettingStore = create<SettingState>()(
+const useSettingStore = create<SettingState>()(
   persist(
     (set, get) => ({
       ...DefaultState,
@@ -53,3 +53,5 @@ export const useSettingStore = create<SettingState>()(
     }
   )
 );
+
+export default useSettingStore;

@@ -3,7 +3,7 @@ type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 };
 
 /**
- * kaisa-fo API 서버의 Json 응답 타입
+ * kaisa-bo API 서버의 Json 응답 타입
  */
 interface JsonResponseType {
   success: boolean;

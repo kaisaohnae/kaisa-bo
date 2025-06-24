@@ -1,5 +1,5 @@
 import interceptor from '@/config/api-interceptor';
-import {useAuthStore} from "@/store/use-auth-store";
+import useAuthStore from '@/store/use-auth-store';
 
 export const apiConfig = (apiUrl: string, apiData?: any) => {
   const {token} = useAuthStore.getState();
@@ -9,8 +9,8 @@ export const apiConfig = (apiUrl: string, apiData?: any) => {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      ...(token ? {Authorization: `Bearer ${token}`} : {}),
+      ...(token ? {Authorization: `Bearer ${token}`} : {})
     },
-    withCredentials: false,
+    withCredentials: false
   });
 };

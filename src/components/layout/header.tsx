@@ -1,19 +1,16 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/use-auth-store';
-import { useSettingStore } from '@/store/use-setting-store';
+import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import IconLogo from "@/components/icons/common/icon-logo";
 
 export default function HeaderSideLayout() {
   const auth = useAuthStore();
   const setting = useSettingStore();
   const router = useRouter();
-
   const [searchKeyword, setSearchKeyword] = useState('');
-
   const menuList = useMemo(() => auth.menuList, [auth.menuList]);
 
   const searchList = useMemo(() => {
