@@ -12,61 +12,50 @@ export default function HeaderSideLayout() {
   const setting = useSettingStore();
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const menuList = useMemo(() => auth.menuList, [auth.menuList]);
+  const menuList = useMemo(() => setting.menuList, [setting.menuList]);
+
+  useEffect(() => {}, []);
 
   const searchList = useMemo(() => {
     const keyword = searchKeyword.trim().toLowerCase();
     if (!keyword) return [];
-    return menuList.flatMap(group => group.menu).filter(menu => menu.menuName.toLowerCase().includes(keyword));
+    return menuList.filter(menu => menu.menuName?.toLowerCase().includes(keyword));
   }, [searchKeyword, menuList]);
 
   const toggleFav = menu => {
-    const idx = setting.favList.findIndex(fav => fav.menuId === menu.menuId);
+    const favList = setting.favList;
+    const idx = favList.findIndex(fav => fav.menuId === menu.menuId);
     if (idx !== -1) {
-      setting.favList.splice(idx, 1);
+      favList.splice(idx, 1);
     } else {
-      setting.favList.push(menu);
+      favList.push(menu);
     }
-    useSettingStore.setState({favList: setting.favList});
-
-    auth.setMenus(
-      auth.menuList.map(group => ({
-        ...group,
-        menu: group.menu.map(m => (m.menuId === menu.menuId ? {...m, fav: !m.fav} : m))
-      }))
-    );
+    setting.setFavList(favList);
   };
 
   const clickMenu = menu => {
-    setting.hash = menu.path;
-
-    useSettingStore.setState({menu: setting.menu});
-
+    setting.setHash(menu.path);
     router.push(menu.path);
   };
 
   const clickHome = () => {
-    setting.hash = '/';
-    useSettingStore.setState({hash: setting.hash});
+    setting.setHash('/');
     router.push('/');
   };
 
   const clickFav = fav => {
-    setting.hash = fav.path;
-    useSettingStore.setState({hash: setting.hash});
+    setting.setHash(fav.path);
     router.push(fav.path);
   };
 
   const closeAll = () => {
     if (confirm('즐겨찾기를 모두 지우시겠습니까?')) {
-      setting.favList = [];
-      useSettingStore.setState({favList: []});
+      setting.setFavList([]);
     }
   };
 
   const toggleMenu = () => {
-    setting.menu.active = !setting.menu.active;
-    useSettingStore.setState({menu: setting.menu});
+    setting.setMenuActive(!setting.menuActive);
   };
 
   const pathname = usePathname();
@@ -78,7 +67,7 @@ export default function HeaderSideLayout() {
   return (
     show && (
       <>
-        <div id="header" className={setting.menu.active ? 'menuOn' : ''}>
+        <div id="header" className={setting.menuActive ? 'menuOn' : ''}>
           <div className="btnMenu" onClick={toggleMenu}>
             <ul>
               <li></li>
@@ -123,9 +112,9 @@ export default function HeaderSideLayout() {
           </div>
         </div>
 
-        <div id="side" className={setting.menu.active ? 'menuOn' : ''}>
+        <div id="side" className={setting.menuActive ? 'menuOn' : ''}>
           <h1 onClick={clickHome}>
-            <IconLogo width={100} />
+            <IconLogo width={100} fill="#666666" />
           </h1>
           <div className="search">
             <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} placeholder="메뉴 검색" />
@@ -152,31 +141,25 @@ export default function HeaderSideLayout() {
                 </ul>
               </div>
             ) : (
-              menuList.map(
-                (group, i) =>
-                  group.menu.length > 0 && (
-                    <div key={i} className={`menu${group.active ? ' on' : ''}`}>
-                      <h2>{group.pathName}</h2>
-                      <ul>
-                        {group.menu.map((menu, j) => (
-                          <li key={j} className={setting.hash === menu.path ? 'active' : ''} onClick={() => clickMenu(menu)}>
-                            <span className="icon pre" dangerouslySetInnerHTML={{__html: menu.icon}} />
-                            <span className="name">{menu.menuName}</span>
-                            <span
-                              className={`icon fav${menu.fav ? ' on' : ''}`}
-                              onClick={e => {
-                                e.stopPropagation();
-                                toggleFav(menu);
-                              }}
-                            >
-                              &#xe807;
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )
-              )
+              <div className="menuList">
+                <ul>
+                  {menuList.map((menu, j) => (
+                    <li key={j} className={setting.hash === menu.path ? 'active' : ''} onClick={() => clickMenu(menu)}>
+                      <span className="icon pre" dangerouslySetInnerHTML={{__html: menu.icon}} />
+                      <span className="name">{menu.menuName}</span>
+                      <span
+                        className={`icon fav${setting.favList.some(fav => fav.menuId === menu.menuId) ? ' on' : ''}`}
+                        onClick={e => {
+                          e.stopPropagation();
+                          toggleFav(menu);
+                        }}
+                      >
+                        &#xe807;
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </div>

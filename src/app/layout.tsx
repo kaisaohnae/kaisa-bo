@@ -19,14 +19,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
-  const {menu} = useSettingStore.getState();
+  const {menuActive} = useSettingStore.getState();
   return (
     <html lang="ko">
     <MetaTags/>
     <body>
-    <div id="container" className={menu.active ? 'menuOn' : ''}>
+    <div id="container" className={menuActive ? 'menuOn' : ''}>
       <Header/>
-      <div id="contents" className={menu.active ? 'menuOn' : ''}>
+      <div id="contents" className={menuActive ? 'menuOn' : ''}>
         <LayoutSub>{children}</LayoutSub>
       </div>
       <Footer/>
