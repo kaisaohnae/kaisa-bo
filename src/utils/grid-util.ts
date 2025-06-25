@@ -17,6 +17,7 @@ const defaultProps = {
   comments: true,
   autoWrapRow: true,
   autoWrapCol: true,
+  rowHeights: 28,
   //height: 'auto',
   height: '500px',
   width: '100%',

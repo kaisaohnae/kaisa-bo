@@ -8,7 +8,7 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 
-export default function CodeSearchForm() {
+export default function Code() {
   const [search, setSearch]: any = useState({
     code: '',
     updater: '',

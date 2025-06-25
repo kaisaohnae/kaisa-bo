@@ -78,6 +78,8 @@ export default function DictionaryPage() {
   };
 
   useEffect(() => {
+    if (!gridRef.current) return;
+
     const container = gridRef.current;
     let hot: Handsontable;
 
@@ -126,7 +128,7 @@ export default function DictionaryPage() {
     <>
       <form
         className="search"
-        onSubmit={(e) => {
+        onSubmit={e => {
           e.preventDefault();
           getList();
         }}
@@ -135,64 +137,43 @@ export default function DictionaryPage() {
           <legend>검색</legend>
           <table>
             <colgroup>
-              <col style={{ width: '80px' }} />
-              <col style={{ width: '30%' }} />
-              <col style={{ width: '80px' }} />
+              <col style={{width: '80px'}} />
+              <col style={{width: '30%'}} />
+              <col style={{width: '80px'}} />
               <col />
             </colgroup>
             <tbody>
-            <tr>
-              <th>약어</th>
-              <td colSpan={3}>
-                <input
-                  type="text"
-                  value={search.abb}
-                  onChange={(e) => handleSearchChange('abb', e.target.value)}
-                />
-              </td>
-            </tr>
+              <tr>
+                <th>약어</th>
+                <td colSpan={3}>
+                  <input type="text" value={search.abb} onChange={e => handleSearchChange('abb', e.target.value)} />
+                </td>
+              </tr>
             </tbody>
             {data.audit && (
               <tbody className="audit">
-              <tr>
-                <th>수정기간</th>
-                <td colSpan={3}>
-                  <SelectGroupDate
-                    format="yyyy-MM-dd"
-                    date={[search.startUpdateDt, search.endUpdateDt]}
-                    onSetStartDate={(o) => handleSearchChange('startUpdateDt', o.date)}
-                    onSetEndDate={(o) => handleSearchChange('endUpdateDt', o.date)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>등록일</th>
-                <td colSpan={3}>
-                  <SelectDate
-                    format="yyyy-MM-dd"
-                    date={[search.createDt]}
-                    onSetStartDate={(o) => handleSearchChange('createDt', o.date)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th>수정ID</th>
-                <td>
-                  <input
-                    type="text"
-                    value={search.updater}
-                    onChange={(e) => handleSearchChange('updater', e.target.value)}
-                  />
-                </td>
-                <th>등록ID</th>
-                <td>
-                  <input
-                    type="text"
-                    value={search.creator}
-                    onChange={(e) => handleSearchChange('creator', e.target.value)}
-                  />
-                </td>
-              </tr>
+                <tr>
+                  <th>수정기간</th>
+                  <td colSpan={3}>
+                    <SelectGroupDate format="yyyy-MM-dd" date={[search.startUpdateDt, search.endUpdateDt]} onSetStartDate={o => handleSearchChange('startUpdateDt', o.date)} onSetEndDate={o => handleSearchChange('endUpdateDt', o.date)} />
+                  </td>
+                </tr>
+                <tr>
+                  <th>등록일</th>
+                  <td colSpan={3}>
+                    <SelectDate format="yyyy-MM-dd" date={[search.createDt]} onSetStartDate={o => handleSearchChange('createDt', o.date)} />
+                  </td>
+                </tr>
+                <tr>
+                  <th>수정ID</th>
+                  <td>
+                    <input type="text" value={search.updater} onChange={e => handleSearchChange('updater', e.target.value)} />
+                  </td>
+                  <th>등록ID</th>
+                  <td>
+                    <input type="text" value={search.creator} onChange={e => handleSearchChange('creator', e.target.value)} />
+                  </td>
+                </tr>
               </tbody>
             )}
           </table>
@@ -208,15 +189,11 @@ export default function DictionaryPage() {
             <button type="button" className="button save" onClick={save}>
               <span className="icon">&#xe814;</span>저장
             </button>
-            <button
-              type="button"
-              className="button reset"
-              onClick={() => window.location.reload()}
-            >
+            <button type="button" className="button reset" onClick={() => window.location.reload()}>
               <span className="icon">&#x22;</span>초기화
             </button>
           </span>
-          <button type="button" className="audit" onClick={() => setData((prev) => ({ ...prev, audit: !prev.audit }))}>
+          <button type="button" className="audit" onClick={() => setData(prev => ({...prev, audit: !prev.audit}))}>
             상세조회
           </button>
           <button type="submit" className="button3">
@@ -225,17 +202,15 @@ export default function DictionaryPage() {
           <button type="reset" onClick={() => window.location.reload()}>
             <span className="icon">&#x22;</span>
           </button>
-          <button
-            type="button"
-            className="button excel"
-            onClick={() => excelUtil.excelExport(data.grid, '코드')}
-          >
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '코드')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>
         </div>
       </form>
-      <div id="grid" className="grid-container" ref={gridRef}></div>
+      <div>
+        <div id="grid" className="grid-container" ref={gridRef}></div>
+      </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
     </>

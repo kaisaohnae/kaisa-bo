@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale';
 
 interface Props {
   date: any[];
@@ -42,13 +42,15 @@ export default function SelectGroupDate({date, format = 'yyyy-MM-dd', isAll = tr
   };
 
   const handleAllChecked = () => {
+    const newChecked = !allChecked;
     setCurrentTerm(0);
-    setAllChecked(!allChecked);
-    if (allChecked) {
+    setAllChecked(newChecked);
+
+    if (newChecked) {
       setStartDate(null);
-      onSetStartDate({date: null});
+      onSetStartDate({ date: null });
       setEndDate(null);
-      onSetEndDate({date: null});
+      onSetEndDate({ date: null });
     } else {
       handleTermClick(1);
     }
@@ -95,10 +97,10 @@ export default function SelectGroupDate({date, format = 'yyyy-MM-dd', isAll = tr
       {!allChecked && (
         <>
           <div className="picker-wrap" style={{paddingRight: 5}}>
-            <DatePicker selected={startDate} onChange={(date: Date | null) => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
+            <DatePicker locale={ko} selected={startDate} onChange={(date: Date | null) => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
           </div>
           <div className="picker-wrap">
-            <DatePicker selected={endDate} onChange={(date: Date | null) => setEndDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
+            <DatePicker locale={ko} selected={endDate} onChange={(date: Date | null) => setEndDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
           </div>
         </>
       )}

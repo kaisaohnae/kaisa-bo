@@ -172,3 +172,4 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
 
 /* date picker reset */
 input.dp__input_readonly {border:1px solid #bbb;}
+.react-datepicker-popper {z-index: 1000 !important;}

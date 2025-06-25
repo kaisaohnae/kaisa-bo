@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale';
 
 interface Props {
   date?: any[];
@@ -13,7 +13,6 @@ interface Props {
 export default function SelectDate({date = [new Date().toISOString().slice(0, 10)], format = 'yyyy-MM-dd', isAll = true, onSetStartDate}: Props) {
   const [allChecked, setAllChecked] = useState(isAll);
   const [startDate, setStartDate] = useState<Date | null>(!isAll && date[0] ? new Date(date[0]) : null);
-
   const placeholder = format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택';
 
   const handleToggleAll = () => {
@@ -50,7 +49,7 @@ export default function SelectDate({date = [new Date().toISOString().slice(0, 10
       </div>
       {!allChecked && (
         <div className="picker-wrap" style={{paddingRight: 5}}>
-          <ReactDatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={placeholder} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} className="input" />
+          <ReactDatePicker locale={ko} selected={startDate} onChange={date => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={placeholder} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} className="input" />
         </div>
       )}
     </div>
