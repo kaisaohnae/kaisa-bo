@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import CompanyService from '@/service/at/company-service';
 import CommonCode from '@/components/common/common-code';
@@ -5,7 +7,20 @@ import gridUtil from '@/utils/grid-util';
 
 export default function CompanyDetail({ detailData, onChange }) {
   const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
-  const [formData, setFormData]: any = useState({});
+  const [formData, setFormData]: any = useState({
+    companyId: '',
+    companyTypeCode: '',
+    companyName: '',
+    lttd: '',
+    lotd: '',
+    address: '',
+    phoneNo: '',
+    creator: '',
+    createDt: '',
+    updater: '',
+    updateDt: '',
+
+  });
 
   const drawDetail = () => {
 
@@ -53,31 +68,31 @@ export default function CompanyDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">업체명</th>
               <td>
-                <input type="text" value={formData.companyName} onChange={(e) => setFormData(prev => ({ ...prev, companyName: e.target.value }))}  />
+                <input type="text" value={formData.companyName || ''} onChange={(e) => setFormData(prev => ({ ...prev, companyName: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">위도</th>
               <td>
-                <input type="text" value={formData.lttd} onChange={(e) => setFormData(prev => ({ ...prev, lttd: e.target.value }))} required />
+                <input type="text" value={formData.lttd || ''} onChange={(e) => setFormData(prev => ({ ...prev, lttd: e.target.value }))} required />
               </td>
             </tr>
             <tr>
               <th scope="col">경도</th>
               <td>
-                <input type="text" value={formData.lotd} onChange={(e) => setFormData(prev => ({ ...prev, lotd: e.target.value }))} required />
+                <input type="text" value={formData.lotd || ''} onChange={(e) => setFormData(prev => ({ ...prev, lotd: e.target.value }))} required />
               </td>
             </tr>
             <tr>
               <th scope="col">주소</th>
               <td>
-                <input type="text" value={formData.address} onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))} required />
+                <input type="text" value={formData.address || ''} onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))} required />
               </td>
             </tr>
             <tr>
               <th scope="col">전화번호</th>
               <td>
-                <input type="text" value={formData.phoneNo} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
+                <input type="text" value={formData.phoneNo || ''} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
               </td>
             </tr>
           <tr>

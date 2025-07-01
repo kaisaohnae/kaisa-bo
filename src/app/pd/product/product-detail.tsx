@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import ProductService from '@/service/pd/product-service';
 import CommonCode from '@/components/common/common-code';
@@ -5,7 +7,28 @@ import gridUtil from '@/utils/grid-util';
 
 export default function ProductDetail({ detailData, onChange }) {
   const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
-  const [formData, setFormData]: any = useState({});
+  const [formData, setFormData]: any = useState({
+    productNo: '',
+    companyId: '',
+    seasonPriceNo: '',
+    productName: '',
+    headCount: '',
+    maxHeadCount: '',
+    m2: '',
+    isDisplay: '',
+    isPet: '',
+    isBBQ: '',
+    isPickup: '',
+    isStone: '',
+    memo: '',
+    content: '',
+    fileNo: '',
+    creator: '',
+    createDt: '',
+    updater: '',
+    updateDt: '',
+
+  });
 
   const drawDetail = () => {
   edit.editor = gridUtil.createEditor({name: '#ProductEditor', cnts: formData }); // formData.contents
@@ -47,37 +70,37 @@ export default function ProductDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">업체아이디</th>
               <td>
-                <input type="text" value={formData.companyId} onChange={(e) => setFormData(prev => ({ ...prev, companyId: e.target.value }))}  />
+                <input type="text" value={formData.companyId || ''} onChange={(e) => setFormData(prev => ({ ...prev, companyId: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">시즌가격번호</th>
               <td>
-                <input type="number" value={formData.seasonPriceNo} onChange={(e) => setFormData(prev => ({ ...prev, seasonPriceNo: e.target.value }))}  />
+                <input type="number" value={formData.seasonPriceNo || ''} onChange={(e) => setFormData(prev => ({ ...prev, seasonPriceNo: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">상품명</th>
               <td>
-                <input type="text" value={formData.productName} onChange={(e) => setFormData(prev => ({ ...prev, productName: e.target.value }))}  />
+                <input type="text" value={formData.productName || ''} onChange={(e) => setFormData(prev => ({ ...prev, productName: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">인원수</th>
               <td>
-                <input type="number" value={formData.headCount} onChange={(e) => setFormData(prev => ({ ...prev, headCount: e.target.value }))}  />
+                <input type="number" value={formData.headCount || ''} onChange={(e) => setFormData(prev => ({ ...prev, headCount: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">최대인원수</th>
               <td>
-                <input type="number" value={formData.maxHeadCount} onChange={(e) => setFormData(prev => ({ ...prev, maxHeadCount: e.target.value }))}  />
+                <input type="number" value={formData.maxHeadCount || ''} onChange={(e) => setFormData(prev => ({ ...prev, maxHeadCount: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">평형</th>
               <td>
-                <input type="number" value={formData.m2} onChange={(e) => setFormData(prev => ({ ...prev, m2: e.target.value }))}  />
+                <input type="number" value={formData.m2 || ''} onChange={(e) => setFormData(prev => ({ ...prev, m2: e.target.value }))}  />
               </td>
             </tr>
             <tr>
@@ -113,7 +136,7 @@ export default function ProductDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">메모</th>
               <td>
-                <input type="text" value={formData.memo} onChange={(e) => setFormData(prev => ({ ...prev, memo: e.target.value }))} required />
+                <input type="text" value={formData.memo || ''} onChange={(e) => setFormData(prev => ({ ...prev, memo: e.target.value }))} required />
               </td>
             </tr>
           <tr>
@@ -127,7 +150,7 @@ export default function ProductDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">파일번호</th>
               <td>
-                <input type="number" value={formData.fileNo} onChange={(e) => setFormData(prev => ({ ...prev, fileNo: e.target.value }))}  />
+                <input type="number" value={formData.fileNo || ''} onChange={(e) => setFormData(prev => ({ ...prev, fileNo: e.target.value }))}  />
               </td>
             </tr>
           <tr>

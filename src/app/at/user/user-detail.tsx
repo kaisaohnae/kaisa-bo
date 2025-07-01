@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import UserService from '@/service/at/user-service';
 import CommonCode from '@/components/common/common-code';
@@ -5,7 +7,21 @@ import gridUtil from '@/utils/grid-util';
 
 export default function UserDetail({ detailData, onChange }) {
   const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
-  const [formData, setFormData]: any = useState({});
+  const [formData, setFormData]: any = useState({
+    userId: '',
+    companyId: '',
+    userName: '',
+    phoneNo: '',
+    passwordUpdateDt: '',
+    memo: '',
+    loginDt: '',
+    userStateCode: '',
+    creator: '',
+    createDt: '',
+    updater: '',
+    updateDt: '',
+
+  });
 
   const drawDetail = () => {
 
@@ -53,31 +69,31 @@ export default function UserDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">사용자이름</th>
               <td>
-                <input type="text" value={formData.userName} onChange={(e) => setFormData(prev => ({ ...prev, userName: e.target.value }))}  />
+                <input type="text" value={formData.userName || ''} onChange={(e) => setFormData(prev => ({ ...prev, userName: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">전화번호</th>
               <td>
-                <input type="text" value={formData.phoneNo} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
+                <input type="text" value={formData.phoneNo || ''} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">비밀번호수정일시</th>
               <td>
-                <input type="datetime" value={formData.passwordUpdateDt} onChange={(e) => setFormData(prev => ({ ...prev, passwordUpdateDt: e.target.value }))}  />
+                <input type="datetime" value={formData.passwordUpdateDt || ''} onChange={(e) => setFormData(prev => ({ ...prev, passwordUpdateDt: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">메모</th>
               <td>
-                <input type="text" value={formData.memo} onChange={(e) => setFormData(prev => ({ ...prev, memo: e.target.value }))} required />
+                <input type="text" value={formData.memo || ''} onChange={(e) => setFormData(prev => ({ ...prev, memo: e.target.value }))} required />
               </td>
             </tr>
             <tr>
               <th scope="col">로그인일시</th>
               <td>
-                <input type="datetime" value={formData.loginDt} onChange={(e) => setFormData(prev => ({ ...prev, loginDt: e.target.value }))}  />
+                <input type="datetime" value={formData.loginDt || ''} onChange={(e) => setFormData(prev => ({ ...prev, loginDt: e.target.value }))}  />
               </td>
             </tr>
             <tr>

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import BoardService from '@/service/pd/board-service';
 import CommonCode from '@/components/common/common-code';
@@ -5,7 +7,20 @@ import gridUtil from '@/utils/grid-util';
 
 export default function BoardDetail({ detailData, onChange }) {
   const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
-  const [formData, setFormData]: any = useState({});
+  const [formData, setFormData]: any = useState({
+    boardNo: '',
+    boardCategoryId: '',
+    companyId: '',
+    title: '',
+    content: '',
+    isDisplay: '',
+    tag: '',
+    creator: '',
+    createDt: '',
+    updater: '',
+    updateDt: '',
+
+  });
 
   const drawDetail = () => {
   edit.editor = gridUtil.createEditor({name: '#BoardEditor', cnts: formData }); // formData.contents
@@ -47,19 +62,19 @@ export default function BoardDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">게시판카테고리아이디</th>
               <td>
-                <input type="number" value={formData.boardCategoryId} onChange={(e) => setFormData(prev => ({ ...prev, boardCategoryId: e.target.value }))}  />
+                <input type="number" value={formData.boardCategoryId || ''} onChange={(e) => setFormData(prev => ({ ...prev, boardCategoryId: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">업체아이디</th>
               <td>
-                <input type="text" value={formData.companyId} onChange={(e) => setFormData(prev => ({ ...prev, companyId: e.target.value }))}  />
+                <input type="text" value={formData.companyId || ''} onChange={(e) => setFormData(prev => ({ ...prev, companyId: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">제목</th>
               <td>
-                <input type="text" value={formData.title} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}  />
+                <input type="text" value={formData.title || ''} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}  />
               </td>
             </tr>
           <tr>
@@ -79,7 +94,7 @@ export default function BoardDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">태그</th>
               <td>
-                <input type="text" value={formData.tag} onChange={(e) => setFormData(prev => ({ ...prev, tag: e.target.value }))} required />
+                <input type="text" value={formData.tag || ''} onChange={(e) => setFormData(prev => ({ ...prev, tag: e.target.value }))} required />
               </td>
             </tr>
           <tr>

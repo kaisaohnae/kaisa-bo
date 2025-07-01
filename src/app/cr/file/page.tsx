@@ -100,7 +100,8 @@ export default function FilePage() {
   useEffect(() => {
     if (!gridRef.current) return;
     const container = gridRef.current;
-    const hot = new Handsontable(container, {
+    let hot: Handsontable;
+    hot = new Handsontable(container, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
@@ -117,13 +118,27 @@ export default function FilePage() {
       {data: 'columnName', type: 'text', width: 150,   },
         ...gridUtil.auditColumns,
       ],
-      // @ts-ignore
-      cells: (row, col) => gridUtil.cellsEvent({ row, col, grid: hot, self: this, pk: [] }),
-      afterChange: (changes, source) => {
-        // @ts-ignore
-        gridUtil.afterChangeEvent({ changes, source, gridProps, grid: hot, self: this })
+      cells: function (row, col) {
+        return gridUtil.cellsEvent({
+          row,
+          col,
+          grid: hot,
+          self: this,
+          pk: [],
+        });
       },
-      afterSelectionEnd: (row: number) => setSelectedRow(row),
+      afterChange: function (changes, source) {
+        return gridUtil.afterChangeEvent({
+          changes,
+          source,
+          gridProps,
+          grid: hot,
+          self: this,
+        });
+      },
+      afterSelectionEnd: function (row: number) {
+        setSelectedRow(row)
+      },
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
@@ -151,11 +166,11 @@ export default function FilePage() {
             <tbody>
             <tr>
               <th scope="row">테이블명</th>
-              <td colSpan={3}><input type="text" value={search.tableName} onChange={e => handleSearchChange('search.tableName', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.tableName} onChange={e => handleSearchChange('tableName', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">컬럼명</th>
-              <td colSpan={3}><input type="text" value={search.columnName} onChange={e => handleSearchChange('search.columnName', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.columnName} onChange={e => handleSearchChange('columnName', e.target.value)} /></td>
             </tr>
             </tbody>
 

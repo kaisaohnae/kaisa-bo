@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import QnaService from '@/service/cs/qna-service';
 import CommonCode from '@/components/common/common-code';
@@ -5,7 +7,19 @@ import gridUtil from '@/utils/grid-util';
 
 export default function QnaDetail({ detailData, onChange }) {
   const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
-  const [formData, setFormData]: any = useState({});
+  const [formData, setFormData]: any = useState({
+    qnaNo: '',
+    memberName: '',
+    phoneNo: '',
+    email: '',
+    title: '',
+    content: '',
+    creator: '',
+    createDt: '',
+    updater: '',
+    updateDt: '',
+
+  });
 
   const drawDetail = () => {
 
@@ -47,31 +61,31 @@ export default function QnaDetail({ detailData, onChange }) {
             <tr>
               <th scope="col">회원명</th>
               <td>
-                <input type="text" value={formData.memberName} onChange={(e) => setFormData(prev => ({ ...prev, memberName: e.target.value }))}  />
+                <input type="text" value={formData.memberName || ''} onChange={(e) => setFormData(prev => ({ ...prev, memberName: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">전화번호</th>
               <td>
-                <input type="text" value={formData.phoneNo} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
+                <input type="text" value={formData.phoneNo || ''} onChange={(e) => setFormData(prev => ({ ...prev, phoneNo: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">이메일</th>
               <td>
-                <input type="text" value={formData.email} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} required />
+                <input type="text" value={formData.email || ''} onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))} required />
               </td>
             </tr>
             <tr>
               <th scope="col">제목</th>
               <td>
-                <input type="text" value={formData.title} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}  />
+                <input type="text" value={formData.title || ''} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}  />
               </td>
             </tr>
             <tr>
               <th scope="col">내용</th>
               <td>
-                <input type="text" value={formData.content} onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}  />
+                <input type="text" value={formData.content || ''} onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}  />
               </td>
             </tr>
           <tr>

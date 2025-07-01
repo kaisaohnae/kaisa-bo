@@ -129,7 +129,8 @@ export default function SeasonPage() {
   useEffect(() => {
     if (!gridRef.current) return;
     const container = gridRef.current;
-    const hot = new Handsontable(container, {
+    let hot: Handsontable;
+    hot = new Handsontable(container, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
@@ -162,13 +163,27 @@ export default function SeasonPage() {
       {data: 'sunPrice', type: 'numeric', width: 150,   },
         ...gridUtil.auditColumns,
       ],
-      // @ts-ignore
-      cells: (row, col) => gridUtil.cellsEvent({ row, col, grid: hot, self: this, pk: [] }),
-      afterChange: (changes, source) => {
-        // @ts-ignore
-        gridUtil.afterChangeEvent({ changes, source, gridProps, grid: hot, self: this })
+      cells: function (row, col) {
+        return gridUtil.cellsEvent({
+          row,
+          col,
+          grid: hot,
+          self: this,
+          pk: [],
+        });
       },
-      afterSelectionEnd: (row: number) => setSelectedRow(row),
+      afterChange: function (changes, source) {
+        return gridUtil.afterChangeEvent({
+          changes,
+          source,
+          gridProps,
+          grid: hot,
+          self: this,
+        });
+      },
+      afterSelectionEnd: function (row: number) {
+        setSelectedRow(row)
+      },
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
@@ -196,11 +211,11 @@ export default function SeasonPage() {
             <tbody>
             <tr v-show="auth.userInfo.companyId === 'kaisa'">
               <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('search.companyId', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">시즌명</th>
-              <td colSpan={3}><input type="text" value={search.seasonName} onChange={e => handleSearchChange('search.seasonName', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.seasonName} onChange={e => handleSearchChange('seasonName', e.target.value)} /></td>
             </tr>
             </tbody>
             {data.audit && (
