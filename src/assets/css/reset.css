@@ -161,6 +161,8 @@ div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button
 	transition:0.2s all linear;
 }
 
+tr.hide {display:none !important;}
+
 /* grid reset */
 .grid-container {transition: none; width: 100%; background:#f3f3f3;}
 .handsontable tr.row-created,

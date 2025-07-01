@@ -34,7 +34,7 @@ export default function DictionaryPage() {
   };
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     DictionaryService.getDictionaryList({ ...search, page: data.currentPage }).then((res) => {
       setData((prev) => ({
         ...prev,
@@ -49,9 +49,9 @@ export default function DictionaryPage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData((prev) => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -71,10 +71,12 @@ export default function DictionaryPage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    DictionaryService.setDictionaryList(saveList).then(() => getList());
+    DictionaryService.setDictionaryList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   useEffect(() => {
@@ -116,9 +118,14 @@ export default function DictionaryPage() {
     });
 
     setData((prev) => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   const handleSearchChange = (key, value) => {
     setSearch((prev) => ({ ...prev, [key]: value }));
@@ -128,9 +135,9 @@ export default function DictionaryPage() {
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>

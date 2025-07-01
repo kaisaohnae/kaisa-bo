@@ -51,7 +51,7 @@ export default function FilePage() {
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     FileService.getFileList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
@@ -66,9 +66,9 @@ export default function FilePage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -87,10 +87,12 @@ export default function FilePage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    FileService.setFileList(saveList).then(() => getList());
+    FileService.setFileList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   const handleSearchChange = (key, value) => {
@@ -142,16 +144,22 @@ export default function FilePage() {
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   return (
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>

@@ -68,7 +68,7 @@ export default function QnaPage() {
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     QnaService.getQnaList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
@@ -83,9 +83,9 @@ export default function QnaPage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -107,10 +107,12 @@ export default function QnaPage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    QnaService.setQnaList(saveList).then(() => getList());
+    QnaService.setQnaList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   const handleSearchChange = (key, value) => {
@@ -176,16 +178,22 @@ export default function QnaPage() {
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   return (
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>

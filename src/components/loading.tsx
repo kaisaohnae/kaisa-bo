@@ -3,15 +3,16 @@
 import React, { useCallback } from 'react';
 import useLoadingStore from '@/store/use-loading-store';
 
-export default function AlertComponent() {
+export default function Loading() {
   const loading = useLoadingStore(useCallback((state) => state.loading, []));
 
+  // console.log('loading', loading)
   if (!loading) {
     return null;
   }
   return (
     <div id="loading">
-      <div className="icon"></div>
+      <div className="loadingCircle"></div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import DatePicker from 'react-datepicker';
+import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
 interface Props {
@@ -97,10 +97,10 @@ export default function SelectGroupDate({date, format = 'yyyy-MM-dd', isAll = tr
       {!allChecked && (
         <>
           <div className="picker-wrap" style={{paddingRight: 5}}>
-            <DatePicker locale={ko} selected={startDate} onChange={(date: Date | null) => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
+            <ReactDatePicker locale={ko} selected={startDate} onChange={(date: Date | null) => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
           </div>
           <div className="picker-wrap">
-            <DatePicker locale={ko} selected={endDate} onChange={(date: Date | null) => setEndDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
+            <ReactDatePicker locale={ko} selected={endDate} onChange={(date: Date | null) => setEndDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={format === 'yyyy-MM-dd' ? '날짜 선택' : '날짜 및 시간 선택'} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} />
           </div>
         </>
       )}

@@ -62,7 +62,7 @@ export default function HolidayPricePage() {
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     HolidayPriceService.getHolidayPriceList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
@@ -77,9 +77,9 @@ export default function HolidayPricePage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -100,10 +100,12 @@ export default function HolidayPricePage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    HolidayPriceService.setHolidayPriceList(saveList).then(() => getList());
+    HolidayPriceService.setHolidayPriceList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   const handleSearchChange = (key, value) => {
@@ -159,16 +161,22 @@ export default function HolidayPricePage() {
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   return (
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>
@@ -184,10 +192,10 @@ export default function HolidayPricePage() {
             <tr>
               <th scope="row">휴일</th>
               <td colSpan={3}>
-                <ReactDatePicker locale={ko} selected={startDate} onChange={date => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={placeholder} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} className="input" />
+                <ReactDatePicker locale={ko} selected={search.holiday ? new Date(search.holiday) : null} onChange={(date: Date | null) => handleSearchChange('holiday', date)} dateFormat={'yyyy-MM-dd'} placeholderText={''} showTimeSelect={false} timeIntervals={30} timeCaption="시간" disabled={false} />
               </td>
             </tr>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
@@ -197,7 +205,7 @@ export default function HolidayPricePage() {
             </tr>
             <tr>
               <th scope="row">휴일코드</th>
-              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={3}><CommonCodeRadio cd="holidayCode" model={search.holidayCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (

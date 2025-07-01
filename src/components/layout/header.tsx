@@ -6,15 +6,19 @@ import useAuthStore from '@/store/use-auth-store';
 import useSettingStore from '@/store/use-setting-store';
 import IconLogo from '@/components/icons/common/icon-logo';
 import {usePathname} from 'next/navigation';
+import useAlertStore from '@/store/use-alert-store';
 
 export default function HeaderSideLayout() {
   const auth = useAuthStore();
   const setting = useSettingStore();
+  const {showAlert} = useAlertStore();
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState('');
   const menuList = useMemo(() => setting.menuList, [setting.menuList]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // showAlert({message: 'alert 테스트'})
+  }, []);
 
   const searchList = useMemo(() => {
     const keyword = searchKeyword.trim().toLowerCase();
@@ -163,6 +167,7 @@ export default function HeaderSideLayout() {
             )}
           </div>
         </div>
+        {setting.menuActive && <div id="mask" onClick={toggleMenu}></div>}
       </>
     )
   );

@@ -48,7 +48,7 @@
 #header.menuOn .btnMenu ul li:nth-child(1) {transform: rotate(-45deg); width:20px; left:-4px; top:4px;}
 #header.menuOn .btnMenu ul li:nth-child(3) {transform: rotate(45deg); width:20px; left:-4px; top:16px;}
 #side.menuOn {left:0;}
-#side {width:220px; box-shadow:0 0 3px 1px rgba(0,0,0,0.5); background:#222; border-right:1px solid #000; height:100%; position:fixed; left:-230px; top:0; z-index:200; white-space:nowrap;}
+#side {width:220px; box-shadow:0 0 3px 1px rgba(0,0,0,0.5); background:#222; border-right:1px solid #000; height:100%; position:fixed; left:-230px; top:0; z-index:1002; white-space:nowrap;}
 #side h1 {width:100%; text-align:left; overflow:hidden; cursor:pointer; padding-top:15px; padding-left:15px;}
 #side h1 img {width:50%; margin:10px 0 -20px 0;}
 #side .search {padding:10px;}
@@ -65,6 +65,16 @@
 #side ul li span.fav {position:absolute; right:0; width:45px; height: 45px; top:0; line-height:45px; opacity: 0.5;}
 #side ul li span.fav.on {opacity:1; color:rgb(229, 255, 0);}
 #side ul li.active {color:#FF9933;}
+
+#mask {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
 
 #footer { font-size: 9px; position: fixed; color: #999; right: 10px; bottom: 0; }
 
@@ -83,3 +93,37 @@
 .detail-container .detail-close:hover {color:#000;}
 .detail-dimmed.on {background: rgba(0,0,0,0.3);}
 .detail-wrapper.on {right:10px; top:10px; }
+
+
+#alert { width: 100%; z-index: 8000; height: 100%; background: rgba(0, 0, 0, 0.3); position: fixed; left: 0; top: 0; }
+#alert .box { position: fixed; z-index: 8001; padding: 20px 30px; width: 380px; margin-left: -190px; left:50%; top: 35%; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); background: #fff; color: #000; text-align: center; overflow: hidden; }
+#alert .box .message {padding: 10px 0;}
+#alert .box .buttons {padding: 10px 0;}
+#alert p { padding: 20px; }
+
+
+#loading { width: 100%; height: 100%; position: fixed; left: 0; top: 0; background: rgba(0, 0, 0, 0.3); z-index: 9000; }
+#loading .loadingCircle { width: 100px; height: 100px; position: fixed; left: 50%; top: 50%; margin: -50px 0 0 -50px; }
+
+@keyframes animation {
+  0% {
+    stroke-dasharray: 2 98;
+    stroke-dashoffset: -105;
+  }
+  50% {
+    stroke-dasharray: 80 10;
+    stroke-dashoffset: -160;
+  }
+  100% {
+    stroke-dasharray: 2 98;
+    stroke-dashoffset: -200;
+  }
+}
+
+#spinner {
+  transform-origin: center;
+  animation-name: animation;
+  animation-duration: 1.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

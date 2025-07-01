@@ -85,7 +85,7 @@ export default function OrderPage() {
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     OrderService.getOrderList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
@@ -100,9 +100,9 @@ export default function OrderPage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -136,10 +136,12 @@ export default function OrderPage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    OrderService.setOrderList(saveList).then(() => getList());
+    OrderService.setOrderList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   const handleSearchChange = (key, value) => {
@@ -221,16 +223,22 @@ export default function OrderPage() {
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   return (
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>
@@ -247,19 +255,19 @@ export default function OrderPage() {
               <th scope="row">주문번호</th>
               <td colSpan={3}><input type="text" value={search.orderNo} onChange={e => handleSearchChange('orderNo', e.target.value)} /></td>
             </tr>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">예약일</th>
               <td colSpan={3}>
-                <ReactDatePicker locale={ko} selected={startDate} onChange={date => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={placeholder} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} className="input" />
+                <ReactDatePicker locale={ko} selected={search.reserveDay ? new Date(search.reserveDay) : null} onChange={(date: Date | null) => handleSearchChange('reserveDay', date)} dateFormat={'yyyy-MM-dd'} placeholderText={''} showTimeSelect={false} timeIntervals={30} timeCaption="시간" disabled={false} />
               </td>
             </tr>
             <tr>
               <th scope="row">주문상태코드</th>
-              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={3}><CommonCodeRadio cd="orderStateCode" model={search.orderStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             <tr>
               <th scope="row">전화번호</th>

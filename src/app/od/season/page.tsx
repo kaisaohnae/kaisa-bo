@@ -72,7 +72,7 @@ export default function SeasonPage() {
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
-  const getList = () => {
+  const getList = async () => {
     SeasonService.getSeasonList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
@@ -87,9 +87,9 @@ export default function SeasonPage() {
     });
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    getList();
+    await getList();
   };
 
   const add = () => {
@@ -116,10 +116,12 @@ export default function SeasonPage() {
     gridUtil.del({ selectedRow, grid: data.grid });
   };
 
-  const save = () => {
+  const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    SeasonService.setSeasonList(saveList).then(() => getList());
+    SeasonService.setSeasonList(saveList).then(async () => {
+      await getList();
+    });
   };
 
   const handleSearchChange = (key, value) => {
@@ -187,16 +189,22 @@ export default function SeasonPage() {
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
-    getList();
+
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      await getList();
+    })();
+  }, [data.grid]);
 
   return (
     <>
       <form
         className="search"
-        onSubmit={e => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          getList();
+          await getList();
         }}
       >
         <fieldset>
@@ -209,7 +217,7 @@ export default function SeasonPage() {
               <col />
             </colgroup>
             <tbody>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
