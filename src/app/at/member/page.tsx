@@ -9,6 +9,7 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
@@ -17,9 +18,11 @@ import MemberDetail from './member-detail';
 
 
 
+
 export default function MemberPage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
   const [detailData, setDetailData]:any = useState({});
   const [detailShow, setDetailShow]:any = useState(false);
@@ -28,11 +31,11 @@ export default function MemberPage() {
   const [search, setSearch] = useState({
     memberId: '',
     memberName: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: '',
-  endUpdateDt: '',
-  createDt: '',
+    updater: '',
+    creator: '',
+    startUpdateDt: '',
+    endUpdateDt: '',
+    createDt: '',
   });
 
   const [data, setData]: any = useState({
@@ -149,7 +152,7 @@ export default function MemberPage() {
       {data: 'passwordUpdateDt', type: 'date', width: 170,   ...gridUtil.dateTimePickerConfig },
       {data: 'loginDt', type: 'date', width: 170,   ...gridUtil.dateTimePickerConfig },
       {data: 'memo', type: 'text', width: 150,   },
-      {data: 'memberStateCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['memberStateCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'memberStateCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['memberStateCode']?.map((o: any) => o.codeValue)) }},
         ...gridUtil.auditColumns,
       ],
       // @ts-ignore
@@ -159,14 +162,14 @@ export default function MemberPage() {
         gridUtil.afterChangeEvent({ changes, source, gridProps, grid: hot, self: this })
       },
       afterSelectionEnd: (row: number) => setSelectedRow(row),
-       afterOnCellMouseDown: (event, coords) => {
-         const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
-         const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
-         if (colHeader === '회원이름' && rowData) {
-           setDetailData(rowData);
-           setDetailShow(true);
-         }
-       },
+      afterOnCellMouseDown: (event, coords) => {
+        const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
+        const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+        if (colHeader === '회원이름' && rowData) {
+          setDetailData(rowData);
+          setDetailShow(true);
+        }
+      },
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
@@ -263,12 +266,12 @@ export default function MemberPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
-      <Detail
-        component={QnaDetail}
-        detailData={detailData}
-        detailShow={detailShow}
-        setDetailShow={setDetailShow}
-      />
+
+      {detailShow && (
+       <>
+         <Detail component={MemberDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+       </>
+      )}
 
     </>
   );

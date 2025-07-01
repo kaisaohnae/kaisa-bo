@@ -9,14 +9,17 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
 
+import CommonCodeRadio from '@/components/common/common-code-radio';
 
 export default function OrderPage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
 
 
@@ -28,11 +31,11 @@ export default function OrderPage() {
     phoneNo: '',
     orderName: '',
     email: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: '',
-  endUpdateDt: '',
-  createDt: '',
+    updater: '',
+    creator: '',
+    startUpdateDt: '',
+    endUpdateDt: '',
+    createDt: '',
   });
 
   const [data, setData]: any = useState({
@@ -177,8 +180,8 @@ export default function OrderPage() {
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'productNo', type: 'numeric', width: 150,   },
       {data: 'reserveDay', type: 'date', width: 170,   ...gridUtil.datePickerConfig },
-      {data: 'orderStateCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['orderStateCode']?.map((o: any) => o.codeValue)) }},
-      {data: 'reserveCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['reserveCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'orderStateCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['orderStateCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'reserveCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['reserveCode']?.map((o: any) => o.codeValue)) }},
       {data: 'phoneNo', type: 'text', width: 150,   },
       {data: 'orderName', type: 'text', width: 150,   },
       {data: 'email', type: 'text', width: 150,   },
@@ -186,10 +189,10 @@ export default function OrderPage() {
       {data: 'addPrice', type: 'numeric', width: 150,   },
       {data: 'salePrice', type: 'numeric', width: 150,   },
       {data: 'headCount', type: 'numeric', width: 150,   },
-      {data: 'isHotWater', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isHotWater']?.map((o: any) => o.codeValue)) }},
-      {data: 'isPickup', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isPickup']?.map((o: any) => o.codeValue)) }},
-      {data: 'isBBQ', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isBBQ']?.map((o: any) => o.codeValue)) }},
-      {data: 'isPet', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isPet']?.map((o: any) => o.codeValue)) }},
+      {data: 'isHotWater', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isHotWater']?.map((o: any) => o.codeValue)) }},
+      {data: 'isPickup', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isPickup']?.map((o: any) => o.codeValue)) }},
+      {data: 'isBBQ', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isBBQ']?.map((o: any) => o.codeValue)) }},
+      {data: 'isPet', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isPet']?.map((o: any) => o.codeValue)) }},
       {data: 'memo', type: 'text', width: 150,   },
         ...gridUtil.auditColumns,
       ],
@@ -241,7 +244,7 @@ export default function OrderPage() {
             </tr>
             <tr>
               <th scope="row">주문상태코드</th>
-              <td colSpan={3}><CommonCodeRadio :cd="'orderStateCode'" :model="search.orderStateCode" @set-data="(val) => { search.orderStateCode = val; }" /></td>
+              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             <tr>
               <th scope="row">전화번호</th>
@@ -318,6 +321,7 @@ export default function OrderPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
+
 
     </>
   );

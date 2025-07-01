@@ -9,14 +9,17 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
+
 
 
 
 export default function FilePage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
 
 
@@ -179,6 +182,7 @@ export default function FilePage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
+
 
     </>
   );

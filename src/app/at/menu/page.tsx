@@ -9,24 +9,27 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
+
 
 
 
 export default function MenuPage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
 
 
   const [search, setSearch] = useState({
     menuName: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: '',
-  endUpdateDt: '',
-  createDt: '',
+    updater: '',
+    creator: '',
+    startUpdateDt: '',
+    endUpdateDt: '',
+    createDt: '',
   });
 
   const [data, setData]: any = useState({
@@ -139,11 +142,11 @@ export default function MenuPage() {
         ...gridUtil.commonColumns,
       {data: 'menuId', type: 'text', width: 150, readOnly: true,  },
       {data: 'menuName', type: 'text', width: 150,   },
-      {data: 'menuGroupCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['menuGroupCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'menuGroupCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['menuGroupCode']?.map((o: any) => o.codeValue)) }},
       {data: 'path', type: 'text', width: 150,   },
       {data: 'icon', type: 'text', width: 150,   },
-      {data: 'isDisplay', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
-      {data: 'isLast', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isLast']?.map((o: any) => o.codeValue)) }},
+      {data: 'isDisplay', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
+      {data: 'isLast', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isLast']?.map((o: any) => o.codeValue)) }},
       {data: 'depth', type: 'numeric', width: 150,   },
       {data: 'sortOrder', type: 'numeric', width: 150,   },
         ...gridUtil.auditColumns,
@@ -247,6 +250,7 @@ export default function MenuPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
+
 
     </>
   );

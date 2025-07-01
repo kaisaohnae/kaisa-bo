@@ -37,7 +37,7 @@ const Detail: React.FC<DetailDrawerProps> = ({ component: Component, detailData,
         <div className="detail-close icon" onClick={handleClose}>
           &#xe097;
         </div>
-        <Component data={detailData} />
+        <Component detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
       </div>
       <div className={`detail-dimmed ${open ? 'on' : ''}`} onClick={handleClose}></div>
     </div>

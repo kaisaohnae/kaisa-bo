@@ -9,14 +9,17 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
 
+import CommonCodeRadio from '@/components/common/common-code-radio';
 
 export default function HolidayPricePage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
 
 
@@ -25,11 +28,11 @@ export default function HolidayPricePage() {
     companyId: '',
     holidayName: '',
     holidayCode: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: '',
-  endUpdateDt: '',
-  createDt: '',
+    updater: '',
+    creator: '',
+    startUpdateDt: '',
+    endUpdateDt: '',
+    createDt: '',
   });
 
   const [data, setData]: any = useState({
@@ -128,7 +131,7 @@ export default function HolidayPricePage() {
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'holidayName', type: 'text', width: 150,   },
       {data: 'price', type: 'numeric', width: 150,   },
-      {data: 'holidayCode', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'holidayCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
         ...gridUtil.auditColumns,
       ],
       // @ts-ignore
@@ -179,7 +182,7 @@ export default function HolidayPricePage() {
             </tr>
             <tr>
               <th scope="row">휴일코드</th>
-              <td colSpan={3}><CommonCodeRadio :cd="'holidayCode'" :model="search.holidayCode" @set-data="(val) => { search.holidayCode = val; }" /></td>
+              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (
@@ -244,6 +247,7 @@ export default function HolidayPricePage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
+
 
     </>
   );

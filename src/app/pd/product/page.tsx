@@ -9,6 +9,7 @@ import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
+import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
@@ -17,9 +18,11 @@ import ProductDetail from './product-detail';
 
 
 
+
 export default function ProductPage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
+  const setting = useSettingStore();
 
   const [detailData, setDetailData]:any = useState({});
   const [detailShow, setDetailShow]:any = useState(false);
@@ -28,11 +31,11 @@ export default function ProductPage() {
   const [search, setSearch] = useState({
     companyId: '',
     productName: '',
-  updater: '',
-  creator: '',
-  startUpdateDt: '',
-  endUpdateDt: '',
-  createDt: '',
+    updater: '',
+    creator: '',
+    startUpdateDt: '',
+    endUpdateDt: '',
+    createDt: '',
   });
 
   const [data, setData]: any = useState({
@@ -168,11 +171,11 @@ export default function ProductPage() {
       {data: 'headCount', type: 'numeric', width: 150,   },
       {data: 'maxHeadCount', type: 'numeric', width: 150,   },
       {data: 'm2', type: 'numeric', width: 150,   },
-      {data: 'isDisplay', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
-      {data: 'isPet', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isPet']?.map((o: any) => o.codeValue)) }},
-      {data: 'isBBQ', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isBBQ']?.map((o: any) => o.codeValue)) }},
-      {data: 'isPickup', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isPickup']?.map((o: any) => o.codeValue)) }},
-      {data: 'isStone', type: 'dropdown', width: 150,   source: function (query, process) { process(auth.codeList['isStone']?.map((o: any) => o.codeValue)) }},
+      {data: 'isDisplay', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
+      {data: 'isPet', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isPet']?.map((o: any) => o.codeValue)) }},
+      {data: 'isBBQ', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isBBQ']?.map((o: any) => o.codeValue)) }},
+      {data: 'isPickup', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isPickup']?.map((o: any) => o.codeValue)) }},
+      {data: 'isStone', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isStone']?.map((o: any) => o.codeValue)) }},
       {data: 'memo', type: 'text', width: 150,   },
       {data: 'fileNo', type: 'numeric', width: 150,   },
         ...gridUtil.auditColumns,
@@ -184,14 +187,14 @@ export default function ProductPage() {
         gridUtil.afterChangeEvent({ changes, source, gridProps, grid: hot, self: this })
       },
       afterSelectionEnd: (row: number) => setSelectedRow(row),
-       afterOnCellMouseDown: (event, coords) => {
-         const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
-         const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
-         if (colHeader === '상품명' && rowData) {
-           setDetailData(rowData);
-           setDetailShow(true);
-         }
-       },
+      afterOnCellMouseDown: (event, coords) => {
+        const colHeader = data.grid.getColHeader(coords.col); // 칼럼 헤더 확인
+        const rowData = data.grid.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+        if (colHeader === '상품명' && rowData) {
+          setDetailData(rowData);
+          setDetailShow(true);
+        }
+      },
       ...gridUtil.defaultProps,
     });
     setData(prev => ({ ...prev, grid: hot }));
@@ -288,12 +291,12 @@ export default function ProductPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
-      <Detail
-        component={QnaDetail}
-        detailData={detailData}
-        detailShow={detailShow}
-        setDetailShow={setDetailShow}
-      />
+
+      {detailShow && (
+       <>
+         <Detail component={ProductDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+       </>
+      )}
 
     </>
   );

@@ -8,7 +8,7 @@ interface Props {
   onSetData: (value: string | number) => void;
 }
 
-export default function SelectBox({cd, model, defaultText = '선택하세요.', onSetData}: Props) {
+export default function CommonCode({cd, model, defaultText = '선택하세요.', onSetData}: Props) {
   const setting = useSettingStore();
   const [value, setValue] = useState<string | number>(model);
 
