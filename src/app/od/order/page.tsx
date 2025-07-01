@@ -247,7 +247,7 @@ export default function OrderPage() {
               <th scope="row">주문번호</th>
               <td colSpan={3}><input type="text" value={search.orderNo} onChange={e => handleSearchChange('orderNo', e.target.value)} /></td>
             </tr>
-            <tr v-show="auth.userInfo.companyId === 'kaisa'">
+            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>

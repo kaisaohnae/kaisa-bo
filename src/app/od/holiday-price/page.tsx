@@ -187,7 +187,7 @@ export default function HolidayPricePage() {
                 <ReactDatePicker locale={ko} selected={startDate} onChange={date => setStartDate(date)} dateFormat={format === 'yyyy-MM-dd' ? 'yyyy-MM-dd' : 'yyyy-MM-dd HH:mm'} placeholderText={placeholder} showTimeSelect={format !== 'yyyy-MM-dd'} timeIntervals={30} timeCaption="시간" disabled={allChecked} className="input" />
               </td>
             </tr>
-            <tr v-show="auth.userInfo.companyId === 'kaisa'">
+            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>

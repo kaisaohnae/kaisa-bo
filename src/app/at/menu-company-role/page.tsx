@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Handsontable from 'handsontable';
 import gridUtil from '@/utils/grid-util';
 import excelUtil from '@/utils/excel-util';
-import SeasonPriceService from '@/service/od/season-price-service';
+import MenuCompanyRoleService from '@/service/at/menu-company-role-service';
 import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
@@ -16,7 +16,7 @@ import { ko } from 'date-fns/locale';
 
 
 
-export default function SeasonPricePage() {
+export default function MenuCompanyRolePage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
@@ -24,8 +24,8 @@ export default function SeasonPricePage() {
 
 
   const [search, setSearch] = useState({
+    menuId: '',
     companyId: '',
-    seasonPriceName: '',
     updater: '',
     creator: '',
     startUpdateDt: '',
@@ -35,13 +35,10 @@ export default function SeasonPricePage() {
 
   const [data, setData]: any = useState({
     required: [
+      'menuId',
       'companyId',
-      'seasonPriceName',
-      'hotWaterPrice',
-      'bbqPrice',
-      'headCountOverPrice',
-      'petPrice',
-      'pickupPrice',
+      'menuName',
+      'buttonRole',
     ],
     grid: null,
     list: [],
@@ -52,22 +49,19 @@ export default function SeasonPricePage() {
   });
 
   const gridProps = {
-    unique: ['seasonPriceNo'],
+    unique: ['companyId'],
     required: [
+      'menuId',
       'companyId',
-      'seasonPriceName',
-      'hotWaterPrice',
-      'bbqPrice',
-      'headCountOverPrice',
-      'petPrice',
-      'pickupPrice',
+      'menuName',
+      'buttonRole',
     ],
   };
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
   const getList = () => {
-    SeasonPriceService.getSeasonPriceList({ ...search, page: data.currentPage }).then(res => {
+    MenuCompanyRoleService.getMenuCompanyRoleList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
         list: res.data?.list || [],
@@ -89,14 +83,10 @@ export default function SeasonPricePage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    seasonPriceNo: '',
+    menuId: '',
     companyId: '',
-    seasonPriceName: '',
-    hotWaterPrice: '',
-    bbqPrice: '',
-    headCountOverPrice: '',
-    petPrice: '',
-    pickupPrice: '',
+    menuName: '',
+    buttonRole: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: data.grid });
@@ -110,7 +100,7 @@ export default function SeasonPricePage() {
   const save = () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    SeasonPriceService.setSeasonPriceList(saveList).then(() => getList());
+    MenuCompanyRoleService.setMenuCompanyRoleList(saveList).then(() => getList());
   };
 
   const handleSearchChange = (key, value) => {
@@ -125,27 +115,19 @@ export default function SeasonPricePage() {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
-      '시즌가격번호',
+      '메뉴아이디',
       '업체아이디',
-      '시즌가격명',
-      '온수요금',
-      '바베큐요금',
-      '인원초과요금',
-      '애완동물요금',
-      '픽업요금',
+      '메뉴명',
+      '버튼권한',
         ...gridUtil.auditColumnNames,
       ],
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'seasonPriceNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'menuId', type: 'text', width: 150, readOnly: true,  },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'seasonPriceName', type: 'text', width: 150,   },
-      {data: 'hotWaterPrice', type: 'numeric', width: 150,   },
-      {data: 'bbqPrice', type: 'numeric', width: 150,   },
-      {data: 'headCountOverPrice', type: 'numeric', width: 150,   },
-      {data: 'petPrice', type: 'numeric', width: 150,   },
-      {data: 'pickupPrice', type: 'numeric', width: 150,   },
+      {data: 'menuName', type: 'text', width: 150,   },
+      {data: 'buttonRole', type: 'text', width: 150,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
@@ -194,13 +176,13 @@ export default function SeasonPricePage() {
               <col />
             </colgroup>
             <tbody>
-            <tr v-show="auth.userInfo.companyId === 'kaisa'">
+            <tr>
+              <th scope="row">메뉴아이디</th>
+              <td colSpan={3}><input type="text" value={search.menuId} onChange={e => handleSearchChange('menuId', e.target.value)} /></td>
+            </tr>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? 'show' : 'hide'}>
               <th scope="row">업체아이디</th>
               <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
-            </tr>
-            <tr>
-              <th scope="row">시즌가격명</th>
-              <td colSpan={3}><input type="text" value={search.seasonPriceName} onChange={e => handleSearchChange('seasonPriceName', e.target.value)} /></td>
             </tr>
             </tbody>
             {data.audit && (
@@ -254,7 +236,7 @@ export default function SeasonPricePage() {
 
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
-          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '시즌가격')}>
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '메뉴업체권한')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>
