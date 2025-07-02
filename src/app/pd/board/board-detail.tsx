@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import BoardService from '@/service/pd/board-service';
 import CommonCode from '@/components/common/common-code';
 import gridUtil from '@/utils/grid-util';
+import useAlertStore from '@/store/use-alert-store';
 
-export default function BoardDetail({ detailData, onChange }) {
-  const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
+export default function BoardDetail({ detailData, detailShow, setDetailShow }) {
+  const editor: any = useRef({});
+  const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
     boardNo: '',
     boardCategoryId: '',
@@ -23,28 +25,69 @@ export default function BoardDetail({ detailData, onChange }) {
   });
 
   const drawDetail = () => {
-  edit.editor = gridUtil.createEditor({name: '#BoardEditor', cnts: formData }); // formData.contents
+    editor.current = gridUtil.createEditor({name: '#BoardEditor', cnts: formData.content });
   };
 
-  const getDetail = () => {
+  const getDetail = async () => {
     if (detailData.boardNo) {
       BoardService.getBoard({ boardNo: detailData.boardNo }).then(
         (res) => {
           setFormData(res.data);
-          drawDetail();
         },
         (err) => {
           console.error(err);
         },
       );
-    } else {
-      drawDetail();
     }
   };
 
+  const save = async () => {
+    if (detailData.boardNo) {
+      BoardService.setBoard({
+        boardNo: formData.boardNo,
+        boardCategoryId: formData.boardCategoryId,
+        companyId: formData.companyId,
+        title: formData.title,
+        content: editor.current?.getMarkdown?.() || '',
+        isDisplay: formData.isDisplay,
+        tag: formData.tag,
+      }).then(
+        (res) => {
+          console.log('save: ', res.data);
+          showAlert({
+            message: '저장되었습니다.',
+            buttons: [{
+              type: 'on',
+              text: '확인',
+              callback: () => {
+                hideAlert();
+                setDetailShow(false);
+              }
+            }]
+          })
+        },
+        (err) => {
+          console.error(err);
+        },
+      );
+    }
+  };
+
+  const cancel = () => {
+    setDetailShow(false);
+  }
+
   useEffect(() => {
-    getDetail();
+    (async () => {
+      await getDetail();
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.boardNo) {
+      drawDetail();
+    }
+  }, [formData]);
 
   return (
     <div className="detail-content">
@@ -126,8 +169,8 @@ export default function BoardDetail({ detailData, onChange }) {
         </table>
       </div>
       <div className="detail-bottom">
-        <button type="button">저장</button>
-        <button type="button">취소</button>
+        <button type="button" onClick={save}>저장</button>
+        <button type="button" onClick={cancel}>취소</button>
       </div>
     </div>
   );

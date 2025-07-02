@@ -1,14 +1,17 @@
 'use client';
 
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {useRouter} from '@/hooks/use-custom-router';
+import useAuthStore from '@/store/use-auth-store';
 
 type Props = {
   onReady: any;
 };
 
 export default function OrgValidator({onReady}: Props) {
+  const auth = useAuthStore();
   const router = useRouter();
+  const mounted = useRef<boolean>(false);
 
   const onReadyCheck = async () => {
     try {
@@ -20,11 +23,16 @@ export default function OrgValidator({onReady}: Props) {
         pathname: '/error',
         query: {cd: 'fetch-error'}
       });
+    } finally {
+      mounted.current = true;
     }
   };
 
   useEffect(() => {
-  }, []);
+    if (mounted.current && !auth.token) {
+      router.push({pathname: '/login', query: {}});
+    }
+  }, [router]);
 
   useEffect(() => {
     const refresh = async () => {

@@ -12,6 +12,8 @@ import Pagination from '@/components/common/pagination';
 
 export default function DictionaryPage() {
   const gridRef = useRef(null);
+  const mounted = useRef<boolean>(false);
+  const handsontable = useRef<Handsontable>(null);
   const [search, setSearch] = useState({
     abb: '',
     updater: '',
@@ -43,8 +45,8 @@ export default function DictionaryPage() {
         currentPage: res.data?.currentPage || 1,
         lastPage: res.data?.lastPage || 1,
       }));
-      if (data.grid) {
-        data.grid?.updateSettings({ data: res.data?.list });
+      if (handsontable.current) {
+        handsontable.current?.updateSettings({ data: res.data?.list });
       }
     });
   };
@@ -63,12 +65,12 @@ export default function DictionaryPage() {
       memo: '',
       ...gridUtil.auditAddColumns,
     };
-    const newList = gridUtil.add({ newRow, list: data.list, grid: data.grid });
+    const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
     setData((prev) => ({ ...prev, list: newList }));
   };
 
   const del = () => {
-    gridUtil.del({ selectedRow, grid: data.grid });
+    gridUtil.del({ selectedRow, grid: handsontable.current});
   };
 
   const save = async () => {
@@ -80,12 +82,12 @@ export default function DictionaryPage() {
   };
 
   useEffect(() => {
-    if (!gridRef.current) return;
-
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     const container = gridRef.current;
-    let hot: Handsontable;
-
-    hot = new Handsontable(container!, {
+    handsontable.current = new Handsontable(container!, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
@@ -106,18 +108,17 @@ export default function DictionaryPage() {
       ],
       cells: function (row, col) {
         // 이 시점에 hot 은 이미 선언되어 있어야 함
-        return gridUtil.cellsEvent({ row, col, grid: hot, self: this, pk: [1] });
+        return gridUtil.cellsEvent({ row, col, grid: handsontable.current, self: this, pk: [1] });
       },
       afterChange(changes, source) {
-        gridUtil.afterChangeEvent({ changes, source, gridProps, grid: hot, self: this });
+        gridUtil.afterChangeEvent({ changes, source, gridProps, grid: handsontable.current, self: this });
       },
       afterSelectionEnd(row: number) {
         setSelectedRow(row);
       },
       ...gridUtil.defaultProps,
     });
-
-    setData((prev) => ({ ...prev, grid: hot }));
+    setData(prev => ({ ...prev, grid: handsontable.current }));
 
   }, []);
 
@@ -125,7 +126,7 @@ export default function DictionaryPage() {
     (async () => {
       await getList();
     })();
-  }, [data.grid]);
+  }, [handsontable.current]);
 
   const handleSearchChange = (key, value) => {
     setSearch((prev) => ({ ...prev, [key]: value }));
@@ -209,7 +210,7 @@ export default function DictionaryPage() {
           <button type="reset" onClick={() => window.location.reload()}>
             <span className="icon">&#x22;</span>
           </button>
-          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '코드')}>
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '코드')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>

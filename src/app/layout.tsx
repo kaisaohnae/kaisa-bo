@@ -7,6 +7,8 @@ import '@/assets/css/layout.css';
 import '@/assets/css/slide.css'
 import '@/assets/css/calendar.css'
 import '@/assets/css/lib/swiper-bundle.min.css'
+import '@/assets/css/lib/tui-grid-editor.css';
+
 import MetaTags from '@/components/layout/meta-tags';
 import Alert from '@/components/alert';
 import Loading from '@/components/loading';

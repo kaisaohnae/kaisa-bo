@@ -20,6 +20,8 @@ export default function HolidayPricePage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
+  const mounted = useRef<boolean>(false);
+  const handsontable = useRef<Handsontable>(null);
 
 
 
@@ -71,8 +73,8 @@ export default function HolidayPricePage() {
         currentPage: res.data?.currentPage || 1,
         lastPage: res.data?.lastPage || 1,
       }));
-      if (data.grid) {
-        data.grid?.updateSettings({ data: res.data?.list });
+      if (handsontable.current) {
+        handsontable.current?.updateSettings({ data: res.data?.list });
       }
     });
   };
@@ -92,12 +94,12 @@ export default function HolidayPricePage() {
     holidayCode: '',
       ...gridUtil.auditAddColumns,
     };
-    const newList = gridUtil.add({ newRow, list: data.list, grid: data.grid });
+    const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
     setData(prev => ({ ...prev, list: newList }));
   };
 
   const del = () => {
-    gridUtil.del({ selectedRow, grid: data.grid });
+    gridUtil.del({ selectedRow, grid: handsontable.current });
   };
 
   const save = async () => {
@@ -113,10 +115,12 @@ export default function HolidayPricePage() {
   };
 
   useEffect(() => {
-    if (!gridRef.current) return;
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     const container = gridRef.current;
-    let hot: Handsontable;
-    hot = new Handsontable(container, {
+    handsontable.current = new Handsontable(container, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
@@ -141,7 +145,7 @@ export default function HolidayPricePage() {
         return gridUtil.cellsEvent({
           row,
           col,
-          grid: hot,
+          grid: handsontable.current,
           self: this,
           pk: [],
         });
@@ -151,7 +155,7 @@ export default function HolidayPricePage() {
           changes,
           source,
           gridProps,
-          grid: hot,
+          grid: handsontable.current,
           self: this,
         });
       },
@@ -160,7 +164,7 @@ export default function HolidayPricePage() {
       },
       ...gridUtil.defaultProps,
     });
-    setData(prev => ({ ...prev, grid: hot }));
+    setData(prev => ({ ...prev, grid: handsontable.current }));
 
   }, []);
 
@@ -259,7 +263,7 @@ export default function HolidayPricePage() {
 
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
-          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '휴일가격')}>
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '휴일가격')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>
@@ -270,7 +274,6 @@ export default function HolidayPricePage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
-
 
     </>
   );

@@ -6,7 +6,7 @@ type AlertProps = {
   type?: string;
   title?: string;
   message: any;
-  button?:  any; // ButtonProps | ButtonProps[];
+  buttons?:  any; // ButtonProps | ButtonProps[];
 };
 
 type State = {

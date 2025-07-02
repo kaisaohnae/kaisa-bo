@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import UserService from '@/service/at/user-service';
 import CommonCode from '@/components/common/common-code';
 import gridUtil from '@/utils/grid-util';
+import useAlertStore from '@/store/use-alert-store';
 
-export default function UserDetail({ detailData, onChange }) {
-  const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
+export default function UserDetail({ detailData, detailShow, setDetailShow }) {
+  const editor: any = useRef({});
+  const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
     userId: '',
     companyId: '',
@@ -27,25 +29,67 @@ export default function UserDetail({ detailData, onChange }) {
 
   };
 
-  const getDetail = () => {
+  const getDetail = async () => {
     if (detailData.companyId) {
       UserService.getUser({ companyId: detailData.companyId }).then(
         (res) => {
           setFormData(res.data);
-          drawDetail();
         },
         (err) => {
           console.error(err);
         },
       );
-    } else {
-      drawDetail();
     }
   };
 
+  const save = async () => {
+    if (detailData.companyId) {
+      UserService.setUser({
+        userId: formData.userId,
+        companyId: formData.companyId,
+        userName: formData.userName,
+        phoneNo: formData.phoneNo,
+        passwordUpdateDt: formData.passwordUpdateDt,
+        memo: formData.memo,
+        loginDt: formData.loginDt,
+        userStateCode: formData.userStateCode,
+      }).then(
+        (res) => {
+          console.log('save: ', res.data);
+          showAlert({
+            message: '저장되었습니다.',
+            buttons: [{
+              type: 'on',
+              text: '확인',
+              callback: () => {
+                hideAlert();
+                setDetailShow(false);
+              }
+            }]
+          })
+        },
+        (err) => {
+          console.error(err);
+        },
+      );
+    }
+  };
+
+  const cancel = () => {
+    setDetailShow(false);
+  }
+
   useEffect(() => {
-    getDetail();
+    (async () => {
+      await getDetail();
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.companyId) {
+      drawDetail();
+    }
+  }, [formData]);
 
   return (
     <div className="detail-content">
@@ -131,8 +175,8 @@ export default function UserDetail({ detailData, onChange }) {
         </table>
       </div>
       <div className="detail-bottom">
-        <button type="button">저장</button>
-        <button type="button">취소</button>
+        <button type="button" onClick={save}>저장</button>
+        <button type="button" onClick={cancel}>취소</button>
       </div>
     </div>
   );

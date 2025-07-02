@@ -23,6 +23,8 @@ export default function BoardPage() {
   const gridRef = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
+  const mounted = useRef<boolean>(false);
+  const handsontable = useRef<Handsontable>(null);
 
   const [detailData, setDetailData]:any = useState({});
   const [detailShow, setDetailShow]:any = useState(false);
@@ -75,8 +77,8 @@ export default function BoardPage() {
         currentPage: res.data?.currentPage || 1,
         lastPage: res.data?.lastPage || 1,
       }));
-      if (data.grid) {
-        data.grid?.updateSettings({ data: res.data?.list });
+      if (handsontable.current) {
+        handsontable.current?.updateSettings({ data: res.data?.list });
       }
     });
   };
@@ -97,12 +99,12 @@ export default function BoardPage() {
     tag: '',
       ...gridUtil.auditAddColumns,
     };
-    const newList = gridUtil.add({ newRow, list: data.list, grid: data.grid });
+    const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
     setData(prev => ({ ...prev, list: newList }));
   };
 
   const del = () => {
-    gridUtil.del({ selectedRow, grid: data.grid });
+    gridUtil.del({ selectedRow, grid: handsontable.current });
   };
 
   const save = async () => {
@@ -118,10 +120,12 @@ export default function BoardPage() {
   };
 
   useEffect(() => {
-    if (!gridRef.current) return;
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     const container = gridRef.current;
-    let hot: Handsontable;
-    hot = new Handsontable(container, {
+    handsontable.current = new Handsontable(container, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
@@ -148,7 +152,7 @@ export default function BoardPage() {
         return gridUtil.cellsEvent({
           row,
           col,
-          grid: hot,
+          grid: handsontable.current,
           self: this,
           pk: [],
         });
@@ -158,7 +162,7 @@ export default function BoardPage() {
           changes,
           source,
           gridProps,
-          grid: hot,
+          grid: handsontable.current,
           self: this,
         });
       },
@@ -166,8 +170,8 @@ export default function BoardPage() {
         setSelectedRow(row)
       },
       afterOnCellMouseDown: (event, coords) => {
-        const colHeader = hot.getColHeader(coords.col); // 칼럼 헤더 확인
-        const rowData = hot.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+        const colHeader = handsontable.current?.getColHeader(coords.col); // 칼럼 헤더 확인
+        const rowData = handsontable.current?.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
         if (colHeader === '제목' && rowData) {
           setDetailData(rowData);
           setDetailShow(true);
@@ -175,7 +179,7 @@ export default function BoardPage() {
       },
       ...gridUtil.defaultProps,
     });
-    setData(prev => ({ ...prev, grid: hot }));
+    setData(prev => ({ ...prev, grid: handsontable.current }));
 
   }, []);
 
@@ -268,7 +272,7 @@ export default function BoardPage() {
 
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
-          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(data.grid, '게시판')}>
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '게시판')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>
@@ -279,7 +283,6 @@ export default function BoardPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
-
       {detailShow && (
        <>
          <Detail component={BoardDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />

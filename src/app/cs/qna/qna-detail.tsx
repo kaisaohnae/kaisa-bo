@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import QnaService from '@/service/cs/qna-service';
 import CommonCode from '@/components/common/common-code';
 import gridUtil from '@/utils/grid-util';
+import useAlertStore from '@/store/use-alert-store';
 
-export default function QnaDetail({ detailData, onChange }) {
-  const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
+export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
+  const editor: any = useRef({});
+  const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
     qnaNo: '',
     memberName: '',
@@ -25,25 +27,65 @@ export default function QnaDetail({ detailData, onChange }) {
 
   };
 
-  const getDetail = () => {
+  const getDetail = async () => {
     if (detailData.qnaNo) {
       QnaService.getQna({ qnaNo: detailData.qnaNo }).then(
         (res) => {
           setFormData(res.data);
-          drawDetail();
         },
         (err) => {
           console.error(err);
         },
       );
-    } else {
-      drawDetail();
     }
   };
 
+  const save = async () => {
+    if (detailData.qnaNo) {
+      QnaService.setQna({
+        qnaNo: formData.qnaNo,
+        memberName: formData.memberName,
+        phoneNo: formData.phoneNo,
+        email: formData.email,
+        title: formData.title,
+        content: editor.current?.getMarkdown?.() || '',
+      }).then(
+        (res) => {
+          console.log('save: ', res.data);
+          showAlert({
+            message: '저장되었습니다.',
+            buttons: [{
+              type: 'on',
+              text: '확인',
+              callback: () => {
+                hideAlert();
+                setDetailShow(false);
+              }
+            }]
+          })
+        },
+        (err) => {
+          console.error(err);
+        },
+      );
+    }
+  };
+
+  const cancel = () => {
+    setDetailShow(false);
+  }
+
   useEffect(() => {
-    getDetail();
+    (async () => {
+      await getDetail();
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.qnaNo) {
+      drawDetail();
+    }
+  }, [formData]);
 
   return (
     <div className="detail-content">
@@ -117,8 +159,8 @@ export default function QnaDetail({ detailData, onChange }) {
         </table>
       </div>
       <div className="detail-bottom">
-        <button type="button">저장</button>
-        <button type="button">취소</button>
+        <button type="button" onClick={save}>저장</button>
+        <button type="button" onClick={cancel}>취소</button>
       </div>
     </div>
   );

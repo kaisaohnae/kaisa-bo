@@ -3,10 +3,8 @@ import {persist} from 'zustand/middleware';
 import useSettingStore from './use-setting-store';
 
 interface AuthState {
-  active: boolean;
   userInfo: any;
   token: string;
-
   loginSuccess: (data: any, routerPush: (path: string) => void) => Promise<void>;
   loginFail: () => void;
   removeSession: () => void;
@@ -16,7 +14,6 @@ interface AuthState {
 const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      active: false,
       userInfo: {} as any,
       token: '',
       loginSuccess: async (data, routerPush) => {

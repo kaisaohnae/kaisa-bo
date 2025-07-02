@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ProductService from '@/service/pd/product-service';
 import CommonCode from '@/components/common/common-code';
 import gridUtil from '@/utils/grid-util';
+import useAlertStore from '@/store/use-alert-store';
 
-export default function ProductDetail({ detailData, onChange }) {
-  const [edit, setEdit] = useState({ editor: {}, editorOption: {} });
+export default function ProductDetail({ detailData, detailShow, setDetailShow }) {
+  const editor: any = useRef({});
+  const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
     productNo: '',
     companyId: '',
@@ -31,28 +33,77 @@ export default function ProductDetail({ detailData, onChange }) {
   });
 
   const drawDetail = () => {
-  edit.editor = gridUtil.createEditor({name: '#ProductEditor', cnts: formData }); // formData.contents
+    editor.current = gridUtil.createEditor({name: '#ProductEditor', cnts: formData.content });
   };
 
-  const getDetail = () => {
+  const getDetail = async () => {
     if (detailData.productNo) {
       ProductService.getProduct({ productNo: detailData.productNo }).then(
         (res) => {
           setFormData(res.data);
-          drawDetail();
         },
         (err) => {
           console.error(err);
         },
       );
-    } else {
-      drawDetail();
     }
   };
 
+  const save = async () => {
+    if (detailData.productNo) {
+      ProductService.setProduct({
+        productNo: formData.productNo,
+        companyId: formData.companyId,
+        seasonPriceNo: formData.seasonPriceNo,
+        productName: formData.productName,
+        headCount: formData.headCount,
+        maxHeadCount: formData.maxHeadCount,
+        m2: formData.m2,
+        isDisplay: formData.isDisplay,
+        isPet: formData.isPet,
+        isBBQ: formData.isBBQ,
+        isPickup: formData.isPickup,
+        isStone: formData.isStone,
+        memo: formData.memo,
+        content: editor.current?.getMarkdown?.() || '',
+        fileNo: formData.fileNo,
+      }).then(
+        (res) => {
+          console.log('save: ', res.data);
+          showAlert({
+            message: '저장되었습니다.',
+            buttons: [{
+              type: 'on',
+              text: '확인',
+              callback: () => {
+                hideAlert();
+                setDetailShow(false);
+              }
+            }]
+          })
+        },
+        (err) => {
+          console.error(err);
+        },
+      );
+    }
+  };
+
+  const cancel = () => {
+    setDetailShow(false);
+  }
+
   useEffect(() => {
-    getDetail();
+    (async () => {
+      await getDetail();
+    })();
   }, []);
+
+  useEffect(() => {
+    if (formData.productNo) {
+      drawDetail();
+    }
+  }, [formData]);
 
   return (
     <div className="detail-content">
@@ -182,8 +233,8 @@ export default function ProductDetail({ detailData, onChange }) {
         </table>
       </div>
       <div className="detail-bottom">
-        <button type="button">저장</button>
-        <button type="button">취소</button>
+        <button type="button" onClick={save}>저장</button>
+        <button type="button" onClick={cancel}>취소</button>
       </div>
     </div>
   );
