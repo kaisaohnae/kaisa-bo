@@ -4,7 +4,7 @@ import React, {useState, useMemo, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 import useAuthStore from '@/store/use-auth-store';
 import useSettingStore from '@/store/use-setting-store';
-import IconLogo from '@/components/icons/common/icon-logo';
+import SvgLogo from '@/components/icons/common/svg-logo';
 import {usePathname} from 'next/navigation';
 import useAlertStore from '@/store/use-alert-store';
 
@@ -40,6 +40,7 @@ export default function HeaderSideLayout() {
   const clickMenu = menu => {
     setting.setHash(menu.path);
     router.push(menu.path);
+    setting.setMenuActive(false);
   };
 
   const clickHome = () => {
@@ -118,7 +119,7 @@ export default function HeaderSideLayout() {
 
         <div id="side" className={setting.menuActive ? 'menuOn' : ''}>
           <h1 onClick={clickHome}>
-            <IconLogo width={100} fill="#666666" />
+            <SvgLogo width={100} fill="#666666" />
           </h1>
           <div className="search">
             <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} placeholder="메뉴 검색" />

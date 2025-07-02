@@ -20,7 +20,7 @@ import QnaDetail from './qna-detail';
 
 
 export default function QnaPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -93,12 +93,12 @@ export default function QnaPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    qnaNo: '',
-    memberName: '',
-    phoneNo: '',
-    email: '',
-    title: '',
-    content: '',
+      qnaNo: '',
+      memberName: '',
+      phoneNo: '',
+      email: '',
+      title: '',
+      content: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -126,8 +126,7 @@ export default function QnaPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

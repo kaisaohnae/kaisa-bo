@@ -20,7 +20,7 @@ import CompanyDetail from './company-detail';
 
 
 export default function CompanyPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -89,13 +89,13 @@ export default function CompanyPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    companyId: '',
-    companyTypeCode: '',
-    companyName: '',
-    lttd: '',
-    lotd: '',
-    address: '',
-    phoneNo: '',
+      companyId: '',
+      companyTypeCode: '',
+      companyName: '',
+      lttd: '',
+      lotd: '',
+      address: '',
+      phoneNo: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -123,8 +123,7 @@ export default function CompanyPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

@@ -20,7 +20,7 @@ import ProductDetail from './product-detail';
 
 
 export default function ProductPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -106,20 +106,20 @@ export default function ProductPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    productNo: '',
-    companyId: '',
-    seasonPriceNo: '',
-    productName: '',
-    headCount: '',
-    maxHeadCount: '',
-    m2: '',
-    isDisplay: '',
-    isPet: '',
-    isBBQ: '',
-    isPickup: '',
-    isStone: '',
-    memo: '',
-    fileNo: '',
+      productNo: '',
+      companyId: '',
+      seasonPriceNo: '',
+      productName: '',
+      headCount: '',
+      maxHeadCount: '',
+      m2: '',
+      isDisplay: '',
+      isPet: '',
+      isBBQ: '',
+      isPickup: '',
+      isStone: '',
+      memo: '',
+      fileNo: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -147,8 +147,7 @@ export default function ProductPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

@@ -17,7 +17,7 @@ import { ko } from 'date-fns/locale';
 
 
 export default function SeasonPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -97,17 +97,17 @@ export default function SeasonPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    seasonNo: '',
-    seasonPriceNo: '',
-    companyId: '',
-    sortOrder: '',
-    seasonName: '',
-    seasonStartDay: '',
-    seasonEndDay: '',
-    price: '',
-    friPrice: '',
-    satPrice: '',
-    sunPrice: '',
+      seasonNo: '',
+      seasonPriceNo: '',
+      companyId: '',
+      sortOrder: '',
+      seasonName: '',
+      seasonStartDay: '',
+      seasonEndDay: '',
+      price: '',
+      friPrice: '',
+      satPrice: '',
+      sunPrice: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -135,8 +135,7 @@ export default function SeasonPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

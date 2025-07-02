@@ -235,7 +235,7 @@ const createEditor = (obj: any) => {
   const initialValue = typeof obj.cnts === 'string' ? obj.cnts : ' '; // Ensure it's a string
   return new Editor({
     el: document.querySelector(obj.name) as HTMLElement,
-    previewStyle: 'vertical',
+    //  previewStyle: 'vertical',
     // previewStyle: 'tab',
     toolbarItems: [
       ['heading', 'bold', 'italic', 'strike'],
@@ -244,7 +244,8 @@ const createEditor = (obj: any) => {
       ['table', 'link', 'image'], // 'image'
       ['code', 'codeblock']
     ],
-    initialEditType: 'wysiwyg', // 'wysiwyg','markdown'
+    initialEditType: 'markdown', // 'wysiwyg','markdown'
+    hideModeSwitch: true,
     height: '400px',
     previewHighlight: true,
     plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],

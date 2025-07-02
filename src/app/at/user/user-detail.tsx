@@ -99,13 +99,13 @@ export default function UserDetail({ detailData, detailShow, setDetailShow }) {
           <caption>사용자 상세</caption>
           <tbody>
           <tr>
-            <th scope="col">사용자아이디</th>
+            <th scope="col" className="required">사용자아이디</th>
             <td>
               {formData.userId}
             </td>
           </tr>
           <tr>
-            <th scope="col">업체아이디</th>
+            <th scope="col" className="required">업체아이디</th>
             <td>
               {formData.companyId}
             </td>
@@ -147,25 +147,25 @@ export default function UserDetail({ detailData, detailShow, setDetailShow }) {
               </td>
             </tr>
           <tr>
-            <th scope="col">등록자</th>
+            <th scope="col" className="audit">등록자</th>
             <td>
               {formData.creator}
             </td>
           </tr>
           <tr>
-            <th scope="col">등록일시</th>
+            <th scope="col" className="audit">등록일시</th>
             <td>
               {formData.createDt}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정자</th>
+            <th scope="col" className="audit">수정자</th>
             <td>
               {formData.updater}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정일시</th>
+            <th scope="col" className="audit">수정일시</th>
             <td>
               {formData.updateDt}
             </td>

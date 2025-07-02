@@ -17,7 +17,7 @@ import { ko } from 'date-fns/locale';
 import CommonCodeRadio from '@/components/common/common-code-radio';
 
 export default function OrderPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -110,24 +110,24 @@ export default function OrderPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    orderNo: '',
-    companyId: '',
-    productNo: '',
-    reserveDay: '',
-    orderStateCode: '',
-    reserveCode: '',
-    phoneNo: '',
-    orderName: '',
-    email: '',
-    price: '',
-    addPrice: '',
-    salePrice: '',
-    headCount: '',
-    isHotWater: '',
-    isPickup: '',
-    isBBQ: '',
-    isPet: '',
-    memo: '',
+      orderNo: '',
+      companyId: '',
+      productNo: '',
+      reserveDay: '',
+      orderStateCode: '',
+      reserveCode: '',
+      phoneNo: '',
+      orderName: '',
+      email: '',
+      price: '',
+      addPrice: '',
+      salePrice: '',
+      headCount: '',
+      isHotWater: '',
+      isPickup: '',
+      isBBQ: '',
+      isPet: '',
+      memo: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -155,8 +155,7 @@ export default function OrderPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

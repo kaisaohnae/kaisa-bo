@@ -17,7 +17,7 @@ import { ko } from 'date-fns/locale';
 
 
 export default function FilePage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -76,9 +76,9 @@ export default function FilePage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    fileNo: '',
-    tableName: '',
-    columnName: '',
+      fileNo: '',
+      tableName: '',
+      columnName: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -106,8 +106,7 @@ export default function FilePage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

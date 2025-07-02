@@ -113,7 +113,7 @@ export default function ProductDetail({ detailData, detailShow, setDetailShow })
           <caption>상품 상세</caption>
           <tbody>
           <tr>
-            <th scope="col">상품번호</th>
+            <th scope="col" className="required">상품번호</th>
             <td>
               {formData.productNo}
             </td>
@@ -191,9 +191,6 @@ export default function ProductDetail({ detailData, detailShow, setDetailShow })
               </td>
             </tr>
           <tr>
-            <th scope="col" colSpan={2}>내용</th>
-          </tr>
-          <tr>
             <td colSpan={2}>
               <div id="ProductEditor" />
             </td>
@@ -205,25 +202,25 @@ export default function ProductDetail({ detailData, detailShow, setDetailShow })
               </td>
             </tr>
           <tr>
-            <th scope="col">등록자</th>
+            <th scope="col" className="audit">등록자</th>
             <td>
               {formData.creator}
             </td>
           </tr>
           <tr>
-            <th scope="col">등록일시</th>
+            <th scope="col" className="audit">등록일시</th>
             <td>
               {formData.createDt}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정자</th>
+            <th scope="col" className="audit">수정자</th>
             <td>
               {formData.updater}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정일시</th>
+            <th scope="col" className="audit">수정일시</th>
             <td>
               {formData.updateDt}
             </td>

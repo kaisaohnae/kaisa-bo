@@ -20,7 +20,7 @@ import MemberDetail from './member-detail';
 
 
 export default function MemberPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -96,15 +96,15 @@ export default function MemberPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    memberId: '',
-    companyId: '',
-    memberName: '',
-    email: '',
-    phoneNo: '',
-    passwordUpdateDt: '',
-    loginDt: '',
-    memo: '',
-    memberStateCode: '',
+      memberId: '',
+      companyId: '',
+      memberName: '',
+      email: '',
+      phoneNo: '',
+      passwordUpdateDt: '',
+      loginDt: '',
+      memo: '',
+      memberStateCode: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -132,8 +132,7 @@ export default function MemberPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

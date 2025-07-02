@@ -20,7 +20,7 @@ import BoardDetail from './board-detail';
 
 
 export default function BoardPage() {
-  const gridRef = useRef(null);
+  const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
@@ -91,12 +91,12 @@ export default function BoardPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-    boardNo: '',
-    boardCategoryId: '',
-    companyId: '',
-    title: '',
-    isDisplay: '',
-    tag: '',
+      boardNo: '',
+      boardCategoryId: '',
+      companyId: '',
+      title: '',
+      isDisplay: '',
+      tag: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -124,8 +124,7 @@ export default function BoardPage() {
       mounted.current = true;
       return;
     }
-    const container = gridRef.current;
-    handsontable.current = new Handsontable(container, {
+    handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,

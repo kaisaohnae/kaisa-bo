@@ -87,7 +87,7 @@
 
 .detail-container {display: none; position: fixed; left:0; top:0; width: 100%; height: 100%; z-index: 1000;}
 .detail-dimmed {transition:0.2s all linear; width: 100%; height: 100%; background: rgba(0,0,0,0.0); z-index: 1000;}
-.detail-wrapper {transition:0.2s all linear; width:60%; right:-65%;  position: absolute; top:10px; height:calc(100% - 20px); border-radius: 10px; background: #fff; z-index: 1000; padding:10px; border-right:1px solid #666; box-shadow:0 0 15px rgba(0,0,0,0.2);}
+.detail-wrapper {transition:0.2s all linear; width:80%; right:-85%; position: absolute; top:10px; height:calc(100% - 20px); border-radius: 10px; background: #fff; z-index: 1000; padding:10px; border-right:1px solid #666; box-shadow:0 0 15px rgba(0,0,0,0.2);}
 .detail-container.on {display: block;}
 .detail-container .detail-close {position:absolute; right:15px; top:15px; color:#666; font-size: 30px; cursor:pointer;}
 .detail-container .detail-close:hover {color:#000;}
@@ -100,28 +100,5 @@
 #alert .box .buttons {padding: 10px 0;}
 #alert p { padding: 20px; }
 
-#loading { width: 100%; height: 100%; position: fixed; left: 0; top: 0; background: rgba(0, 0, 0, 0.3); z-index: 9000; }
-#loading .loadingCircle { width: 100px; height: 100px; position: fixed; left: 50%; top: 50%; margin: -50px 0 0 -50px; }
-
-@keyframes animation {
-  0% {
-    stroke-dasharray: 2 98;
-    stroke-dashoffset: -105;
-  }
-  50% {
-    stroke-dasharray: 80 10;
-    stroke-dashoffset: -160;
-  }
-  100% {
-    stroke-dasharray: 2 98;
-    stroke-dashoffset: -200;
-  }
-}
-
-#spinner {
-  transform-origin: center;
-  animation-name: animation;
-  animation-duration: 1.2s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
+#loading { width: 100%; height: 100%; position: fixed; left: 0; top: 0; background: rgba(0, 0, 0, 0.0); z-index: 9000; }
+#loading .loading { width: 100px; height: 100px; position: fixed; left: 50%; top: 50%; margin: -50px 0 0 -50px;}

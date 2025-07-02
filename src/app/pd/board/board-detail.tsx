@@ -97,7 +97,7 @@ export default function BoardDetail({ detailData, detailShow, setDetailShow }) {
           <caption>게시판 상세</caption>
           <tbody>
           <tr>
-            <th scope="col">게시판번호</th>
+            <th scope="col" className="required">게시판번호</th>
             <td>
               {formData.boardNo}
             </td>
@@ -121,9 +121,6 @@ export default function BoardDetail({ detailData, detailShow, setDetailShow }) {
               </td>
             </tr>
           <tr>
-            <th scope="col" colSpan={2}>내용</th>
-          </tr>
-          <tr>
             <td colSpan={2}>
               <div id="BoardEditor" />
             </td>
@@ -141,25 +138,25 @@ export default function BoardDetail({ detailData, detailShow, setDetailShow }) {
               </td>
             </tr>
           <tr>
-            <th scope="col">등록자</th>
+            <th scope="col" className="audit">등록자</th>
             <td>
               {formData.creator}
             </td>
           </tr>
           <tr>
-            <th scope="col">등록일시</th>
+            <th scope="col" className="audit">등록일시</th>
             <td>
               {formData.createDt}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정자</th>
+            <th scope="col" className="audit">수정자</th>
             <td>
               {formData.updater}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정일시</th>
+            <th scope="col" className="audit">수정일시</th>
             <td>
               {formData.updateDt}
             </td>

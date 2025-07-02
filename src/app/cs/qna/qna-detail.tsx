@@ -95,7 +95,7 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
           <caption>문의 상세</caption>
           <tbody>
           <tr>
-            <th scope="col">질문번호</th>
+            <th scope="col" className="required">질문번호</th>
             <td>
               {formData.qnaNo}
             </td>
@@ -131,25 +131,25 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
               </td>
             </tr>
           <tr>
-            <th scope="col">등록자</th>
+            <th scope="col" className="audit">등록자</th>
             <td>
               {formData.creator}
             </td>
           </tr>
           <tr>
-            <th scope="col">등록일시</th>
+            <th scope="col" className="audit">등록일시</th>
             <td>
               {formData.createDt}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정자</th>
+            <th scope="col" className="audit">수정자</th>
             <td>
               {formData.updater}
             </td>
           </tr>
           <tr>
-            <th scope="col">수정일시</th>
+            <th scope="col" className="audit">수정일시</th>
             <td>
               {formData.updateDt}
             </td>
