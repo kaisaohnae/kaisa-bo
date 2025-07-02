@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Handsontable from 'handsontable';
 import gridUtil from '@/utils/grid-util';
 import excelUtil from '@/utils/excel-util';
-import QnaService from '@/service/cs/qna-service';
+import CodeService from '@/service/cr/code-service';
 import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
@@ -13,29 +13,21 @@ import useSettingStore from '@/store/use-setting-store';
 import ReactDatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 
-import Detail from '@/components/common/detail';
-import QnaDetail from './qna-detail';
 
 
 
-
-export default function QnaPage() {
+export default function CodePage() {
   const gridRef: any = useRef(null);
   const auth = useAuthStore();
   const setting = useSettingStore();
   const mounted = useRef<boolean>(false);
   const handsontable = useRef<Handsontable>(null);
 
-  const [detailData, setDetailData]:any = useState({});
-  const [detailShow, setDetailShow]:any = useState(false);
 
 
   const [search, setSearch] = useState({
-    memberName: '',
-    phoneNo: '',
-    email: '',
-    title: '',
-    content: '',
+    code: '',
+    codeValue: '',
     updater: '',
     creator: '',
     startUpdateDt: '',
@@ -45,10 +37,9 @@ export default function QnaPage() {
 
   const [data, setData]: any = useState({
     required: [
-      'memberName',
-      'phoneNo',
-      'title',
-      'content',
+      'code',
+      'codeValue',
+      'sortOrder',
     ],
     grid: null,
     list: [],
@@ -59,19 +50,18 @@ export default function QnaPage() {
   });
 
   const gridProps = {
-    unique: ['qnaNo'],
+    unique: ['codeValue'],
     required: [
-      'memberName',
-      'phoneNo',
-      'title',
-      'content',
+      'code',
+      'codeValue',
+      'sortOrder',
     ],
   };
 
   const [selectedRow, setSelectedRow]: any = useState(null);
 
   const getList = async () => {
-    QnaService.getQnaList({ ...search, page: data.currentPage }).then(res => {
+    CodeService.getCodeList({ ...search, page: data.currentPage }).then(res => {
       setData(prev => ({
         ...prev,
         list: res.data?.list || [],
@@ -93,12 +83,11 @@ export default function QnaPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-      qnaNo: '',
-      memberName: '',
-      phoneNo: '',
-      email: '',
-      title: '',
-      content: '',
+      code: '',
+      codeValue: '',
+      codeName: '',
+      memo: '',
+      sortOrder: '',
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
@@ -112,7 +101,7 @@ export default function QnaPage() {
   const save = async () => {
     const saveList = gridUtil.valid({ list: data.list, required: gridProps.required });
     if (!saveList) return;
-    QnaService.setQnaList(saveList).then(async () => {
+    CodeService.setCodeList(saveList).then(async () => {
       await getList();
     });
   };
@@ -130,23 +119,21 @@ export default function QnaPage() {
       data: data.list,
       colHeaders: [
         ...gridUtil.commonColumnNames,
-      '질문번호',
-      '회원명',
-      '전화번호',
-      '이메일',
-      '제목',
-      '내용',
+      '코드',
+      '코드값',
+      '코드명',
+      '설명',
+      '정렬순서',
         ...gridUtil.auditColumnNames,
       ],
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true,  },
-      {data: 'memberName', type: 'text', width: 150,   },
-      {data: 'phoneNo', type: 'text', width: 150,   },
-      {data: 'email', type: 'text', width: 150,   },
-      {data: 'title', type: 'text', width: 150,  className: 'underline', },
-      {data: 'content', type: 'text', width: 150,   },
+      {data: 'code', type: 'text', width: 150, readOnly: true,  },
+      {data: 'codeValue', type: 'text', width: 150, readOnly: true,  },
+      {data: 'codeName', type: 'text', width: 150,   },
+      {data: 'memo', type: 'text', width: 150,   },
+      {data: 'sortOrder', type: 'numeric', width: 150,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
@@ -169,14 +156,6 @@ export default function QnaPage() {
       },
       afterSelectionEnd: function (row: number) {
         setSelectedRow(row)
-      },
-      afterOnCellMouseDown: (event, coords) => {
-        const colHeader = handsontable.current?.getColHeader(coords.col); // 칼럼 헤더 확인
-        const rowData = handsontable.current?.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
-        if (colHeader === '제목' && rowData) {
-          setDetailData(rowData);
-          setDetailShow(true);
-        }
       },
       ...gridUtil.defaultProps,
     });
@@ -210,24 +189,12 @@ export default function QnaPage() {
             </colgroup>
             <tbody>
             <tr>
-              <th scope="row">회원명</th>
-              <td colSpan={3}><input type="text" value={search.memberName} onChange={e => handleSearchChange('memberName', e.target.value)} /></td>
+              <th scope="row">코드</th>
+              <td colSpan={3}><input type="text" value={search.code} onChange={e => handleSearchChange('code', e.target.value)} /></td>
             </tr>
             <tr>
-              <th scope="row">전화번호</th>
-              <td colSpan={3}><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
-            </tr>
-            <tr>
-              <th scope="row">이메일</th>
-              <td colSpan={3}><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
-            </tr>
-            <tr>
-              <th scope="row">제목</th>
-              <td colSpan={3}><input type="text" value={search.title} onChange={e => handleSearchChange('title', e.target.value)} /></td>
-            </tr>
-            <tr>
-              <th scope="row">내용</th>
-              <td colSpan={3}><input type="text" value={search.content} onChange={e => handleSearchChange('content', e.target.value)} /></td>
+              <th scope="row">코드값</th>
+              <td colSpan={3}><input type="text" value={search.codeValue} onChange={e => handleSearchChange('codeValue', e.target.value)} /></td>
             </tr>
             </tbody>
             {data.audit && (
@@ -278,7 +245,7 @@ export default function QnaPage() {
           <button type="button" className="audit" onClick={() => setData(prev => ({...prev, audit: !prev.audit}))}>상세조회</button>
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
-          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '문의')}>
+          <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '코드')}>
             <span className="icon">&#xf1c3;</span>
           </button>
           <div className="totalCount">총 {data.totalCount}건</div>
@@ -289,11 +256,6 @@ export default function QnaPage() {
       </div>
       {data.list.length === 0 && <div className="no-list">조회 내역이 없습니다.</div>}
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
-      {detailShow && (
-       <>
-         <Detail component={QnaDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
-       </>
-      )}
 
     </>
   );

@@ -194,7 +194,6 @@ export default function FilePage() {
             <button type="button" className="button save" onClick={save}><span className="icon">&#xe814;</span>저장</button>
             <button type="button" className="button reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span>초기화</button>
           </span>
-
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
           <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '파일')}>
