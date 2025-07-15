@@ -56,7 +56,7 @@ const Login: React.FC = () => {
 
     try {
       const res = await AuthService.login(param);
-      if (res) {
+      if (res.success) {
         // setting.setState();
         auth.loginSuccess(res.data, router.push);
       } else {
@@ -64,6 +64,7 @@ const Login: React.FC = () => {
         showAlert({message: '회원정보와 일치하지 않습니다.'});
       }
     } catch (err) {
+      showAlert({message: '회원정보가 일치하지 않습니다.'});
       console.error(err);
     }
   };
