@@ -148,7 +148,7 @@ export default function FilePage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-  }, []);
+  }, [gridRef.current]);
 
   useEffect(() => {
     (async () => {

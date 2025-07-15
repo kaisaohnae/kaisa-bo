@@ -149,7 +149,7 @@ export default function ApiLogPage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-  }, []);
+  }, [gridRef.current]);
 
   useEffect(() => {
     (async () => {

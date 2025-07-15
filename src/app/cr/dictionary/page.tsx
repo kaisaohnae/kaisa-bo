@@ -159,7 +159,7 @@ export default function DictionaryPage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-  }, []);
+  }, [gridRef.current]);
 
   useEffect(() => {
     (async () => {
