@@ -3,7 +3,7 @@ import Handsontable from 'handsontable';
 import 'handsontable/dist/handsontable.full.min.css';
 import gridUtil from '@/utils/grid-util';
 import excelUtil from '@/utils/excel-util';
-import CodeService from '@/service/common/code-service';
+import CodeService from '@/service/cr/code-service';
 import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
 import Pagination from '@/components/common/pagination';
