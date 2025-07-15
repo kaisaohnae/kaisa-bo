@@ -227,7 +227,7 @@ export default function OrderPage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-  }, []);
+  }, [gridRef.current]);
 
   useEffect(() => {
     (async () => {
