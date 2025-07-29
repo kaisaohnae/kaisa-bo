@@ -6,17 +6,21 @@
   padding: 10px;
 }
 
-#container.menuOn {
+#container.menu-on {
   padding: 10px 10px 10px 230px;
 }
 
 #contents {
+  height: calc(100% - 109px);
   background: #fff;
   border: 10px solid #fff;
-  height: calc(100% - 109px);
   z-index: 1;
   overflow: auto;
 }
+
+.login #contents {height: 100%;}
+
+#container.login {padding:0;}
 #contents::-webkit-scrollbar {display:none;}
 
 #header {width:100%; height:100px; overflow:hidden; padding:10px 10px 0 10px; position:relative; z-index:2;}
@@ -44,10 +48,10 @@
 #header .tab ul li .close:hover {transform: rotate(90deg); right:-5px; top:-2px; color:#666;}
 #header .tab .closeAll {cursor:pointer; border:1px solid #aaa; position:absolute; right:2px; color:#666; bottom:4px; width:31px; height:30px; line-height:30px;}
 #header .tab .closeAll:hover {color:#000; background:rgba(255,255,255,0.2);}
-#header.menuOn .btnMenu {left:230px;}
-#header.menuOn .btnMenu ul li:nth-child(1) {transform: rotate(-45deg); width:20px; left:-4px; top:4px;}
-#header.menuOn .btnMenu ul li:nth-child(3) {transform: rotate(45deg); width:20px; left:-4px; top:16px;}
-#side.menuOn {left:0;}
+#header.menu-on .btnMenu {left:230px;}
+#header.menu-on .btnMenu ul li:nth-child(1) {transform: rotate(-45deg); width:20px; left:-4px; top:4px;}
+#header.menu-on .btnMenu ul li:nth-child(3) {transform: rotate(45deg); width:20px; left:-4px; top:16px;}
+#side.menu-on {left:0;}
 #side {width:220px; box-shadow:0 0 3px 1px rgba(0,0,0,0.5); background:#222; border-right:1px solid #000; height:100%; position:fixed; left:-230px; top:0; z-index:1002; white-space:nowrap;}
 #side h1 {width:100%; text-align:left; overflow:hidden; cursor:pointer; padding-top:15px; padding-left:15px;}
 #side h1 img {width:50%; margin:10px 0 -20px 0;}

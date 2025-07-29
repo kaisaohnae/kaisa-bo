@@ -8,7 +8,7 @@ import SvgLogo from '@/components/icons/common/svg-logo';
 import {usePathname} from 'next/navigation';
 import useAlertStore from '@/store/use-alert-store';
 
-export default function HeaderSideLayout() {
+export default function Header() {
   const auth = useAuthStore();
   const setting = useSettingStore();
   const {showAlert} = useAlertStore();
@@ -63,16 +63,9 @@ export default function HeaderSideLayout() {
     setting.setMenuActive(!setting.menuActive);
   };
 
-  const pathname = usePathname();
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    setShow(!pathname?.match('login'));
-  }, [pathname]);
-
   return (
-    show && (
       <>
-        <div id="header" className={setting.menuActive ? 'menuOn' : ''}>
+        <div id="header" className={setting.menuActive ? 'menu-on' : ''}>
           <div className="btnMenu" onClick={toggleMenu}>
             <ul>
               <li></li>
@@ -117,7 +110,7 @@ export default function HeaderSideLayout() {
           </div>
         </div>
 
-        <div id="side" className={setting.menuActive ? 'menuOn' : ''}>
+        <div id="side" className={setting.menuActive ? 'menu-on' : ''}>
           <h1 onClick={clickHome}>
             <SvgLogo width={100} fill="#666666" />
           </h1>
@@ -170,6 +163,5 @@ export default function HeaderSideLayout() {
         </div>
         {setting.menuActive && <div id="mask" onClick={toggleMenu}></div>}
       </>
-    )
   );
 }
