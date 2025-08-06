@@ -31,7 +31,7 @@
     "@toast-ui/editor": "^3.2.2",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "air-datepicker": "^3.6.0",
-    "axios": "1.10.0",
+    "axios": "1.11.0",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.23.5",

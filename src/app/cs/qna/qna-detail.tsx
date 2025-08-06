@@ -11,6 +11,7 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
   const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
     qnaNo: '',
+    companyId: '',
     memberName: '',
     phoneNo: '',
     email: '',
@@ -44,6 +45,7 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
     if (detailData.qnaNo) {
       QnaService.setQna({
         qnaNo: formData.qnaNo,
+        companyId: formData.companyId,
         memberName: formData.memberName,
         phoneNo: formData.phoneNo,
         email: formData.email,
@@ -100,6 +102,12 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
               {formData.qnaNo}
             </td>
           </tr>
+            <tr>
+              <th scope="col">업체아이디</th>
+              <td>
+                <input type="text" value={formData.companyId || ''} onChange={(e) => setFormData(prev => ({ ...prev, companyId: e.target.value }))}  />
+              </td>
+            </tr>
             <tr>
               <th scope="col">회원명</th>
               <td>

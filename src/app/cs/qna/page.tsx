@@ -31,6 +31,7 @@ export default function QnaPage() {
 
 
   const [search, setSearch] = useState({
+    companyId: '',
     memberName: '',
     phoneNo: '',
     email: '',
@@ -45,6 +46,7 @@ export default function QnaPage() {
 
   const [data, setData]: any = useState({
     required: [
+      'companyId',
       'memberName',
       'phoneNo',
       'title',
@@ -61,6 +63,7 @@ export default function QnaPage() {
   const gridProps = {
     unique: ['qnaNo'],
     required: [
+      'companyId',
       'memberName',
       'phoneNo',
       'title',
@@ -94,6 +97,7 @@ export default function QnaPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       qnaNo: '',
+      companyId: '',
       memberName: '',
       phoneNo: '',
       email: '',
@@ -131,6 +135,7 @@ export default function QnaPage() {
       colHeaders: [
         ...gridUtil.commonColumnNames,
       '질문번호',
+      '업체아이디',
       '회원명',
       '전화번호',
       '이메일',
@@ -142,6 +147,7 @@ export default function QnaPage() {
       columns: [
         ...gridUtil.commonColumns,
       {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'memberName', type: 'text', width: 150,   },
       {data: 'phoneNo', type: 'text', width: 150,   },
       {data: 'email', type: 'text', width: 150,   },
@@ -209,6 +215,10 @@ export default function QnaPage() {
               <col />
             </colgroup>
             <tbody>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
+              <th scope="row">업체아이디</th>
+              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+            </tr>
             <tr>
               <th scope="row">회원명</th>
               <td colSpan={3}><input type="text" value={search.memberName} onChange={e => handleSearchChange('memberName', e.target.value)} /></td>
