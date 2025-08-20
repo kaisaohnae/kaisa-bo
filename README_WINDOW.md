@@ -17,6 +17,7 @@ yarn dev
 
 git config --global user.name "kaisa"
 git config --global user.email "kaisaohnae@gmail.com"
+
 ```
 
 
