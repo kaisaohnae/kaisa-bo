@@ -129,7 +129,8 @@ yarn build
 ### 초기화
 ```
 git config --global user.name "kaisa"
-git config --global user.email "kaisa@a-na.me"
+git config --global user.email "kaisaohnae@gmail.com"
+
 rm -rf .git
 git init
 git add .
