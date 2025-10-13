@@ -90,7 +90,6 @@ export default function QnaPage() {
 
   const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    await getList();
   };
 
   const add = () => {
@@ -195,6 +194,13 @@ export default function QnaPage() {
       await getList();
     })();
   }, [data.grid]);
+
+  useEffect(() => {
+    if (!data.grid) return;
+    (async () => {
+      await getList();
+    })();
+  }, [data.currentPage]);
 
   return (
     <>

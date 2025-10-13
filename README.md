@@ -4,7 +4,7 @@ kaisa-bo 2.0 홈페이지
 
 #### 버전 정보
 
-- Node.js: 20.x.x
+- Node.js: 20.x.x (https://nodejs.org/download/release/v20.19.5/)
 - React: 18.x.x
 - Next.js: 14.x.x
 
@@ -62,6 +62,12 @@ root
 ```bash
 # nvm 설치 후 
 nvm install 20
+npm install -g yarn
+
+호환성 관리자 모드로 
+corepack enable
+corepack prepare yarn@4.5.2 --activate
+yarn --version (4.5.2 가 나와야함)
 ```
 
 ### Yarn
@@ -139,3 +145,9 @@ git remote add origin "https://github.com/kaisaohnae/kaisa-bo.git"
 git branch -m main master
 git push -u --force origin master
 ```
+
+git clone https://github.com/kaisaohnae/kaisa-bo.git
+git clone https://github.com/kaisaohnae/kaisa-fo.git
+git clone https://github.com/kaisaohnae/chlois-fo.git
+git clone https://github.com/kaisaohnae/kaisa-api.git
+git clone https://github.com/kaisaohnae/kaisa-erd.git

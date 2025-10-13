@@ -100,7 +100,6 @@ export default function ProductPage() {
 
   const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    await getList();
   };
 
   const add = () => {
@@ -226,6 +225,13 @@ export default function ProductPage() {
       await getList();
     })();
   }, [data.grid]);
+
+  useEffect(() => {
+    if (!data.grid) return;
+    (async () => {
+      await getList();
+    })();
+  }, [data.currentPage]);
 
   return (
     <>

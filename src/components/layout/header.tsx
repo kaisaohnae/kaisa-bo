@@ -40,7 +40,7 @@ export default function Header() {
   const clickMenu = menu => {
     setting.setHash(menu.path);
     router.push(menu.path);
-    setting.setMenuActive(false);
+    // setting.setMenuActive(false);
   };
 
   const clickHome = () => {
@@ -63,9 +63,13 @@ export default function Header() {
     setting.setMenuActive(!setting.menuActive);
   };
 
+  const openSetting = () => {
+    console.log(1);
+  }
+
   return (
       <>
-        <div id="header" className={setting.menuActive ? 'menu-on' : ''}>
+        <div id="header" className={setting.menuActive ? 'menu-on' : 'menu'}>
           <div className="btnMenu" onClick={toggleMenu}>
             <ul>
               <li></li>
@@ -84,6 +88,7 @@ export default function Header() {
               <u onClick={() => auth.logout(router.push)} style={{cursor: 'pointer'}}>
                 로그아웃
               </u>
+              <u className="icon setting" style={{cursor: 'pointer', paddingLeft: 10}} onClick={openSetting}>&#xe0cb;</u>
             </li>
           </ul>
           <div className="tab">

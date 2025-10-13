@@ -70,7 +70,6 @@ export default function FilePage() {
 
   const handlePageChange = async (page) => {
     setData(prev => ({ ...prev, currentPage: page }));
-    await getList();
   };
 
   const add = () => {
@@ -155,6 +154,13 @@ export default function FilePage() {
       await getList();
     })();
   }, [data.grid]);
+
+  useEffect(() => {
+    if (!data.grid) return;
+    (async () => {
+      await getList();
+    })();
+  }, [data.currentPage]);
 
   return (
     <>
