@@ -15,17 +15,30 @@ export default function Pagination({ currentPage, lastPage, onChangePage }: Prop
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }, [currentPage, lastPage]);
 
+  const startPage = visiblePages[0];
+  const endPage = visiblePages[visiblePages.length - 1];
+
   const changePage = (page: number) => {
     if (page < 1 || page > lastPage) return;
     onChangePage(page);
   };
 
+  const canGoPrevGroup = startPage > 1;
+  const canGoNextGroup = endPage < lastPage;
+
   return (
     <div className="pagination">
-      <span className="icon first" onClick={() => currentPage !== 1 && changePage(1)}>
+      <span
+        className={`icon first${currentPage === 1 ? ' disabled' : ''}`}
+        onClick={() => currentPage !== 1 && changePage(1)}
+      >
         &#xf100;
       </span>
-      <span className="icon pre" onClick={() => currentPage !== 1 && changePage(currentPage - 1)}>
+
+      <span
+        className={`icon pre${!canGoPrevGroup ? ' disabled' : ''}`}
+        onClick={() => canGoPrevGroup && changePage(startPage - pageSize)}
+      >
         &#xf104;
       </span>
 
@@ -39,10 +52,17 @@ export default function Pagination({ currentPage, lastPage, onChangePage }: Prop
         </span>
       ))}
 
-      <span className="icon next" onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}>
+      <span
+        className={`icon next${!canGoNextGroup ? ' disabled' : ''}`}
+        onClick={() => canGoNextGroup && changePage(endPage + 1)}
+      >
         &#xf105;
       </span>
-      <span className="icon last" onClick={() => currentPage !== lastPage && changePage(lastPage)}>
+
+      <span
+        className={`icon last${currentPage === lastPage ? ' disabled' : ''}`}
+        onClick={() => currentPage !== lastPage && changePage(lastPage)}
+      >
         &#xf101;
       </span>
     </div>
