@@ -92,7 +92,7 @@ export default function BoardPage() {
       ...gridUtil.commonAddColumns,
       boardNo: '',
       boardCategoryId: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       title: '',
       isDisplay: '',
       tag: '',

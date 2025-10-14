@@ -106,7 +106,7 @@ export default function ProductPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       productNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       seasonPriceNo: '',
       productName: '',
       headCount: '',

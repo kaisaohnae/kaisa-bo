@@ -96,7 +96,7 @@ export default function QnaPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       qnaNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       memberName: '',
       phoneNo: '',
       email: '',

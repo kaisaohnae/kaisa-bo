@@ -87,7 +87,7 @@ export default function HolidayPricePage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       holiday: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       holidayName: '',
       price: '',
       holidayCode: '',

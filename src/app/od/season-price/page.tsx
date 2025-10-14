@@ -91,7 +91,7 @@ export default function SeasonPricePage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       seasonPriceNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       seasonPriceName: '',
       hotWaterPrice: '',
       bbqPrice: '',

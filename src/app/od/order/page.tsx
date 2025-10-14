@@ -110,7 +110,7 @@ export default function OrderPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       orderNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       productNo: '',
       reserveDay: '',
       orderStateCode: '',

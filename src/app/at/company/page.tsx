@@ -88,7 +88,7 @@ export default function CompanyPage() {
   const add = () => {
     const newRow = {
       ...gridUtil.commonAddColumns,
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       companyTypeCode: '',
       companyName: '',
       lttd: '',

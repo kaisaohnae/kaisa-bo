@@ -98,7 +98,7 @@ export default function SeasonPage() {
       ...gridUtil.commonAddColumns,
       seasonNo: '',
       seasonPriceNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       sortOrder: '',
       seasonName: '',
       seasonStartDay: '',

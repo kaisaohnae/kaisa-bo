@@ -74,7 +74,7 @@ export default function ApiLogPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       logNo: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       logContent: '',
       logTypeCode: '',
       ...gridUtil.auditAddColumns,

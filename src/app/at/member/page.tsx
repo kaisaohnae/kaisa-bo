@@ -96,7 +96,7 @@ export default function MemberPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       memberId: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       memberName: '',
       email: '',
       phoneNo: '',

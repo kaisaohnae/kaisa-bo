@@ -85,7 +85,7 @@ export default function MenuCompanyRolePage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       menuId: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       menuName: '',
       buttonRole: '',
       ...gridUtil.auditAddColumns,

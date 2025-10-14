@@ -89,7 +89,7 @@ export default function BoardCategoryPage() {
     const newRow = {
       ...gridUtil.commonAddColumns,
       boardCategoryId: '',
-      companyId: '',
+      companyId: auth.userInfo.companyId,
       categoryName: '',
       isDisplay: '',
       isLast: '',
