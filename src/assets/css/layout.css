@@ -115,6 +115,12 @@
 #header.menu-on .btnMenu ul li:nth-child(1) {transform: rotate(-45deg); width:20px; left:-4px; top:4px;}
 #header.menu-on .btnMenu ul li:nth-child(3) {transform: rotate(45deg); width:20px; left:-4px; top:16px;}
 
+.modal-settings {padding:10px; width:220px; position: fixed; right:25px; top:45px; border-radius: 10px; background: #fff; z-index: 1000; box-shadow:3px 5px 5px rgba(0,0,0,0.3);}
+.modal-settings h2 {padding-bottom:10px;}
+.modal-settings label {display: block;}
+.modal-settings input {width:200px;}
+.modal-settings .buttons {padding-bottom:10px;}
+.modal-settings h3 {padding:3px 0; font-size: 12px; color: #666;}
 
 /* 디바이가 넓을때 */
 @media (min-width:800px) {

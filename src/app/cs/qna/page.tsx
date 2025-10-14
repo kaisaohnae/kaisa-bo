@@ -284,7 +284,7 @@ export default function QnaPage() {
 
           </table>
         </fieldset>
-        <div className="btnWrap">
+        <div className="buttons">
           <span className="crud">
             <button type="button" className="button add" onClick={add}><span className="icon">&#xe813;</span>추가</button>
             <button type="button" className="button del" onClick={del}><span className="icon">&#xe815;</span>삭제</button>

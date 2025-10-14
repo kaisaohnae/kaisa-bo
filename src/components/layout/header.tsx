@@ -7,11 +7,13 @@ import useSettingStore from '@/store/use-setting-store';
 import SvgLogo from '@/components/icons/common/svg-logo';
 import {usePathname} from 'next/navigation';
 import useAlertStore from '@/store/use-alert-store';
+import ModalSettings from '@/components/modal/modal-settings';
 
 export default function Header() {
   const auth = useAuthStore();
   const setting = useSettingStore();
   const {showAlert} = useAlertStore();
+  const [showModalSettings, setShowModalSettings] = useState(false);
   const router = useRouter();
   const [searchKeyword, setSearchKeyword] = useState('');
   const menuList = useMemo(() => setting.menuList, [setting.menuList]);
@@ -64,11 +66,14 @@ export default function Header() {
   };
 
   const openSetting = () => {
-    console.log(1);
+    setShowModalSettings(!showModalSettings);
   }
 
   return (
       <>
+        {showModalSettings && (
+          <ModalSettings onClose={() => setShowModalSettings(false)} />
+        )}
         <div id="header" className={setting.menuActive ? 'menu-on' : 'menu'}>
           <div className="btnMenu" onClick={toggleMenu}>
             <ul>

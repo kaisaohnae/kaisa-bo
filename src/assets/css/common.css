@@ -16,15 +16,15 @@ form.search fieldset table th {padding:1px 20px 1px 10px; color:#333; height:45p
 form.search fieldset table td {padding:1px 1px 1px 1px; height:45px;}
 form.search fieldset legend {display:none;}
 
-.btnWrap {padding:10px 0 35px 0; text-align:center; position:relative;}
-.btnWrap .totalCount {position:absolute; right:0; bottom:0; font-size:11px;}
+.buttons {padding:10px 0 35px 0; text-align:center; position:relative;}
+.buttons .totalCount {position:absolute; right:0; bottom:0; font-size:11px;}
 
-.btnWrap .crud {position:absolute; left:0; bottom:5px;}
-.btnWrap .crud button {line-height:19px; height:20px; padding:0 5px 0 0; font-size:11px; background:#eee; border:1px solid #ddd; color:#555; text-shadow:none;}
-.btnWrap .crud button .icon {line-height:19px; font-size:12px;}
-.btnWrap .crud button.add .icon {color:#000;}
-.btnWrap .crud button.save .icon {color:#047a00;}
-.btnWrap .crud button.del .icon {color:#b63434;}
+.buttons .crud {position:absolute; left:0; bottom:5px;}
+.buttons .crud button {line-height:19px; height:20px; padding:0 5px 0 0; font-size:11px; background:#eee; border:1px solid #ddd; color:#555; text-shadow:none;}
+.buttons .crud button .icon {line-height:19px; font-size:12px;}
+.buttons .crud button.add .icon {color:#000;}
+.buttons .crud button.save .icon {color:#047a00;}
+.buttons .crud button.del .icon {color:#b63434;}
 
 th.required:after {content:'*'; display:inline-block; font-size:12px; color:#ff0000; padding-left:5px;}
 

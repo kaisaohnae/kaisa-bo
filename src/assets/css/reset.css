@@ -57,6 +57,7 @@ select {font-size:14px; color:#777; border:1px solid #bbb; height:35px; line-hei
 table {border-collapse:collapse;}
 table caption {display:none;}
 input,textarea,button {font-size:14px; vertical-align:middle;}
+h1,h2,h3,h4,h5,h6 {color:#333;}
 h1,h2,h3,h4,h5,h6,strong,b {font-size:14px; font-weight:normal;}
 th {font-weight:normal; text-align:left;}
 
