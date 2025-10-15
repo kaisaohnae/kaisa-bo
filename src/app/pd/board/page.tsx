@@ -197,15 +197,8 @@ export default function BoardPage() {
           await getList();
         }}
       >
-        <fieldset>
-          <legend>검색</legend>
+        <div className="field">
           <table>
-            <colgroup>
-              <col style={{ width: '80px' }} />
-              <col style={{ width: '30%' }} />
-              <col style={{ width: '80px' }} />
-              <col />
-            </colgroup>
             <tbody>
             <tr>
               <th scope="row">게시판카테고리아이디</th>
@@ -257,7 +250,7 @@ export default function BoardPage() {
             )}
 
           </table>
-        </fieldset>
+        </div>
         <div className="buttons">
           <span className="crud">
             <button type="button" className="button add" onClick={add}><span className="icon">&#xe813;</span>추가</button>
