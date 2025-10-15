@@ -169,13 +169,13 @@ export default function ApiLogPage() {
         <div className="field">
           <table>
             <tbody>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
-              <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
-            </tr>
             <tr>
               <th scope="row">로그내용</th>
               <td colSpan={3}><input type="text" value={search.logContent} onChange={e => handleSearchChange('logContent', e.target.value)} /></td>
+            </tr>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
+              <th scope="row">업체아이디</th>
+              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             </tbody>
 

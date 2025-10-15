@@ -23,10 +23,11 @@ export default function HolidayPricePage() {
   const mounted = useRef<boolean>(false);
   const handsontable = useRef<Handsontable>(null);
 
-
+  const now = new Date();
+  const defaultMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
   const [search, setSearch] = useState({
-    holiday: '',
+    holiday: defaultMonth,
     companyId: '',
     holidayName: '',
     holidayCode: '',
@@ -185,23 +186,41 @@ export default function HolidayPricePage() {
         <div className="field">
           <table>
             <tbody>
-            <tr>
-              <th scope="row">휴일</th>
-              <td colSpan={3}>
-                <ReactDatePicker locale={ko} selected={search.holiday ? new Date(search.holiday) : null} onChange={(date: Date | null) => handleSearchChange('holiday', date)} dateFormat={'yyyy-MM-dd'} placeholderText={''} showTimeSelect={false} timeIntervals={30} timeCaption="시간" disabled={false} />
-              </td>
-            </tr>
             <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
+              <th scope="row">휴일 <span>(개월단위)</span></th>
+              <td>
+                {/*
+                <ReactDatePicker locale={ko} selected={search.holiday ? new Date(search.holiday) : null} onChange={(date: Date | null) => handleSearchChange('holiday', date)} dateFormat={'yyyy-MM-dd'} placeholderText={''} showTimeSelect={false} timeIntervals={30} timeCaption="시간" disabled={false} />
+                UTC → KST 보정
+                */}
+                <ReactDatePicker
+                  locale={ko}
+                  selected={search.holiday ? new Date(search.holiday + '-01') : null} // YYYY-MM 기준으로 변환
+                  onChange={(date: Date | null) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      handleSearchChange('holiday', `${year}-${month}`); // "YYYY-MM" 형태로 전송
+                    } else {
+                      handleSearchChange('holiday', '');
+                    }
+                  }}
+                  dateFormat="yyyy-MM"
+                  showMonthYearPicker
+                  placeholderText="월 선택"
+                  disabled={false}
+                />
+              </td>
               <th scope="row">휴일명</th>
-              <td colSpan={3}><input type="text" value={search.holidayName} onChange={e => handleSearchChange('holidayName', e.target.value)} /></td>
+              <td><input type="text" value={search.holidayName} onChange={e => handleSearchChange('holidayName', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">휴일코드</th>
-              <td colSpan={3}><CommonCodeRadio cd="holidayCode" model={search.holidayCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={5}><CommonCodeRadio cd="holidayCode" model={search.holidayCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (

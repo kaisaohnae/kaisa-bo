@@ -13,7 +13,8 @@
 form.search {width:100%;}
 form.search .field {width:100%; overflow:auto; line-height:40px; padding:3px 10px 6px 10px; border:1px solid #ddd; background:#eee; display:block; border-radius: 5px;}
 form.search .field table {white-space:nowrap;}
-form.search .field table th {padding:0 20px 0 10px; color:#333; height:44px; width:80px;}
+form.search .field table th {padding:0 20px 0 10px; color:#333; height:44px; width:60px;}
+form.search .field table th span {font-size:12px; color:#999;}
 form.search .field table td {padding:0 1px 0 1px;}
 form.search .field legend {display:none;}
 

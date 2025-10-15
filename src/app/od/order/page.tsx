@@ -23,12 +23,14 @@ export default function OrderPage() {
   const mounted = useRef<boolean>(false);
   const handsontable = useRef<Handsontable>(null);
 
-
+  const now = new Date();
+  const defaultMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
 
   const [search, setSearch] = useState({
     orderNo: '',
     companyId: '',
     reserveDay: '',
+    reserveMonth: '', // defaultMonth,
     orderStateCode: '',
     phoneNo: '',
     orderName: '',
@@ -248,34 +250,68 @@ export default function OrderPage() {
           <table>
             <tbody>
             <tr>
-              <th scope="row">주문번호</th>
-              <td colSpan={3}><input type="text" value={search.orderNo} onChange={e => handleSearchChange('orderNo', e.target.value)} /></td>
-            </tr>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
-              <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
-            </tr>
-            <tr>
               <th scope="row">예약일</th>
-              <td colSpan={3}>
-                <ReactDatePicker locale={ko} selected={search.reserveDay ? new Date(search.reserveDay) : null} onChange={(date: Date | null) => handleSearchChange('reserveDay', date)} dateFormat={'yyyy-MM-dd'} placeholderText={''} showTimeSelect={false} timeIntervals={30} timeCaption="시간" disabled={false} />
+              <td>
+                <ReactDatePicker
+                  locale={ko}
+                  selected={search.reserveDay ? new Date(search.reserveDay) : null}
+                  onChange={(date: Date | null) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      const day = String(date.getDate()).padStart(2, '0');
+                      handleSearchChange('reserveDay', `${year}-${month}-${day}`); // "YYYY-MM-DD"
+                    } else {
+                      handleSearchChange('reserveDay', '');
+                    }
+                  }}
+                  dateFormat="yyyy-MM-dd"
+                  showTimeSelect={false}
+                  timeIntervals={30}
+                  timeCaption="시간"
+                  placeholderText="예약일 선택"
+                />
+              </td>
+              <th scope="row">예약월</th>
+              <td>
+                <ReactDatePicker
+                  locale={ko}
+                  selected={search.reserveMonth ? new Date(search.reserveMonth) : null}
+                  /*selected={
+                    search.reserveMonth
+                      ? new Date(search.reserveMonth + '-01')
+                      : new Date()
+                  }*/
+                  onChange={(date: Date | null) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      handleSearchChange('reserveMonth', `${year}-${month}`); // "YYYY-MM" 형식으로 전송
+                    } else {
+                      handleSearchChange('reserveMonth', '');
+                    }
+                  }}
+                  dateFormat="yyyy-MM"
+                  showMonthYearPicker
+                  placeholderText="예약월 선택"
+                />
               </td>
             </tr>
             <tr>
               <th scope="row">주문상태코드</th>
-              <td colSpan={3}><CommonCodeRadio cd="orderStateCode" model={search.orderStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={5}><CommonCodeRadio cd="orderStateCode" model={search.orderStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             <tr>
               <th scope="row">전화번호</th>
-              <td colSpan={3}><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
               <th scope="row">이름</th>
-              <td colSpan={3}><input type="text" value={search.orderName} onChange={e => handleSearchChange('orderName', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.orderName} onChange={e => handleSearchChange('orderName', e.target.value)} /></td>
               <th scope="row">이메일</th>
-              <td colSpan={3}><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
+              <td><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
+            </tr>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
+              <th scope="row">업체아이디</th>
+              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             </tbody>
             {data.audit && (

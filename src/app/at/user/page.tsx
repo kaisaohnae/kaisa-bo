@@ -214,25 +214,21 @@ export default function UserPage() {
         <div className="field">
           <table>
             <tbody>
-            <tr>
-              <th scope="row">사용자아이디</th>
-              <td colSpan={3}><input type="text" value={search.userId} onChange={e => handleSearchChange('userId', e.target.value)} /></td>
-            </tr>
             <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
+              <th scope="row">사용자아이디</th>
+              <td><input type="text" value={search.userId} onChange={e => handleSearchChange('userId', e.target.value)} /></td>
               <th scope="row">사용자이름</th>
-              <td colSpan={3}><input type="text" value={search.userName} onChange={e => handleSearchChange('userName', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.userName} onChange={e => handleSearchChange('userName', e.target.value)} /></td>
               <th scope="row">전화번호</th>
-              <td colSpan={3}><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
+              <td><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">사용자상태코드</th>
-              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={5}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (
