@@ -183,13 +183,7 @@ export default function CompanyPage() {
   }, [gridRef.current]);
 
   useEffect(() => {
-    (async () => {
-      await getList();
-    })();
-  }, [data.grid]);
-
-  useEffect(() => {
-    if (!data.grid) return;
+    if (!handsontable.current) return;
     (async () => {
       await getList();
     })();

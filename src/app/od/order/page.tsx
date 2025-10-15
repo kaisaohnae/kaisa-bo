@@ -229,13 +229,7 @@ export default function OrderPage() {
   }, [gridRef.current]);
 
   useEffect(() => {
-    (async () => {
-      await getList();
-    })();
-  }, [data.grid]);
-
-  useEffect(() => {
-    if (!data.grid) return;
+    if (!handsontable.current) return;
     (async () => {
       await getList();
     })();

@@ -161,21 +161,13 @@ export default function UserPage() {
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
-        const cellProperties: any = {};
-        const rowData: any = handsontable.current?.getSourceDataAtRow(row);
-        const colHeader = handsontable.current?.getColHeader(col);
-        if(colHeader === '사용자아이디' || colHeader === '업체아이디') {
-          // 기존 행은 readOnly, 새 행만 수정 가능
-          cellProperties.readOnly = !(!rowData?.userId || !rowData?.companyId);
-        }
-        const customProps = gridUtil.cellsEvent({
+        return gridUtil.cellsEvent({
           row,
           col,
           grid: handsontable.current,
           self: this,
           pk: [],
         });
-        return { ...cellProperties, ...customProps };
       },
       afterChange: function (changes, source) {
         return gridUtil.afterChangeEvent({
@@ -190,13 +182,9 @@ export default function UserPage() {
         setSelectedRow(row)
       },
       afterOnCellMouseDown: (event, coords) => {
-        const hot = handsontable.current;
-        if (!hot) return;
-        const colHeader = hot.getColHeader(coords.col); // 칼럼 헤더
-        const rowData = hot.getSourceDataAtRow(coords.row); // 행 데이터
-        const cellValue = hot.getDataAtCell(coords.row, coords.col); // 셀 값
-        // 헤더가 '사용자이름'이고, 행 데이터와 셀 값이 모두 존재할 때만 실행
-        if (colHeader === '사용자이름' && rowData && cellValue) {
+        const colHeader = handsontable.current?.getColHeader(coords.col); // 칼럼 헤더 확인
+        const rowData = handsontable.current?.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
+        if (colHeader === '사용자이름' && rowData) {
           setDetailData(rowData);
           setDetailShow(true);
         }
@@ -208,13 +196,7 @@ export default function UserPage() {
   }, [gridRef.current]);
 
   useEffect(() => {
-    (async () => {
-      await getList();
-    })();
-  }, [data.grid]);
-
-  useEffect(() => {
-    if (!data.grid) return;
+    if (!handsontable.current) return;
     (async () => {
       await getList();
     })();
@@ -232,22 +214,32 @@ export default function UserPage() {
         <fieldset>
           <legend>검색</legend>
           <table>
+            <colgroup>
+              <col style={{ width: '80px' }} />
+              <col style={{ width: '30%' }} />
+              <col style={{ width: '80px' }} />
+              <col />
+            </colgroup>
             <tbody>
-            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
-              <th scope="row">업체아이디</th>
-              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
-            </tr>
             <tr>
               <th scope="row">사용자아이디</th>
-              <td><input type="text" value={search.userId} onChange={e => handleSearchChange('userId', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.userId} onChange={e => handleSearchChange('userId', e.target.value)} /></td>
+            </tr>
+            <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
+              <th scope="row">업체아이디</th>
+              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+            </tr>
+            <tr>
               <th scope="row">사용자이름</th>
-              <td><input type="text" value={search.userName} onChange={e => handleSearchChange('userName', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.userName} onChange={e => handleSearchChange('userName', e.target.value)} /></td>
+            </tr>
+            <tr>
               <th scope="row">전화번호</th>
-              <td><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
+              <td colSpan={3}><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">사용자상태코드</th>
-              <td colSpan={5}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={3}><CommonCodeRadio cd="userStateCode" model={search.userStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (
