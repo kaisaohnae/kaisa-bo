@@ -11,9 +11,9 @@
 .hide {display:none;}
 
 form.search {width:100%; white-space:nowrap;}
-form.search fieldset {width:100%; line-height:40px; padding:5px 10px 8px 10px; border:0.5px solid #ddd; background:#eee; display:block; border-radius: 5px;}
-form.search fieldset table th {padding:1px 20px 1px 10px; color:#333; height:45px;}
-form.search fieldset table td {padding:1px 1px 1px 1px; height:45px;}
+form.search fieldset {width:100%; line-height:40px; padding:3px 10px 0px 10px; border:0.5px solid #ddd; background:#eee; display:block; border-radius: 5px;}
+form.search fieldset table th {padding:0 20px 0 10px; color:#333; height:45px; width:80px;}
+form.search fieldset table td {padding:0 1px 0 1px; height:45px;}
 form.search fieldset legend {display:none;}
 
 .buttons {padding:10px 0 35px 0; text-align:center; position:relative;}
