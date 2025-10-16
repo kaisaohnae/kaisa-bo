@@ -5,9 +5,10 @@ interface DetailDrawerProps {
   detailData: any;
   detailShow: boolean;
   setDetailShow: any;
+  getList: any;
 }
 
-const Detail: React.FC<DetailDrawerProps> = ({ component: Component, detailData, detailShow, setDetailShow }) => {
+const Detail: React.FC<DetailDrawerProps> = ({ component: Component, detailData, detailShow, setDetailShow, getList }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ const Detail: React.FC<DetailDrawerProps> = ({ component: Component, detailData,
         <div className="detail-close icon" onClick={handleClose}>
           &#xe097;
         </div>
-        <Component detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+        <Component detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
       </div>
       <div className={`detail-dimmed ${open ? 'on' : ''}`} onClick={handleClose}></div>
     </div>

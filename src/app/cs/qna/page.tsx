@@ -294,7 +294,7 @@ export default function QnaPage() {
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
       {detailShow && (
        <>
-         <Detail component={QnaDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+         <Detail component={QnaDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
        </>
       )}
 

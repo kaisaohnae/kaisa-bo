@@ -299,7 +299,7 @@ export default function OrderPage() {
             </tr>
             <tr>
               <th scope="row">주문상태코드</th>
-              <td colSpan={5}><CommonCodeRadio cd="orderStateCode" model={search.orderStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={5}><CommonCodeRadio cd="orderStateCode" model={search.orderStateCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, orderStateCode: val })); }} /></td>
             </tr>
             <tr>
               <th scope="row">전화번호</th>

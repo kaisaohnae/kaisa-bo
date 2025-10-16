@@ -6,7 +6,7 @@ import CommonCode from '@/components/common/common-code';
 import gridUtil from '@/utils/grid-util';
 import useAlertStore from '@/store/use-alert-store';
 
-export default function ProductDetail({ detailData, detailShow, setDetailShow }) {
+export default function ProductDetail({ detailData, detailShow, setDetailShow, getList }) {
   const editor: any = useRef({});
   const {showAlert, hideAlert} = useAlertStore();
   const [formData, setFormData]: any = useState({
@@ -78,6 +78,7 @@ export default function ProductDetail({ detailData, detailShow, setDetailShow })
               callback: () => {
                 hideAlert();
                 setDetailShow(false);
+                getList();
               }
             }]
           })

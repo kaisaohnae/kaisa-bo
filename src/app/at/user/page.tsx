@@ -292,7 +292,7 @@ export default function UserPage() {
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
       {detailShow && (
        <>
-         <Detail component={UserDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+         <Detail component={UserDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
        </>
       )}
 

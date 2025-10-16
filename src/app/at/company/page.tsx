@@ -267,7 +267,7 @@ export default function CompanyPage() {
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
       {detailShow && (
        <>
-         <Detail component={CompanyDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+         <Detail component={CompanyDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
        </>
       )}
 

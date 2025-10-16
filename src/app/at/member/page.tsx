@@ -284,7 +284,7 @@ export default function MemberPage() {
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
       {detailShow && (
        <>
-         <Detail component={MemberDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+         <Detail component={MemberDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
        </>
       )}
 

@@ -274,7 +274,7 @@ export default function BoardPage() {
       <Pagination currentPage={data.currentPage} lastPage={data.lastPage} onChangePage={handlePageChange} />
       {detailShow && (
        <>
-         <Detail component={BoardDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} />
+         <Detail component={BoardDetail} detailData={detailData} detailShow={detailShow} setDetailShow={setDetailShow} getList={getList} />
        </>
       )}
 
