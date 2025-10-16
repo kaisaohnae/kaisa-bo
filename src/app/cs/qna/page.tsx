@@ -139,19 +139,19 @@ export default function QnaPage() {
       '전화번호',
       '이메일',
       '제목',
-      '내용',
+      //'내용',
         ...gridUtil.auditColumnNames,
       ],
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'qnaNo', type: 'numeric', width: 150, readOnly: true,  },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'memberName', type: 'text', width: 150,   },
+      {data: 'qnaNo', type: 'numeric', width: 80, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 80, readOnly: true,  },
+      {data: 'memberName', type: 'text', width: 80,   },
       {data: 'phoneNo', type: 'text', width: 150,   },
       {data: 'email', type: 'text', width: 150,   },
       {data: 'title', type: 'text', width: 150,  className: 'underline', },
-      {data: 'content', type: 'text', width: 150,   },
+      //{data: 'content', type: 'text', width: 150,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
@@ -210,25 +210,19 @@ export default function QnaPage() {
             <tbody>
             <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
-              <td colSpan={3}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">회원명</th>
-              <td colSpan={3}><input type="text" value={search.memberName} onChange={e => handleSearchChange('memberName', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.memberName} onChange={e => handleSearchChange('memberName', e.target.value)} /></td>
               <th scope="row">전화번호</th>
-              <td colSpan={3}><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.phoneNo} onChange={e => handleSearchChange('phoneNo', e.target.value)} /></td>
               <th scope="row">이메일</th>
-              <td colSpan={3}><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
+              <td><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">제목</th>
-              <td colSpan={3}><input type="text" value={search.title} onChange={e => handleSearchChange('title', e.target.value)} /></td>
-            </tr>
-            <tr>
+              <td><input type="text" value={search.title} onChange={e => handleSearchChange('title', e.target.value)} /></td>
               <th scope="row">내용</th>
               <td colSpan={3}><input type="text" value={search.content} onChange={e => handleSearchChange('content', e.target.value)} /></td>
             </tr>

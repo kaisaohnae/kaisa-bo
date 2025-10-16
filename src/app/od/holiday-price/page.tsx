@@ -133,11 +133,11 @@ export default function HolidayPricePage() {
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'holiday', type: 'date', width: 170, readOnly: true,  ...gridUtil.datePickerConfig },
+      {data: 'holiday', type: 'date', width: 110, readOnly: true,  ...gridUtil.datePickerConfig },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'holidayName', type: 'text', width: 150,   },
-      {data: 'price', type: 'numeric', width: 150,   },
-      {data: 'holidayCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'holidayName', type: 'text', width: 120,   },
+      {data: 'price', type: 'numeric', width: 100,   },
+      {data: 'holidayCode', type: 'dropdown', width: 100,   source: function (query, process) { process(setting.codeList['holidayCode']?.map((o: any) => o.codeValue)) }},
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {

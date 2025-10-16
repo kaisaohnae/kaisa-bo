@@ -139,12 +139,12 @@ export default function CompanyPage() {
       columns: [
         ...gridUtil.commonColumns,
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'companyTypeCode', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['companyTypeCode']?.map((o: any) => o.codeValue)) }},
-      {data: 'companyName', type: 'text', width: 150,  className: 'underline', },
-      {data: 'lttd', type: 'text', width: 150,   },
-      {data: 'lotd', type: 'text', width: 150,   },
+      {data: 'companyTypeCode', type: 'dropdown', width: 100,   source: function (query, process) { process(setting.codeList['companyTypeCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'companyName', type: 'text', width: 120,  className: 'underline', },
+      {data: 'lttd', type: 'text', width: 100,   },
+      {data: 'lotd', type: 'text', width: 100,   },
       {data: 'address', type: 'text', width: 150,   },
-      {data: 'phoneNo', type: 'text', width: 150,   },
+      {data: 'phoneNo', type: 'text', width: 120,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {

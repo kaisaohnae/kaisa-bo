@@ -135,7 +135,7 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
             <tr>
               <th scope="col">내용</th>
               <td>
-                <input type="text" value={formData.content || ''} onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}  />
+                <textarea value={formData.content || ''} onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}  />
               </td>
             </tr>
           <tr>

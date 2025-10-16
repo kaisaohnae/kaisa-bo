@@ -149,9 +149,9 @@ export default function MemberPage() {
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'memberId', type: 'text', width: 150, readOnly: true,  },
+      {data: 'memberId', type: 'text', width: 100, readOnly: true,  },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'memberName', type: 'text', width: 150,  className: 'underline', },
+      {data: 'memberName', type: 'text', width: 100,  className: 'underline', },
       {data: 'email', type: 'text', width: 150,   },
       {data: 'phoneNo', type: 'text', width: 150,   },
       {data: 'passwordUpdateDt', type: 'date', width: 170,   ...gridUtil.dateTimePickerConfig },

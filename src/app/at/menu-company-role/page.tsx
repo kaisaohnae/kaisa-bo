@@ -128,20 +128,28 @@ export default function MenuCompanyRolePage() {
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'menuId', type: 'text', width: 150, readOnly: true,  },
-      {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
-      {data: 'menuName', type: 'text', width: 150,   },
-      {data: 'buttonRole', type: 'text', width: 150,   },
+      {data: 'menuId', type: 'text', width: 120, readOnly: true,  },
+      {data: 'companyId', type: 'text', width: 80, readOnly: true,  },
+      {data: 'menuName', type: 'text', width: 110,   },
+      {data: 'buttonRole', type: 'text', width: 90,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
-        return gridUtil.cellsEvent({
+        const cellProperties: any = {};
+        const rowData: any = handsontable.current?.getSourceDataAtRow(row);
+        const colHeader = handsontable.current?.getColHeader(col);
+        if(colHeader === '메뉴아이디' || colHeader === '업체아이디') {
+          // 기존 행은 readOnly, 새 행만 수정 가능
+          cellProperties.readOnly = !(!rowData?.menuId || !rowData?.companyId);
+        }
+        const customProps = gridUtil.cellsEvent({
           row,
           col,
           grid: handsontable.current,
           self: this,
           pk: [],
         });
+        return { ...cellProperties, ...customProps };
       },
       afterChange: function (changes, source) {
         return gridUtil.afterChangeEvent({

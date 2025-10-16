@@ -142,8 +142,8 @@ export default function BoardPage() {
       {data: 'boardCategoryId', type: 'numeric', width: 150,   },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'title', type: 'text', width: 150,  className: 'underline', },
-      {data: 'isDisplay', type: 'dropdown', width: 150,   source: function (query, process) { process(setting.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
-      {data: 'tag', type: 'text', width: 150,   },
+      {data: 'isDisplay', type: 'dropdown', width: 100,   source: function (query, process) { process(setting.codeList['isDisplay']?.map((o: any) => o.codeValue)) }},
+      {data: 'tag', type: 'text', width: 100,   },
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
