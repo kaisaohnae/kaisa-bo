@@ -95,6 +95,7 @@ export default function CompanyPage() {
       lotd: '',
       address: '',
       phoneNo: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

@@ -172,6 +172,11 @@ tr.hide {display:none !important;}
 .handsontable tr.row-updated td.cell-required {background-color: #ffcccc !important;}
 .handsontable td,
 .handsontable thead th {padding:3px 5px 2px 5px;}
+.handsontable .htCore td {
+    white-space: nowrap;   /* 줄바꿈 방지 */
+    overflow: hidden;      /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis; /* ... 표시 (선택 사항) */
+}
 
 /* date picker reset */
 input.dp__input_readonly {border:1px solid #bbb;}

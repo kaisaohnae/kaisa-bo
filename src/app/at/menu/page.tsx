@@ -100,6 +100,7 @@ export default function MenuPage() {
       isLast: '',
       depth: '',
       sortOrder: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

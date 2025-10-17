@@ -78,6 +78,7 @@ export default function FilePage() {
       fileNo: '',
       tableName: '',
       columnName: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

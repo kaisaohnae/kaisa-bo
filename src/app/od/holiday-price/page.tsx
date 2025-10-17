@@ -92,6 +92,7 @@ export default function HolidayPricePage() {
       holidayName: '',
       price: '',
       holidayCode: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

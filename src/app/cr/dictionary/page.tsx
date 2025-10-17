@@ -87,6 +87,7 @@ export default function DictionaryPage() {
       english: '',
       korean: '',
       memo: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

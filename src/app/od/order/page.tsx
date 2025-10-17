@@ -129,6 +129,7 @@ export default function OrderPage() {
       isBBQ: '',
       isPet: '',
       memo: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

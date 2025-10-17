@@ -88,6 +88,7 @@ export default function MenuCompanyRolePage() {
       companyId: auth.userInfo.companyId,
       menuName: '',
       buttonRole: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

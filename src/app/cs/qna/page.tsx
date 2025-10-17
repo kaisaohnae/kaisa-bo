@@ -102,6 +102,7 @@ export default function QnaPage() {
       email: '',
       title: '',
       content: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

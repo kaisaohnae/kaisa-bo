@@ -104,6 +104,7 @@ export default function MemberPage() {
       loginDt: '',
       memo: '',
       memberStateCode: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

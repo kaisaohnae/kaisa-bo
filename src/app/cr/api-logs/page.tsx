@@ -77,6 +77,7 @@ export default function ApiLogPage() {
       companyId: auth.userInfo.companyId,
       logContent: '',
       logTypeCode: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });

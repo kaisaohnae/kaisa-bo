@@ -96,6 +96,7 @@ export default function BoardPage() {
       title: '',
       isDisplay: '',
       tag: '',
+      isNew: true,
       ...gridUtil.auditAddColumns,
     };
     const newList = gridUtil.add({ newRow, list: data.list, grid: handsontable.current });
