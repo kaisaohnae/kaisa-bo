@@ -127,7 +127,7 @@ export default function QnaPage() {
   };
 
   useEffect(() => {
-    if (!gridRef.current) return; // ref 확인
+    if (!gridRef.current) return; // ref 확인 (for 배포시 초기 조회)
     if (mounted.current) return;
     mounted.current = true;
 
