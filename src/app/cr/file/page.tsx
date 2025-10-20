@@ -7,6 +7,7 @@ import excelUtil from '@/utils/excel-util';
 import FileService from '@/service/cr/file-service';
 import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
+import CrudButtons from '@/components/common/crud-buttons';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
 import useSettingStore from '@/store/use-setting-store';
@@ -182,12 +183,7 @@ export default function FilePage() {
           </table>
         </div>
         <div className="buttons">
-          <span className="crud">
-            <button type="button" className="button add" onClick={add}><span className="icon">&#xe813;</span>추가</button>
-            <button type="button" className="button del" onClick={del}><span className="icon">&#xe815;</span>삭제</button>
-            <button type="button" className="button save" onClick={save}><span className="icon">&#xe814;</span>저장</button>
-            <button type="button" className="button reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span>초기화</button>
-          </span>
+          <CrudButtons menuId="cr-file" add={add} del={del} save={save} />
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
           <button type="button" className="button excel" onClick={() => excelUtil.excelExport(handsontable.current, '파일')}>

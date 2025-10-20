@@ -7,6 +7,7 @@ import excelUtil from '@/utils/excel-util';
 import CompanyService from '@/service/at/company-service';
 import SelectDate from '@/components/common/select-date';
 import SelectGroupDate from '@/components/common/select-group-date';
+import CrudButtons from '@/components/common/crud-buttons';
 import Pagination from '@/components/common/pagination';
 import useAuthStore from '@/store/use-auth-store';
 import useSettingStore from '@/store/use-setting-store';
@@ -246,12 +247,7 @@ export default function CompanyPage() {
           </table>
         </div>
         <div className="buttons">
-          <span className="crud">
-            <button type="button" className="button add" onClick={add}><span className="icon">&#xe813;</span>추가</button>
-            <button type="button" className="button del" onClick={del}><span className="icon">&#xe815;</span>삭제</button>
-            <button type="button" className="button save" onClick={save}><span className="icon">&#xe814;</span>저장</button>
-            <button type="button" className="button reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span>초기화</button>
-          </span>
+          <CrudButtons menuId="at-company" add={add} del={del} save={save} />
           <button type="button" className="audit" onClick={() => setData(prev => ({...prev, audit: !prev.audit}))}>상세조회</button>
           <button type="submit" className="button3"><span className="icon">&#xe096;</span></button>
           <button type="reset" onClick={() => window.location.reload()}><span className="icon">&#x22;</span></button>
