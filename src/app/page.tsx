@@ -67,7 +67,10 @@ export default function MainDashboard() {
             </defs>
             <CartesianGrid strokeDasharray="2 2"/>
             <XAxis dataKey="reserveMonth"/>
-            <YAxis domain={yDomain}/>
+            <YAxis
+              domain={yDomain}
+              tickFormatter={(value) => `${Math.floor(value / 10000)}`} // 만 단위
+            />
             <Tooltip/>
             <Line
               type="monotone"
