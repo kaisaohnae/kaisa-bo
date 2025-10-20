@@ -144,10 +144,10 @@ export default function ProductPage() {
   };
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+    if (!gridRef.current) return; // ref 확인 (for 배포시 초기 조회)
+    if (mounted.current) return;
+    mounted.current = true;
+ 
     handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
@@ -220,7 +220,6 @@ export default function ProductPage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-    getList();
   }, []);
 
   useEffect(() => {
