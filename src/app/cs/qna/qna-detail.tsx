@@ -50,7 +50,8 @@ export default function QnaDetail({ detailData, detailShow, setDetailShow }) {
         phoneNo: formData.phoneNo,
         email: formData.email,
         title: formData.title,
-        content: editor.current?.getMarkdown?.() || '',
+        // content: editor.current?.getMarkdown?.() || '',
+        content: formData.content, // 여기 수정
       }).then(
         (res) => {
           console.log('save: ', res.data);
