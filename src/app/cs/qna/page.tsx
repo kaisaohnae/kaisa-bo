@@ -127,10 +127,10 @@ export default function QnaPage() {
   };
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
+    if (!gridRef.current) return; // ref 확인
+    if (mounted.current) return;
+    mounted.current = true;
+
     handsontable.current = new Handsontable(gridRef.current, {
       data: data.list,
       colHeaders: [
