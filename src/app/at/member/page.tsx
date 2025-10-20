@@ -195,7 +195,8 @@ export default function MemberPage() {
     });
     setData(prev => ({ ...prev, grid: handsontable.current }));
 
-  }, [gridRef.current]);
+    getList();
+  }, []);
 
   useEffect(() => {
     if (!handsontable.current) return;
