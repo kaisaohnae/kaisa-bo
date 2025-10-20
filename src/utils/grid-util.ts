@@ -79,11 +79,11 @@ const commonColumns = [
 ];
 const auditColumnNames = ['등록자', '등록일시', '수정자', '수정일시']
 const auditColumns = [
-  {data: 'creator', type: 'text', width: 100, readOnly: true, editor: false},
-  {data: 'createDt', type: 'text', width: 170, readOnly: true, editor: false},
-  // {data: 'createDt', type: 'date', width: 170, ...datePickerConfig},
-  {data: 'updater', type: 'text', width: 100, readOnly: true, editor: false},
-  {data: 'updateDt', type: 'text', width: 170, readOnly: true, editor: false},
+  {data: 'creator', type: 'text', width: 80, readOnly: true, editor: false},
+  {data: 'createDt', type: 'text', width: 150, readOnly: true, editor: false},
+  // {data: 'createDt', type: 'date', width: 150, ...datePickerConfig},
+  {data: 'updater', type: 'text', width: 80, readOnly: true, editor: false},
+  {data: 'updateDt', type: 'text', width: 150, readOnly: true, editor: false},
 ];
 const commonAddColumns = {
   mode: 'C',

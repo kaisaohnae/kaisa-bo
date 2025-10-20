@@ -80,7 +80,7 @@ export default function MainDashboard() {
         </ResponsiveContainer>
       </div>
 
-      <div className="totalPrice">총 매출: {totalPrice.toLocaleString()}</div>
+      {/*<div className="totalPrice">총 매출: {totalPrice.toLocaleString()}</div>*/}
     </div>
   );
 }
