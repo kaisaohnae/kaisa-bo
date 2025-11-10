@@ -15,7 +15,7 @@ export default function CounselDetail({ detailData, detailShow, setDetailShow })
     memberName: '',
     phoneNo: '',
     email: '',
-    title: '',
+    counselCode: '',
     content: '',
     latitude: '',
     longitude: '',
@@ -54,7 +54,7 @@ export default function CounselDetail({ detailData, detailShow, setDetailShow })
         memberName: formData.memberName,
         phoneNo: formData.phoneNo,
         email: formData.email,
-        title: formData.title,
+        counselCode: formData.counselCode,
         content: editor.current?.getMarkdown?.() || '',
         latitude: formData.latitude,
         longitude: formData.longitude,
@@ -137,9 +137,9 @@ export default function CounselDetail({ detailData, detailShow, setDetailShow })
               </td>
             </tr>
             <tr>
-              <th scope="col">제목</th>
+              <th scope="col">상담코드</th>
               <td>
-                <input type="text" value={formData.title || ''} onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))} required />
+                <CommonCode cd="counselCode" model={formData.counselCode} onSetData={(val) => setFormData(prev => ({ ...prev, counselCode: val }))} />
               </td>
             </tr>
             <tr>

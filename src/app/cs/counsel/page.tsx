@@ -18,7 +18,7 @@ import Detail from '@/components/common/detail';
 import CounselDetail from './counsel-detail';
 
 
-
+import CommonCodeRadio from '@/components/common/common-code-radio';
 
 export default function CounselPage() {
   const gridRef: any = useRef(null);
@@ -35,7 +35,7 @@ export default function CounselPage() {
     memberName: '',
     phoneNo: '',
     email: '',
-    title: '',
+    counselCode: '',
     content: '',
     updater: '',
     creator: '',
@@ -99,7 +99,7 @@ export default function CounselPage() {
       memberName: '',
       phoneNo: '',
       email: '',
-      title: '',
+      counselCode: '',
       content: '',
       latitude: '',
       longitude: '',
@@ -142,7 +142,7 @@ export default function CounselPage() {
       '회원명',
       '전화번호',
       '이메일',
-      '제목',
+      '상담코드',
       '내용',
       '위도',
       '경도',
@@ -159,7 +159,7 @@ export default function CounselPage() {
       {data: 'memberName', type: 'text', width: 150,   },
       {data: 'phoneNo', type: 'text', width: 150,   },
       {data: 'email', type: 'text', width: 150,   },
-      {data: 'title', type: 'text', width: 150,  className: 'underline', },
+      {data: 'counselCode', type: 'dropdown', width: 150,  className: 'underline', source: function (query, process) { process(setting.codeList['counselCode']?.map((o: any) => o.codeValue)) }},
       {data: 'content', type: 'text', width: 150,   },
       {data: 'latitude', type: 'text', width: 150,   },
       {data: 'longitude', type: 'text', width: 150,   },
@@ -192,7 +192,7 @@ export default function CounselPage() {
       afterOnCellMouseDown: (event, coords) => {
         const colHeader = handsontable.current?.getColHeader(coords.col); // 칼럼 헤더 확인
         const rowData = handsontable.current?.getSourceDataAtRow(coords.row); // 선택된 행의 데이터
-        if (colHeader === '제목' && rowData) {
+        if (colHeader === '상담코드' && rowData) {
           setDetailData(rowData);
           setDetailShow(true);
         }
@@ -235,8 +235,8 @@ export default function CounselPage() {
               <td colSpan={3}><input type="text" value={search.email} onChange={e => handleSearchChange('email', e.target.value)} /></td>
             </tr>
             <tr>
-              <th scope="row">제목</th>
-              <td colSpan={3}><input type="text" value={search.title} onChange={e => handleSearchChange('title', e.target.value)} /></td>
+              <th scope="row">상담코드</th>
+              <td colSpan={3}><CommonCodeRadio cd="counselCode" model={search.counselCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             <tr>
               <th scope="row">내용</th>
