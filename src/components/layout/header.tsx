@@ -122,7 +122,7 @@ export default function Header() {
 
         <div id="side" className={setting.menuActive ? 'menu-on' : ''}>
           <h1 onClick={clickHome}>
-            <SvgLogo width={100} fill="#666666" />
+            {auth.userInfo.companyId === 'kaisa' ? (<SvgLogo width={100} fill="#666666" />) : (<span className="logo">{auth.userInfo.companyId.charAt(0).toUpperCase() + auth.userInfo.companyId.slice(1)} <b>Admin</b></span>)}
           </h1>
           <div className="search">
             <input value={searchKeyword} onChange={e => setSearchKeyword(e.target.value)} placeholder="메뉴 검색" />

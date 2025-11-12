@@ -40,7 +40,7 @@ const CrudButtons: React.FC<CrudButtonsProps> = ({ menuId, add, del, save, showR
       )}
       {showReset && (
         <button type="button" className="button reset" onClick={() => window.location.reload()}>
-          <span className="icon">&#x22;</span>초기화
+          <span className="icon">&#x22;</span>취소
         </button>
       )}
     </span>
