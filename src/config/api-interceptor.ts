@@ -1,7 +1,9 @@
 import axios, {AxiosInstance, AxiosError} from 'axios';
 import useLoadingStore from '@/store/use-loading-store';
+import useAlertStore from '@/store/use-alert-store';
 
 const { startLoading, stopLoading } = useLoadingStore.getState();
+const { showAlert } = useAlertStore.getState();
 
 const service: AxiosInstance = axios.create({
   timeout: 10000,
@@ -34,7 +36,8 @@ service.interceptors.response.use(
       window.location.href = '/login';
     }
     if (data && data.message) {
-      //alert.open({title: null, message: data.message});
+      showAlert({message: data.message})
+      // alert(data.message);
     }
     return Promise.reject();
   }
