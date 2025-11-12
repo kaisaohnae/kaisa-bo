@@ -26,9 +26,13 @@ export default function HolidayPricePage() {
 
   const now = new Date();
   const defaultMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  const currentYear = new Date().getFullYear();
+  const lastYear = currentYear - 1;
 
   const [search, setSearch] = useState({
-    holiday: defaultMonth,
+    holiday: '',
+    year: currentYear,
+    month: '',
     companyId: '',
     holidayName: '',
     holidayCode: '',
@@ -190,7 +194,7 @@ export default function HolidayPricePage() {
             <tbody>
             <tr className={auth.userInfo.companyId === 'kaisa' ? '' : 'hide'}>
               <th scope="row">업체아이디</th>
-              <td colSpan={5}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
+              <td colSpan={6}><input type="text" value={search.companyId} onChange={e => handleSearchChange('companyId', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">휴일 <span>(개월단위)</span></th>
@@ -201,28 +205,60 @@ export default function HolidayPricePage() {
                 */}
                 <ReactDatePicker
                   locale={ko}
-                  selected={search.holiday ? new Date(search.holiday + '-01') : null} // YYYY-MM 기준으로 변환
+                  selected={search.year ? new Date(Number(search.year), 0, 1) : null}
                   onChange={(date: Date | null) => {
                     if (date) {
                       const year = date.getFullYear();
-                      const month = String(date.getMonth() + 1).padStart(2, '0');
-                      handleSearchChange('holiday', `${year}-${month}`); // "YYYY-MM" 형태로 전송
+                      setSearch((prev: any) => ({
+                        ...prev,
+                        year: year.toString(),
+                        month: '', // 연도 변경 시 월 초기화
+                      }));
                     } else {
-                      handleSearchChange('holiday', '');
+                      setSearch((prev: any) => ({ ...prev, year: '', month: '' }));
                     }
                   }}
-                  dateFormat="yyyy-MM"
+                  dateFormat="yyyy"
+                  showYearPicker
+                  placeholderText="연도 선택"
+                  minDate={new Date(lastYear, 0, 1)} // 과거는 작년까지만
+                  maxDate={new Date(2100, 11, 31)}  // 미래는 원하는 만큼
+                />
+              </td>
+              <td>
+                {/* 월 선택 */}
+                <ReactDatePicker
+                  locale={ko}
+                  selected={
+                    search.year && search.month
+                      ? new Date(Number(search.year), Number(search.month) - 1, 1)
+                      : null
+                  }
+                  onChange={(date: Date | null) => {
+                    if (!search.year) return; // 연도 없으면 월 선택 불가
+                    if (date) {
+                      const month = date.getMonth() + 1;
+                      setSearch(prev => ({
+                        ...prev,
+                        month: month.toString().padStart(2, '0'),
+                      }));
+                    } else {
+                      setSearch(prev => ({ ...prev, month: '' }));
+                    }
+                  }}
+                  dateFormat="MM"
                   showMonthYearPicker
                   placeholderText="월 선택"
-                  disabled={false}
+                  disabled={!search.year} // 연도 선택 전에는 비활성화
                 />
+
               </td>
               <th scope="row">휴일명</th>
               <td><input type="text" value={search.holidayName} onChange={e => handleSearchChange('holidayName', e.target.value)} /></td>
             </tr>
             <tr>
               <th scope="row">휴일코드</th>
-              <td colSpan={5}><CommonCodeRadio cd="holidayCode" model={search.holidayCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
+              <td colSpan={6}><CommonCodeRadio cd="holidayCode" model={search.holidayCode} onSetData={(val) => { setSearch((prev: any) => ({ ...prev, userStateCode: val })); }} /></td>
             </tr>
             </tbody>
             {data.audit && (
