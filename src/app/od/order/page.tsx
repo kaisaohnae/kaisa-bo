@@ -31,7 +31,7 @@ export default function OrderPage() {
     orderNo: '',
     companyId: '',
     reserveDay: '',
-    reserveMonth: '', // defaultMonth,
+    reserveMonth: defaultMonth,
     orderStateCode: '',
     phoneNo: '',
     orderName: '',
