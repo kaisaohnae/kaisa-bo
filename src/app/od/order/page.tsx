@@ -192,7 +192,19 @@ export default function OrderPage() {
       //{data: 'productNo', type: 'numeric', width: 100,   },
       {data: 'productName', type: 'text', width: 100, readOnly: true,  },
       {data: 'reserveDay', type: 'date', width: 120,   ...gridUtil.datePickerConfig },
-      {data: 'orderStateCode', type: 'dropdown', width: 100,   source: function (query, process) { process(setting.codeList['orderStateCode']?.map((o: any) => o.codeValue)) }},
+      {data: 'orderStateCode', type: 'dropdown', width: 100,
+        source: function (query, process) { process(setting.codeList['orderStateCode']?.map((o: any) => o.codeValue)) },
+        renderer: function (instance, td, row, col, prop, value, cellProperties) {
+          // 기본 textRenderer 먼저 적용 (Handsontable 기본 스타일 유지)
+          Handsontable.renderers.AutocompleteRenderer.call(this, instance, td, row, col, prop, value, cellProperties);
+          if (value === '예약중') {
+            td.style.color = 'red';
+          } else {
+            td.style.color = '';
+            td.style.fontWeight = '';
+          }
+        },
+      },
       {data: 'reserveCode', type: 'dropdown', width: 100,   source: function (query, process) { process(setting.codeList['reserveCode']?.map((o: any) => o.codeValue)) }},
       {data: 'phoneNo', type: 'text', width: 110,   },
       {data: 'orderName', type: 'text', width: 100,   },
