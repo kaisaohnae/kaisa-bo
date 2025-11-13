@@ -217,7 +217,7 @@ export default function OrderPage() {
       {data: 'isHotWater', type: 'dropdown', width: 90,   source: function (query, process) { process(setting.codeList['isHotWater']?.map((o: any) => o.codeValue)) }},
       {data: 'isPickup', type: 'dropdown', width: 90,   source: function (query, process) { process(setting.codeList['isPickup']?.map((o: any) => o.codeValue)) }},
       {data: 'isBBQ', type: 'dropdown', width: 90,   source: function (query, process) { process(setting.codeList['isBBQ']?.map((o: any) => o.codeValue)) }},
-      {data: 'isPet', type: 'dropdown', width: 90,   source: function (query, process) { process(setting.codeList['isPet']?.map((o: any) => o.codeValue)) }},
+      {data: 'isPet', hidden: true, type: 'dropdown', width: 90,   source: function (query, process) { process(setting.codeList['isPet']?.map((o: any) => o.codeValue)) }},
         ...gridUtil.auditColumns,
       ],
       cells: function (row, col) {
