@@ -178,10 +178,9 @@ tr.hide {display:none !important;}
     text-overflow: ellipsis; /* ... 표시 (선택 사항) */
 }
 
-.handsontableEditor.autocompleteEditor.htMacScroll.listbox.handsontable {
-    min-height: 125px !important;
-}
-.handsontable.listbox .ht_master table {border: 1px solid #000 !important;}
+.handsontableEditor {min-height: 130px !important; min-width: 110px !important;}
+.handsontable .ht_master table td.listbox { border-left: 1px solid #000 !important; border-right: 1px solid #000 !important;}
+.handsontable .ht_master table { border-bottom:1px solid #000 !important;}
 
 /* date picker reset */
 input.dp__input_readonly {border:1px solid #bbb;}
