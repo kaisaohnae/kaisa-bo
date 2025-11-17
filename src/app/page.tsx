@@ -55,7 +55,6 @@ export default function MainDashboard() {
           </li>
         ))}
       </ul>
-
       <div style={{width: '100%', padding: '10px 0 20px 0', overflow: 'auto'}}>
         <ResponsiveContainer width={1670} height={300}>
           <LineChart data={monthlyData} margin={{top: 10, right: 0, left: 0, bottom: 0}}>
