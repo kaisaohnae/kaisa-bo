@@ -139,7 +139,7 @@ export default function HolidayPricePage() {
       hiddenColumns: gridUtil.hiddenColumns([]),
       columns: [
         ...gridUtil.commonColumns,
-      {data: 'holiday', type: 'date', width: 110, readOnly: true,  ...gridUtil.datePickerConfig },
+      {data: 'holiday', type: 'date', width: 110, readOnly: false,  ...gridUtil.datePickerConfig },
       {data: 'companyId', type: 'text', width: 100, readOnly: true,  },
       {data: 'holidayName', type: 'text', width: 120,   },
       {data: 'price', type: 'numeric', width: 100,   },
