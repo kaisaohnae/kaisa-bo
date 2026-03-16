@@ -93,7 +93,7 @@ export default function Header() {
               <u onClick={() => auth.logout(router.push)} style={{cursor: 'pointer'}}>
                 로그아웃
               </u>
-              <u className="icon setting" style={{cursor: 'pointer', paddingLeft: 10}} onClick={openSetting}>&#xe0cb;</u>
+              {/* <u className="icon setting" style={{cursor: 'pointer', paddingLeft: 10}} onClick={openSetting}>&#xe0cb;</u> */}
             </li>
           </ul>
           <div className="tab">
