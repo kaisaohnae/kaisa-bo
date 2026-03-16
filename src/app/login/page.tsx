@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState, useEffect, useRef} from 'react';
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 import AuthService from '@/service/common/auth-service';
 import useSettingStore from '@/store/use-setting-store';
@@ -16,6 +16,7 @@ interface LoginInfo {
 
 const Login: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -35,6 +36,16 @@ const Login: React.FC = () => {
     if (!savedSettings) {
       // setting.setState();
     }
+
+    const test = searchParams.get('test');
+    if (test === '1') {
+      setParam(prev => ({
+        ...prev,
+        userId: 'test',
+        pwd: 'dlatl123!'
+      }));
+    }
+
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

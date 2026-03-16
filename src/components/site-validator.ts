@@ -3,6 +3,7 @@
 import {useEffect, useRef} from 'react';
 import {useRouter} from '@/hooks/use-custom-router';
 import useAuthStore from '@/store/use-auth-store';
+import { useSearchParams } from 'next/navigation';
 
 type Props = {
   onReady: any;
@@ -12,6 +13,7 @@ export default function OrgValidator({onReady}: Props) {
   const auth = useAuthStore();
   const router = useRouter();
   const mounted = useRef<boolean>(false);
+  const searchParams = useSearchParams();
 
   const onReadyCheck = async () => {
     try {
@@ -30,7 +32,7 @@ export default function OrgValidator({onReady}: Props) {
 
   useEffect(() => {
     if (mounted.current && !auth.token) {
-      router.push({pathname: '/login', query: {}});
+      router.push({pathname: '/login', query: Object.fromEntries(searchParams.entries())});
     }
   }, [router]);
 
