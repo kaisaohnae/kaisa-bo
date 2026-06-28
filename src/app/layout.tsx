@@ -4,9 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '@/assets/css/reset.css';
 import '@/assets/css/common.css';
 import '@/assets/css/layout.css';
-import '@/assets/css/slide.css';
 import '@/assets/css/calendar.css';
-import '@/assets/css/lib/swiper-bundle.min.css';
 import '@/assets/css/lib/tui-grid-editor.css';
 
 import MetaTags from '@/components/layout/meta-tags';
