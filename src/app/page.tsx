@@ -204,7 +204,7 @@ export default function MainDashboard() {
                 domain={yDomain}
                 tickFormatter={(value) => `${Math.floor(value / 10000)}만`}
               />
-              <Tooltip formatter={(value: number) => `${value.toLocaleString('ko-KR')}원`}/>
+              <Tooltip formatter={(value) => `${Number(value ?? 0).toLocaleString('ko-KR')}원`}/>
               <Area
                 type="monotone"
                 dataKey="sumPrice"
@@ -233,7 +233,7 @@ export default function MainDashboard() {
                   <Cell key={entry.name} fill={entry.color}/>
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number, name: string) => [`${value.toLocaleString('ko-KR')}건`, name]}/>
+              <Tooltip formatter={(value, name) => [`${Number(value ?? 0).toLocaleString('ko-KR')}건`, String(name ?? '')]}/>
             </PieChart>
           </ResponsiveContainer>
         </article>
@@ -271,7 +271,7 @@ export default function MainDashboard() {
               <CartesianGrid strokeDasharray="3 3" vertical={false}/>
               <XAxis dataKey="name"/>
               <YAxis allowDecimals={false}/>
-              <Tooltip formatter={(value: number) => `${value.toLocaleString('ko-KR')}건`}/>
+              <Tooltip formatter={(value) => `${Number(value ?? 0).toLocaleString('ko-KR')}건`}/>
               <Bar dataKey="count" fill="url(#barGradient)" radius={[8, 8, 0, 0]}/>
             </BarChart>
           </ResponsiveContainer>
