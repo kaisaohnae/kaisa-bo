@@ -1,0 +1,41 @@
+{
+  "name": "kaisa-bo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p 8886",
+    "build:dev": "shx cp .env.production.dev .env.production && next build && shx rm .env.production",
+    "build": "shx cp .env.production.prod .env.production && next build && shx rm .env.production",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^16.2.9",
+    "prettier": "^3.6.2",
+    "shx": "^0.4.0",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "axios": "^1.18.1",
+    "dayjs": "^1.11.13",
+    "framer-motion": "^12.23.5",
+    "handsontable": "^15.3.0",
+    "js-cookie": "^3.0.5",
+    "next": "^16.2.9",
+    "prismjs": "^1.30.0",
+    "react": "^19.1.0",
+    "react-datepicker": "^8.4.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^3.1.0",
+    "xlsx-js-style": "^1.2.0",
+    "zustand": "^5.0.6"
+  }
+}
