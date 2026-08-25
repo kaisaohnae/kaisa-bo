@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 8886",
-    "build:dev": "shx cp .env.production.dev .env.production && next build && shx rm .env.production",
-    "build": "shx cp .env.production.prod .env.production && next build && shx rm .env.production",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "next lint",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/js-cookie": "^3",
