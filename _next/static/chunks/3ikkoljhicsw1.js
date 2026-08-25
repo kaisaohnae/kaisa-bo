@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,58298,e=>{"use strict";var r=e.i(43476);e.s(["default",0,function(){return(0,r.jsxs)("div",{id:"error",children:[(0,r.jsx)("p",{children:"알수 없는 에러가 발생하였습니다."}),(0,r.jsx)("a",{href:"/",className:"home",children:"홈으로"})]})}])}]);

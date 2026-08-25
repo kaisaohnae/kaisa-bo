@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,29306,e=>{"use strict";var r=e.i(43476);e.s(["default",0,function(){return(0,r.jsxs)("div",{id:"error",children:[(0,r.jsx)("p",{children:"요청하신 페이지를 찾을 수 없습니다."}),(0,r.jsx)("a",{href:"/",className:"home",children:"홈으로"})]})}])}]);
